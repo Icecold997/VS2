@@ -52,5 +52,8 @@ Protokoll Strategieplanung 4.11.17
   - FileServer!=FileSystem -> Frage an Esch: Was macht in dem Fall Sinn
   - Supernodes/Superpeers -benötigt?
   - Aufbauend auf p2p oder doppelte Arbeit? 
+  
+  Protokoll Planung mit Hr Sauer 9.11.17
+  - keine nenneswerte Erfolge, Herr Sauer schliesst sich mit Herr Esch kurz und meldet sich dann wieder bei uns. Herr Sauer hatte Geburtstag.
  
 
