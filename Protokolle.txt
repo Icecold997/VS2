@@ -63,4 +63,7 @@ Funktionen zum Zugriff auf Fremden PC zu implementieren ist zwar gefordert muss 
 - GUI (vorerst angedacht)
 - Schattenkopien
 - delta XML
-
+- Updates: 
+   - Robert und ich setzen uns Sonntag zusammen (wann genau wird via Telefon ausgemacht)
+   - Timo und Thilo schauen sich Montag die Präsentation nochmal an und machen Verbesserungsvorschläge
+- nächste Besprechung: Montag: 13:45
