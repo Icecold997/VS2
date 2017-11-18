@@ -1,0 +1,6 @@
+\select@language {ngerman}
+\contentsline {section}{\numberline {1}Sitzungsprotokolle}{2}{section.1}
+\contentsline {subsection}{\numberline {1.1}24.10.2017}{2}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}27.10.17:10:00- 13:00}{2}{subsection.1.2}
+\contentsline {subsection}{\numberline {1.3}Strategieplanung 4.11.17}{3}{subsection.1.3}
+\contentsline {subsection}{\numberline {1.4}Planung mit Herrn Sauer 9.11.17}{3}{subsection.1.4}
