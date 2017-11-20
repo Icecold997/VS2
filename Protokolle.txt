@@ -67,3 +67,10 @@ Funktionen zum Zugriff auf Fremden PC zu implementieren ist zwar gefordert muss 
    - Robert und ich setzen uns Sonntag zusammen (wann genau wird via Telefon ausgemacht)
    - Timo und Thilo schauen sich Montag die Präsentation nochmal an und machen Verbesserungsvorschläge
 - nächste Besprechung: Montag: 13:45
+ 
+Protokoll Strategieplanung 20.11.17
+- Kernpunkte: Datenbank, Kommunikation
+- Trennen von Aufgabe1 und Aufgabe2 in der Präsentation
+- Gantt unrealistisch
+- treffen heute Abend in Discoprd, Robert und Jan-> Usecases/Userstories, Marc Integriert Architektur nach Vorgabe
+- debuggen und entschlacken der Präsentation
