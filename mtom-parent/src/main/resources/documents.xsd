@@ -1,0 +1,34 @@
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
+        xmlns:tns="http://htwsaar.de/"
+        targetNamespace="http://htwsaar.de/"
+        xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="2.0"
+        elementFormDefault="qualified">
+
+
+	<element name="storeDocumentRequest">
+		<complexType>
+			<sequence>
+				<element name="document" type="tns:document" />
+
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="storeDocumentResponse">
+		<complexType>
+			<sequence>
+				<element name="success" type="boolean" />
+			</sequence>
+		</complexType>
+	</element>
+
+	<complexType name="document">
+		<sequence>
+			<element name="name" type="string" />
+			<element name="author" type="string" />
+			<element name="content" type="base64Binary" />
+		</sequence>
+	</complexType>
+
+</schema>

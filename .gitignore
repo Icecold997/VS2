@@ -1,0 +1,24 @@
+# Add any directories, files, or patterns you don't want to be tracked by version control
+
+# IntelliJ
+.idea/
+*.iml
+out/
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# Other stuff
+.DS_Store
+bin/
+target/
+
+#Database
+db/serverDB/
+db/
+derby.log
+
+#Generated Service stubs
+vs-parent/src/main/java/de/htwsaar/
