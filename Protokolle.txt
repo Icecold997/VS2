@@ -74,3 +74,15 @@ Protokoll Präsentationsbesprechung 20.11.17
 - Gantt unrealistisch
 - treffen heute Abend in Discoprd, Robert und Jan-> Usecases/Userstories, Marc Integriert Architektur nach Vorgabe
 - debuggen und entschlacken der Präsentation
+
+Protokoll Feinprojektbesprechung 28.11.17
+- Punkte der letzten Präsentation:
+  . Aufgabe 1: FILESYSTEM also kein FileServer (Jeder kann Daten mitnehmen)
+  . Aufgabe 2: Gegenseitiger Ausschluss im Gegenzug vernachlässigbar
+  . Lastverteilung kommt wieder dazu (in gewissem Rahmen
+- Aufgabe1
+  . Prinzip DNS iv.m. Vater-Sohn Dateidatenbank zur Dateifindung(Pfadfindung) Pfad->ID
+  . Marc bringt Fr Pi für Kai ran
+  . Marc Do nicht da
+  . Donnerstag Meeting ab 2. Stunde (Arbeitstreffen)
+- Aufgabe2
