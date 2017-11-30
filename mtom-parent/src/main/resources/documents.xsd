@@ -23,6 +23,58 @@
 		</complexType>
 	</element>
 
+
+
+	<element name="renameDocumentRequest">
+		<complexType>
+			<sequence>
+				<element name="currentDocumentName" type="string" />
+				<element name="newDocumentName" type="string" />
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="renameDocumentResponse">
+		<complexType>
+			<sequence>
+				<element name="success" type="boolean" />
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="searchDocumentRequest">
+		<complexType>
+			<sequence>
+				<element name="documentName" type="string" />
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="searchDocumentResponse">
+		<complexType>
+			<sequence>
+				<element name="found" type="boolean" />
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="deleteDocumentRequest">
+		<complexType>
+			<sequence>
+				<element name="documentName" type="string" />
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="deleteDocumentResponse">
+		<complexType>
+			<sequence>
+				<element name="success" type="boolean" />
+			</sequence>
+		</complexType>
+	</element>
+
+
 	<complexType name="document">
 		<sequence>
 			<element name="name" type="string" />

@@ -10,6 +10,7 @@ package de.htwsaar;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -24,7 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="success" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
+ *         &lt;element name="documentName" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -35,27 +36,36 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "success"
+    "documentName"
 })
-@XmlRootElement(name = "storeDocumentResponse")
-public class StoreDocumentResponse {
+@XmlRootElement(name = "searchDocumentRequest")
+public class SearchDocumentRequest {
 
-    protected boolean success;
+    @XmlElement(required = true)
+    protected String documentName;
 
     /**
-     * Ruft den Wert der success-Eigenschaft ab.
+     * Ruft den Wert der documentName-Eigenschaft ab.
      * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
-    public boolean isSuccess() {
-        return success;
+    public String getDocumentName() {
+        return documentName;
     }
 
     /**
-     * Legt den Wert der success-Eigenschaft fest.
+     * Legt den Wert der documentName-Eigenschaft fest.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
-    public void setSuccess(boolean value) {
-        this.success = value;
+    public void setDocumentName(String value) {
+        this.documentName = value;
     }
 
 }

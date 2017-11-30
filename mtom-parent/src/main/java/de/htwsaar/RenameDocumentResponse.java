@@ -37,8 +37,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "", propOrder = {
     "success"
 })
-@XmlRootElement(name = "storeDocumentResponse")
-public class StoreDocumentResponse {
+@XmlRootElement(name = "renameDocumentResponse")
+public class RenameDocumentResponse {
 
     protected boolean success;
 

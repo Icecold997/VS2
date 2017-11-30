@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.7 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2017.11.30 um 06:43:59 AM CET 
+// Generiert: 2017.11.30 um 08:44:48 AM CET 
 //
 
 
@@ -37,6 +37,46 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link RenameDocumentResponse }
+     * 
+     */
+    public RenameDocumentResponse createRenameDocumentResponse() {
+        return new RenameDocumentResponse();
+    }
+
+    /**
+     * Create an instance of {@link SearchDocumentRequest }
+     * 
+     */
+    public SearchDocumentRequest createSearchDocumentRequest() {
+        return new SearchDocumentRequest();
+    }
+
+    /**
+     * Create an instance of {@link RenameDocumentRequest }
+     * 
+     */
+    public RenameDocumentRequest createRenameDocumentRequest() {
+        return new RenameDocumentRequest();
+    }
+
+    /**
+     * Create an instance of {@link SearchDocumentResponse }
+     * 
+     */
+    public SearchDocumentResponse createSearchDocumentResponse() {
+        return new SearchDocumentResponse();
+    }
+
+    /**
+     * Create an instance of {@link DeleteDocumentRequest }
+     * 
+     */
+    public DeleteDocumentRequest createDeleteDocumentRequest() {
+        return new DeleteDocumentRequest();
+    }
+
+    /**
      * Create an instance of {@link StoreDocumentRequest }
      * 
      */
@@ -50,6 +90,14 @@ public class ObjectFactory {
      */
     public Document createDocument() {
         return new Document();
+    }
+
+    /**
+     * Create an instance of {@link DeleteDocumentResponse }
+     * 
+     */
+    public DeleteDocumentResponse createDeleteDocumentResponse() {
+        return new DeleteDocumentResponse();
     }
 
     /**
