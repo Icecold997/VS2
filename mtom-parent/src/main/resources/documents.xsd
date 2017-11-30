@@ -10,7 +10,6 @@
 		<complexType>
 			<sequence>
 				<element name="document" type="tns:document" />
-
 			</sequence>
 		</complexType>
 	</element>
@@ -80,6 +79,7 @@
 			<element name="name" type="string" />
 			<element name="author" type="string" />
 			<element name="content" type="base64Binary" />
+			<element name="sourceUri" type="string" />
 		</sequence>
 	</complexType>
 

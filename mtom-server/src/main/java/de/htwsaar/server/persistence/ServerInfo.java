@@ -21,8 +21,6 @@ public class ServerInfo extends AbstractEntity {
     private String serverIp;
 
 
-    //private BCryptPasswordEncoder encoder;
-
     public ServerInfo() {
 
     }
@@ -34,10 +32,6 @@ public class ServerInfo extends AbstractEntity {
 
     public void setServerIp(String serverIp) {
         this.serverIp = serverIp;
-    }
-    @Override
-    public String toString(){
-        return "Message: ";
     }
 
 

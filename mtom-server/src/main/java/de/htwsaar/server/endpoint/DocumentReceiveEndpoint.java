@@ -8,8 +8,8 @@ import java.io.IOException;
 import de.htwsaar.Document;
 import de.htwsaar.StoreDocumentRequest;
 import de.htwsaar.StoreDocumentResponse;
-import de.htwsaar.server.persistence.ServerDAO;
-import de.htwsaar.server.persistence.ServerInfo;
+import de.htwsaar.server.persistence.FileArrangementDAO;
+import de.htwsaar.server.persistence.FileArrangementConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -22,7 +22,7 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 public class DocumentReceiveEndpoint {
 
 	@Autowired
-	ServerDAO serverDao;
+	FileArrangementDAO fileArrangementDao;
 
 	private static final String NAMESPACE_URI = "http://htwsaar.de/";
 
@@ -30,11 +30,14 @@ public class DocumentReceiveEndpoint {
 	@ResponsePayload
 	public StoreDocumentResponse storeDocument(@RequestPayload StoreDocumentRequest request) throws IOException {
 
-		ServerInfo serverInfo = new ServerInfo();       //Datenbank beispiel
-		serverInfo.setServerIp("192.168.0.1");
-		serverInfo = serverDao.save(serverInfo);
-
+		FileArrangementConfig fileArrangementConfig = new FileArrangementConfig();
 		Document document = request.getDocument();
+
+		fileArrangementConfig.setFilename(document.getName());
+		fileArrangementConfig.setFileLocation("C:/input/");
+		fileArrangementConfig.setLocal(true);
+		fileArrangementConfig.setSourceIp(document.getSourceUri());
+		fileArrangementDao.save(fileArrangementConfig);
 		System.out.println("Datei empfangen : DateiName: "+ document.getName());
 		byte[] demBytes = document.getContent();  // datei in byteform aus der soap nachricht holen
 

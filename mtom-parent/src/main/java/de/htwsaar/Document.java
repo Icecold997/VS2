@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.7 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2017.11.30 um 08:44:48 AM CET 
+// Generiert: 2017.11.30 um 12:49:28 PM CET 
 //
 
 
@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="author" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="content" type="{http://www.w3.org/2001/XMLSchema}base64Binary"/>
+ *         &lt;element name="sourceUri" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -39,7 +40,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "document", propOrder = {
     "name",
     "author",
-    "content"
+    "content",
+    "sourceUri"
 })
 public class Document {
 
@@ -49,6 +51,8 @@ public class Document {
     protected String author;
     @XmlElement(required = true)
     protected byte[] content;
+    @XmlElement(required = true)
+    protected String sourceUri;
 
     /**
      * Ruft den Wert der name-Eigenschaft ab.
@@ -118,6 +122,30 @@ public class Document {
      */
     public void setContent(byte[] value) {
         this.content = value;
+    }
+
+    /**
+     * Ruft den Wert der sourceUri-Eigenschaft ab.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getSourceUri() {
+        return sourceUri;
+    }
+
+    /**
+     * Legt den Wert der sourceUri-Eigenschaft fest.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setSourceUri(String value) {
+        this.sourceUri = value;
     }
 
 }
