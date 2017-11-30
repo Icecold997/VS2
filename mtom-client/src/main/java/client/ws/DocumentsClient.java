@@ -17,24 +17,28 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 
 	public DocumentsClient() {}
 
-
-	public boolean storeDocument(int size) throws IOException {
+	/**
+	 *
+	 * @param pathToFile im format C:/../myfile.t
+	 * @return
+	 * @throws IOException
+     */
+	public boolean storeDocument(String pathToFile) throws IOException {
 		Document document = new Document();
-		document.setName(Integer.toString(size));
-		Path inputPath  = new File("C:/Keil/myfile.txt").toPath();  //datei auswählen
+		Path inputPath  = new File(pathToFile).toPath();
 		byte[] array = Files.readAllBytes(inputPath);
 		document.setContent(array);
 		document.setName(inputPath.getFileName().toString());
 		StoreDocumentRequest request = new StoreDocumentRequest();
 		request.setDocument(document);
 
-		System.out.println();
-		System.out.println("Storing document of size " + size);
 
 		StoreDocumentResponse response = (StoreDocumentResponse) getWebServiceTemplate()
 				.marshalSendAndReceive(request);
 		boolean success = response.isSuccess();
-
+		if(success){
+			System.out.println("Datei erfolgreich versendet");
+		}
 		return success;
 	}
 

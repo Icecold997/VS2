@@ -26,7 +26,7 @@ public class DocumentEndpoint {
 	public StoreDocumentResponse storeDocument(
 			@RequestPayload StoreDocumentRequest request) throws IOException {
 		Document document = request.getDocument();
-		System.out.println("DateiName: "+ document.getName());
+		System.out.println("Datei empfangen : DateiName: "+ document.getName());
 		byte[] demBytes = document.getContent();
 
 		File outputFile = new File("C:/input/"+document.getName());

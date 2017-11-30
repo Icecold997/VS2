@@ -23,33 +23,26 @@ public class Application {
 		ApplicationContext ctx = springApplication.run();
 		DocumentsClient documentsClient = ctx.getBean(DocumentsClient.class);
 
-		int size = readSize();
-		while (size > 0) {
-			documentsClient.storeDocument(size);
-			size = readSize();
+		String pathToFile = readPathToFile();
+		while (pathToFile != null) {
+			documentsClient.storeDocument(pathToFile);
+			pathToFile = readPathToFile();
 		}
 		System.out.println("exit");
 	}
 
-	private static int readSize() throws IOException {
-		Integer result = null;
+	private static String readPathToFile() throws IOException {
+		String result = null;
 		while (result == null) {
-			System.out
-					.printf("\nenter size of document to upload, or just press enter to exit: ");
+			System.out.printf("\nDateipfad eingeben im Format C:/../myfile.endung: ");
+			System.out.printf("\nnichts eingeben um programm zu verlassen\n");
 			String line = readLine();
 			if (line == null || line.trim().isEmpty()) {
-				return 0;
+				return null;
+			}else{
+				result = line;
 			}
-			try {
-				result = Integer.parseInt(line);
-				if (result < 1) {
-					System.out.println("enter an integer > 0");
-					result = null;
-				}
-			} catch (NumberFormatException e) {
-				System.out.println("not a valid integer: " + line);
-				result = null;
-			}
+
 		}
 		return result;
 	}
@@ -57,4 +50,5 @@ public class Application {
 	private static String readLine() throws IOException {
 		return new BufferedReader(new InputStreamReader(System.in)).readLine();
 	}
+
 }
