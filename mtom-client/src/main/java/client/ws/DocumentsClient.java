@@ -5,9 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import de.htwsaar.Document;
-import de.htwsaar.StoreDocumentRequest;
-import de.htwsaar.StoreDocumentResponse;
+import de.htwsaar.*;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 
 
@@ -43,5 +41,27 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 		return success;
 	}
 
+   public boolean renameDocument(String oldFileName,String newFileName){
+	   RenameDocumentRequest request = new RenameDocumentRequest();
+	   request.setCurrentDocumentName(oldFileName);
+	   request.setNewDocumentName(newFileName);
+	   RenameDocumentResponse response =(RenameDocumentResponse) getWebServiceTemplate().marshalSendAndReceive(request);
+	   boolean success = response.isSuccess();
+	   if(success){
+	   	System.out.println("Datei erfolgreich umbenannt");
+	   }
+	   return success;
+   }
 
+   public boolean deleteDocument(String fileName){
+   	  DeleteDocumentRequest request = new DeleteDocumentRequest();
+	   request.setDocumentName(fileName);
+	   DeleteDocumentResponse response = (DeleteDocumentResponse) getWebServiceTemplate().marshalSendAndReceive(request);
+	   boolean success = response.isSuccess();
+	   if(success){
+	   	System.out.println("Datei erfolgreich gelöscht");
+	   }
+   	   return success;
+
+   }
 }
