@@ -8,6 +8,7 @@ import java.io.IOException;
 import de.htwsaar.Document;
 import de.htwsaar.StoreDocumentRequest;
 import de.htwsaar.StoreDocumentResponse;
+import de.htwsaar.server.config.ServerConfig;
 import de.htwsaar.server.persistence.FileArrangementDAO;
 import de.htwsaar.server.persistence.FileArrangementConfig;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,14 +35,14 @@ public class DocumentReceiveEndpoint {
 		Document document = request.getDocument();
 
 		fileArrangementConfig.setFilename(document.getName());
-		fileArrangementConfig.setFileLocation("C:/input/");
+		fileArrangementConfig.setFileLocation(ServerConfig.fileDirectory+"/");
 		fileArrangementConfig.setLocal(true);
 		fileArrangementConfig.setSourceIp(document.getSourceUri());
 		fileArrangementDao.save(fileArrangementConfig);
 		System.out.println("Datei empfangen : DateiName: "+ document.getName());
 		byte[] demBytes = document.getContent();  // datei in byteform aus der soap nachricht holen
 
-		File outputFile = new File("C:/input/"+document.getName()); //  ort an dem datei gespeichert wird
+		File outputFile = new File(ServerConfig.fileDirectory+"/"+ document.getName()); //  ort an dem datei gespeichert wird
 
 		try (FileOutputStream outputStream = new FileOutputStream(outputFile); ) { // bytes aus nachricht in datei zurückschreiben
 
