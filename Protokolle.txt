@@ -75,7 +75,7 @@ Protokoll Präsentationsbesprechung 20.11.17
 - treffen heute Abend in Discoprd, Robert und Jan-> Usecases/Userstories, Marc Integriert Architektur nach Vorgabe
 - debuggen und entschlacken der Präsentation
 
-Protokoll Feinprojektbesprechung 28.11.17
+Protokoll Feinkonzeptbesprechung 28.11.17
 - Punkte der letzten Präsentation:
   . Aufgabe 1: FILESYSTEM also kein FileServer (Jeder kann Daten mitnehmen)
   . Aufgabe 2: Gegenseitiger Ausschluss im Gegenzug vernachlässigbar
@@ -86,3 +86,6 @@ Protokoll Feinprojektbesprechung 28.11.17
   . Marc Do nicht da
   . Donnerstag Meeting ab 2. Stunde (Arbeitstreffen)
 - Aufgabe2
+
+
+Protokoll Feinkonzeptbesprechung 5.12.17
