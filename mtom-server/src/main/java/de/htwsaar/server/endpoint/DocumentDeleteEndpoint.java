@@ -32,7 +32,7 @@ public class DocumentDeleteEndpoint {
 
         Optional<FileArrangementConfig> fileArrangementConfig =  fileArrangementDao.findByfilename(request.getDocumentName());
         if(fileArrangementConfig.isPresent()) {
-            File file = new File(fileArrangementConfig.get().getFileLocation()+fileArrangementConfig.get().getFilename());
+            File file = new File(fileArrangementConfig.get().getFileLocation()+"/"+fileArrangementConfig.get().getFilename());
             if(file.delete()){
                 System.out.println(file.getName()+" is deleted");
                 fileArrangementDao.deleteByfilename(request.getDocumentName());

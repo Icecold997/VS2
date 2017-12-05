@@ -20,5 +20,9 @@ db/serverDB/
 db/
 derby.log
 
+#FileSystem
+fileSystem
+fileSystem/
+
 #Generated Service stubs
 vs-parent/src/main/java/de/htwsaar/

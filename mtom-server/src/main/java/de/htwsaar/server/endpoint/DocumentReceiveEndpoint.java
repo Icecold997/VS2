@@ -25,24 +25,28 @@ public class DocumentReceiveEndpoint {
 	@Autowired
 	FileArrangementDAO fileArrangementDao;
 
+	@Autowired
+	ServerConfig serverConfig;
+
 	private static final String NAMESPACE_URI = "http://htwsaar.de/";
 
 	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "storeDocumentRequest")
 	@ResponsePayload
 	public StoreDocumentResponse storeDocument(@RequestPayload StoreDocumentRequest request) throws IOException {
 
+
 		FileArrangementConfig fileArrangementConfig = new FileArrangementConfig();
 		Document document = request.getDocument();
 
 		fileArrangementConfig.setFilename(document.getName());
-		fileArrangementConfig.setFileLocation(ServerConfig.fileDirectory+"/");
+		fileArrangementConfig.setFileLocation(serverConfig.fileDirectory+"/");
 		fileArrangementConfig.setLocal(true);
 		fileArrangementConfig.setSourceIp(document.getSourceUri());
 		fileArrangementDao.save(fileArrangementConfig);
 		System.out.println("Datei empfangen : DateiName: "+ document.getName());
 		byte[] demBytes = document.getContent();  // datei in byteform aus der soap nachricht holen
 
-		File outputFile = new File(ServerConfig.fileDirectory+"/"+ document.getName()); //  ort an dem datei gespeichert wird
+		File outputFile = new File(serverConfig.fileDirectory+"/"+ document.getName()); //  ort an dem datei gespeichert wird
 
 		try (FileOutputStream outputStream = new FileOutputStream(outputFile); ) { // bytes aus nachricht in datei zurückschreiben
 

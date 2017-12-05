@@ -13,4 +13,5 @@ public interface FileArrangementDAO extends CrudRepository<FileArrangementConfig
     FileArrangementConfig save(FileArrangementConfig fileArrangementConfig);
     Optional<FileArrangementConfig> findByfilename(String fileName);
     void deleteByfilename(String fileName);
+
 }
