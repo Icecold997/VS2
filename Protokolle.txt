@@ -89,3 +89,7 @@ Protokoll Feinkonzeptbesprechung 28.11.17
 
 
 Protokoll Feinkonzeptbesprechung 5.12.17
+- Programmiertätigkeiten Aufgabe 1 
+- Aktivitätsdiagramm (Grober Entwurf)
+- Prezi aktualisieren
+- Beginn des Entwurfs einer Search-Funktion
