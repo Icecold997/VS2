@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.7 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2017.11.30 um 12:49:28 PM CET 
+// Generiert: 2017.12.08 um 05:14:36 PM CET 
 //
 
 
@@ -77,6 +77,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link SendDirectoryInformationToParentRequest }
+     * 
+     */
+    public SendDirectoryInformationToParentRequest createSendDirectoryInformationToParentRequest() {
+        return new SendDirectoryInformationToParentRequest();
+    }
+
+    /**
+     * Create an instance of {@link Directory }
+     * 
+     */
+    public Directory createDirectory() {
+        return new Directory();
+    }
+
+    /**
      * Create an instance of {@link StoreDocumentRequest }
      * 
      */
@@ -106,6 +122,14 @@ public class ObjectFactory {
      */
     public StoreDocumentResponse createStoreDocumentResponse() {
         return new StoreDocumentResponse();
+    }
+
+    /**
+     * Create an instance of {@link SendDirectoryInformationToParentResponse }
+     * 
+     */
+    public SendDirectoryInformationToParentResponse createSendDirectoryInformationToParentResponse() {
+        return new SendDirectoryInformationToParentResponse();
     }
 
 }

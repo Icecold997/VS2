@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="found" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
+ *         &lt;element name="success" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -35,27 +35,27 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "found"
+    "success"
 })
-@XmlRootElement(name = "searchDocumentResponse")
-public class SearchDocumentResponse {
+@XmlRootElement(name = "sendDirectoryInformationToParentResponse")
+public class SendDirectoryInformationToParentResponse {
 
-    protected boolean found;
+    protected boolean success;
 
     /**
-     * Ruft den Wert der found-Eigenschaft ab.
+     * Ruft den Wert der success-Eigenschaft ab.
      * 
      */
-    public boolean isFound() {
-        return found;
+    public boolean isSuccess() {
+        return success;
     }
 
     /**
-     * Legt den Wert der found-Eigenschaft fest.
+     * Legt den Wert der success-Eigenschaft fest.
      * 
      */
-    public void setFound(boolean value) {
-        this.found = value;
+    public void setSuccess(boolean value) {
+        this.success = value;
     }
 
 }

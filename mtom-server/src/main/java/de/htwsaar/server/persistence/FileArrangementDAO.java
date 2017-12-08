@@ -3,6 +3,7 @@ package de.htwsaar.server.persistence;
 import org.springframework.data.repository.CrudRepository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -12,6 +13,7 @@ import java.util.Optional;
 public interface FileArrangementDAO extends CrudRepository<FileArrangementConfig, Integer> {
     FileArrangementConfig save(FileArrangementConfig fileArrangementConfig);
     Optional<FileArrangementConfig> findByfilename(String fileName);
+    Optional<List<FileArrangementConfig>> findAllByisDirectory(boolean isDirectory);
     void deleteByfilename(String fileName);
 
 }

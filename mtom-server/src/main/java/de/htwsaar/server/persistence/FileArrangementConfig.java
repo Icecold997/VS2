@@ -52,7 +52,7 @@ public class FileArrangementConfig extends AbstractEntity{
         isLocal = local;
     }
 
-    public String isSourceIp() {
+    public String getSourceIp() {
         return sourceIp;
     }
 

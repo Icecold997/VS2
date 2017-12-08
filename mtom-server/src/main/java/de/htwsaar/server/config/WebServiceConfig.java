@@ -2,6 +2,7 @@ package de.htwsaar.server.config;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.htwsaar.server.persistence.ServerInfo;
 import org.springframework.boot.context.embedded.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -80,5 +81,12 @@ public class WebServiceConfig extends WsConfigurationSupport {
 	public MarshallingPayloadMethodProcessor methodProcessor() {
 		return new MarshallingPayloadMethodProcessor(marshaller());
 	}
-
+	@Bean
+	public ServerInformationTransmitter serverInformationTransmitter(Jaxb2Marshaller marshaller) {
+		ServerInformationTransmitter serverInformationTransmitter = new ServerInformationTransmitter();
+		serverInformationTransmitter.setDefaultUri("http://localhost:9090/ws/documents");
+		serverInformationTransmitter.setMarshaller(marshaller);
+		serverInformationTransmitter.setUnmarshaller(marshaller);
+		return serverInformationTransmitter;
+	}
 }

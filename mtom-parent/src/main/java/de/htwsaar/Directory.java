@@ -11,22 +11,21 @@ package de.htwsaar;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java-Klasse für anonymous complex type.
+ * <p>Java-Klasse für directory complex type.
  * 
  * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
  * 
  * <pre>
- * &lt;complexType>
+ * &lt;complexType name="directory">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="currentDocumentName" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="newDocumentName" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="directoryName" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="sourceIp" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,64 +35,63 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "currentDocumentName",
-    "newDocumentName"
+@XmlType(name = "directory", propOrder = {
+    "directoryName",
+    "sourceIp"
 })
-@XmlRootElement(name = "renameDocumentRequest")
-public class RenameDocumentRequest {
+public class Directory {
 
     @XmlElement(required = true)
-    protected String currentDocumentName;
+    protected String directoryName;
     @XmlElement(required = true)
-    protected String newDocumentName;
+    protected String sourceIp;
 
     /**
-     * Ruft den Wert der currentDocumentName-Eigenschaft ab.
+     * Ruft den Wert der directoryName-Eigenschaft ab.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getCurrentDocumentName() {
-        return currentDocumentName;
+    public String getDirectoryName() {
+        return directoryName;
     }
 
     /**
-     * Legt den Wert der currentDocumentName-Eigenschaft fest.
+     * Legt den Wert der directoryName-Eigenschaft fest.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setCurrentDocumentName(String value) {
-        this.currentDocumentName = value;
+    public void setDirectoryName(String value) {
+        this.directoryName = value;
     }
 
     /**
-     * Ruft den Wert der newDocumentName-Eigenschaft ab.
+     * Ruft den Wert der sourceIp-Eigenschaft ab.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getNewDocumentName() {
-        return newDocumentName;
+    public String getSourceIp() {
+        return sourceIp;
     }
 
     /**
-     * Legt den Wert der newDocumentName-Eigenschaft fest.
+     * Legt den Wert der sourceIp-Eigenschaft fest.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setNewDocumentName(String value) {
-        this.newDocumentName = value;
+    public void setSourceIp(String value) {
+        this.sourceIp = value;
     }
 
 }
