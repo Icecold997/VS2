@@ -13,7 +13,8 @@ import java.util.Optional;
 public interface FileArrangementDAO extends CrudRepository<FileArrangementConfig, Integer> {
     FileArrangementConfig save(FileArrangementConfig fileArrangementConfig);
     Optional<FileArrangementConfig> findByfilename(String fileName);
-    Optional<List<FileArrangementConfig>> findAllByisDirectory(boolean isDirectory);
+    Optional<List<FileArrangementConfig>> findAllByisDirectoryAndIsLocal(boolean isDirectory,boolean isLocal);
+    Optional<FileArrangementConfig> findByfilenameAndIsDirectory(String fileName,boolean isDirectory);
     void deleteByfilename(String fileName);
 
 }

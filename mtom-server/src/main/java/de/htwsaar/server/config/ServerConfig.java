@@ -90,6 +90,7 @@ public class ServerConfig {
             }
         }
     }
+
   //TODO beim server start vater informationen schicken
    private void sendInformationToParent(){
        List<Directory> directorys = getAllDirectorys();
@@ -100,11 +101,10 @@ public class ServerConfig {
              transmitter.sendRequestToParent(parent.getUrl(),directorys);
            }
        }
-
-
    }
+
     private List<Directory> getAllDirectorys(){
-        Optional<List<FileArrangementConfig>> directorysInDatabase = fileArrangementDAO.findAllByisDirectory(true);
+        Optional<List<FileArrangementConfig>> directorysInDatabase = fileArrangementDAO.findAllByisDirectoryAndIsLocal(true,true);
         List<Directory> directorys = new ArrayList<Directory>();
         Directory directory;
         if(directorysInDatabase.isPresent()){

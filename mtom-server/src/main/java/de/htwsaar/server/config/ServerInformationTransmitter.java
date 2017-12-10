@@ -13,6 +13,7 @@ import java.util.List;
 public class ServerInformationTransmitter extends WebServiceGatewaySupport {
 
  //TODO testen
+
     public boolean sendRequestToParent(String targetUrl,List<Directory> directoryList){
 
         SendDirectoryInformationToParentRequest request = new SendDirectoryInformationToParentRequest();
