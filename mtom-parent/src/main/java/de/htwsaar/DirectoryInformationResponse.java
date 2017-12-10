@@ -8,6 +8,8 @@
 
 package de.htwsaar;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -25,7 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="documentName" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="fileConfig" type="{http://htwsaar.de/}fileView" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,36 +38,41 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "documentName"
+    "fileConfig"
 })
-@XmlRootElement(name = "searchDocumentRequest")
-public class SearchDocumentRequest {
+@XmlRootElement(name = "directoryInformationResponse")
+public class DirectoryInformationResponse {
 
     @XmlElement(required = true)
-    protected String documentName;
+    protected List<FileView> fileConfig;
 
     /**
-     * Ruft den Wert der documentName-Eigenschaft ab.
+     * Gets the value of the fileConfig property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getDocumentName() {
-        return documentName;
-    }
-
-    /**
-     * Legt den Wert der documentName-Eigenschaft fest.
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the fileConfig property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getFileConfig().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link FileView }
+     * 
+     * 
      */
-    public void setDocumentName(String value) {
-        this.documentName = value;
+    public List<FileView> getFileConfig() {
+        if (fileConfig == null) {
+            fileConfig = new ArrayList<FileView>();
+        }
+        return this.fileConfig;
     }
 
 }

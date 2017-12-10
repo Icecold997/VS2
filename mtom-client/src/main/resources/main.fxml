@@ -9,35 +9,17 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="200.0" prefWidth="100.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="client.gui.MainController">
   <children>
-    <MenuBar VBox.vgrow="NEVER">
-      <menus>
-        <Menu mnemonicParsing="false" text="Disconnect">
-          <items>
-            <MenuItem mnemonicParsing="false" text="New" />
-            <MenuItem mnemonicParsing="false" text="Open…" />
-            <Menu mnemonicParsing="false" text="Open Recent" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Close" />
-            <MenuItem mnemonicParsing="false" text="Save" />
-            <MenuItem mnemonicParsing="false" text="Save As…" />
-            <MenuItem mnemonicParsing="false" text="Revert" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Preferences…" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Quit" />
-          </items>
-        </Menu>
-      </menus>
-    </MenuBar>
+    
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
          <children>
-            <TableView layoutX="47.0" layoutY="48.0" prefHeight="276.0" prefWidth="546.0">
+            <TableView fx:id="table_view" layoutX="40.0" layoutY="48.0" prefHeight="276.0" prefWidth="546.0">
               <columns>
-                <TableColumn prefWidth="256.0" text="Name" />
-                  <TableColumn prefWidth="105.0" text="Typ" />
-                  <TableColumn prefWidth="184.0" text="Datum" />
+                <TableColumn fx:id="table_name" prefWidth="256.0" text="Name" />
+                  <TableColumn fx:id="table_type" prefWidth="105.0" text="Typ" />
+                  <TableColumn fx:id="table_date" prefWidth="184.0" text="Datum" />
               </columns>
             </TableView>
          </children>

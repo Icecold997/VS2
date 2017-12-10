@@ -16,5 +16,6 @@ public interface FileArrangementDAO extends CrudRepository<FileArrangementConfig
     Optional<List<FileArrangementConfig>> findAllByisDirectoryAndIsLocal(boolean isDirectory,boolean isLocal);
     Optional<FileArrangementConfig> findByfilenameAndIsDirectory(String fileName,boolean isDirectory);
     void deleteByfilename(String fileName);
+    List<FileArrangementConfig> findAll();
 
 }

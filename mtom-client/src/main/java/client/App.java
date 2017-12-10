@@ -1,26 +1,16 @@
 package client;
 
+import client.gui.Router;
 import javafx.application.Preloader;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import de.htwsaar.AbstractJavaFxApp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Lazy;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
 
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-
-import client.ws.DocumentsClient;
 
 @Configuration
 @ComponentScan
@@ -28,7 +18,7 @@ import client.ws.DocumentsClient;
 public class App  extends AbstractJavaFxApp {
 
 	@Autowired
-	Router router;
+    Router router;
 
 	@Value("${ui.client.title}")
 	private String windowClientTitle;

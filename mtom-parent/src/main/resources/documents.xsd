@@ -105,13 +105,29 @@
 		</sequence>
 	</complexType>
 
-	<complexType name="directoryInformationRequest">
-	</complexType>
+	<element name="directoryInformationRequest">
+		<complexType>
+			<sequence>
+				<element name="received" type="boolean"/>
+			</sequence>
+		</complexType>
+	</element>
 
-	<complexType name="directoryInformationResponse">
+	<element name="directoryInformationResponse">
+		<complexType>
 		<sequence>
-			<element name="directory" type="tns:directory" maxOccurs="unbounded"/>
-			<element name="fileName" type="string" maxOccurs="unbounded"/>
+			<element name="fileConfig" type="tns:fileView" maxOccurs="unbounded" />
 		</sequence>
+		</complexType>
+	</element>
+
+
+	<complexType name="fileView">
+		<sequence>
+			<element name="fileOrDirectoryName" type="string"/>
+			<element name="type" type="string"/>
+			<element name="date" type="string"/>
+		</sequence>
+
 	</complexType>
 </schema>

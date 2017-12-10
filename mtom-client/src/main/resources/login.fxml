@@ -11,7 +11,7 @@
 
 <?import javafx.scene.text.Text?>
 <BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="client.LoginController">
+            fx:controller="client.gui.LoginController">
     <center>
         <GridPane alignment="CENTER">
             <HBox GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2" >

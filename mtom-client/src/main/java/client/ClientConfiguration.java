@@ -1,8 +1,10 @@
 package client;
 
+import client.gui.LoginController;
+import client.gui.MainController;
+import client.ws.DocumentsClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Scope;
 
 /**
@@ -17,5 +19,15 @@ public class ClientConfiguration {
         return new LoginController();
     }
 
+    @Bean
+    @Scope("prototype")
+    MainController mainController() {
+            return new MainController();
+            }
 
+    @Bean
+    @Scope("prototype")
+    DocumentsClient documentsClient() {
+        return new DocumentsClient();
+    }
 }

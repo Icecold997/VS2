@@ -1,6 +1,7 @@
-package client;
+package client.gui;
 
 
+import client.App;
 import de.htwsaar.SpringFxmlLoader;
 import javafx.application.Platform;
 import javafx.scene.Parent;
@@ -52,11 +53,11 @@ public class Router {
 
 
     public Parent setSceneContent(String fxml, String stylesheet) {
-        return setSceneContent(fxml, stylesheet, 1280, 720);
+        return setSceneContent(fxml, stylesheet, 900, 900);
     }
 
     public Parent setSceneContent(String fxml) {
-        return setSceneContent(fxml, "/theme.css", 1152, 648);
+        return setSceneContent(fxml, "/theme.css", 700, 400);
     }
 
     public void showModal(String fxml, String stylesheet, int width, int height, String title) {

@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="success" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
+ *         &lt;element name="received" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -35,27 +35,27 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "success"
+    "received"
 })
-@XmlRootElement(name = "renameDocumentResponse")
-public class RenameDocumentResponse {
+@XmlRootElement(name = "directoryInformationRequest")
+public class DirectoryInformationRequest {
 
-    protected boolean success;
+    protected boolean received;
 
     /**
-     * Ruft den Wert der success-Eigenschaft ab.
+     * Ruft den Wert der received-Eigenschaft ab.
      * 
      */
-    public boolean isSuccess() {
-        return success;
+    public boolean isReceived() {
+        return received;
     }
 
     /**
-     * Legt den Wert der success-Eigenschaft fest.
+     * Legt den Wert der received-Eigenschaft fest.
      * 
      */
-    public void setSuccess(boolean value) {
-        this.success = value;
+    public void setReceived(boolean value) {
+        this.received = value;
     }
 
 }

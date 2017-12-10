@@ -64,4 +64,14 @@ public class DocumentsClient extends WebServiceGatewaySupport {
    	   return success;
 
    }
+
+	public DirectoryInformationResponse sendDirectoryInformationRequest(String url) throws IOException {
+
+		DirectoryInformationRequest request = new DirectoryInformationRequest();
+
+		DirectoryInformationResponse response = (DirectoryInformationResponse) getWebServiceTemplate()
+				.marshalSendAndReceive(request);
+
+		return response;
+	}
 }
