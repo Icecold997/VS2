@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -40,7 +41,7 @@ public class ServerConfig {
 
 
 
-    private  void createFileDirectory() {
+    private  void createFileDirectory(){
         String path = System.getProperty("user.dir") + "/";
         String dirName = "fileSystem";
 
@@ -61,7 +62,7 @@ public class ServerConfig {
 
 
     //durchsuche dir und füge alle directories und files in datenbank
-    private void checkDirecotory(File dir) {
+    private void checkDirecotory(File dir)  {
         File[] files = dir.listFiles();
 
         if(files != null){
@@ -74,6 +75,12 @@ public class ServerConfig {
                   fileArrangementConfig.setFilename(files[i].getName());
                   fileArrangementConfig.setFileLocation(fileDirectory);
                   fileArrangementConfig.setDirectory(true);
+                    try{
+                        fileArrangementConfig.setSourceIp(LocalIpAddress.getExternalIpAddress());
+                    }catch(IOException e){
+                        fileArrangementConfig.setSourceIp("localhost");
+                    }
+
                   fileArrangementConfig.setLocal(true);
                   fileArrangementDAO.save(fileArrangementConfig);
                 }else {

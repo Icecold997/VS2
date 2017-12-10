@@ -20,7 +20,8 @@ public class ServerInformationTransmitter extends WebServiceGatewaySupport {
         for(Directory directory :directoryList){
             request.getDirectory().add(directory);
         }
-        SendDirectoryInformationToParentResponse response = (SendDirectoryInformationToParentResponse) getWebServiceTemplate().marshalSendAndReceive("http://localhost:9090/ws/documents",request);
+        String finalUrl = "http://"+targetUrl+":9090/ws/documents";
+        SendDirectoryInformationToParentResponse response = (SendDirectoryInformationToParentResponse) getWebServiceTemplate().marshalSendAndReceive(finalUrl,request);
         return true;
     }
 }
