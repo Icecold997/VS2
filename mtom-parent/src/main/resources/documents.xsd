@@ -104,4 +104,14 @@
 			<element name="sourceIp" type="string"/>
 		</sequence>
 	</complexType>
+
+	<complexType name="directoryInformationRequest">
+	</complexType>
+
+	<complexType name="directoryInformationResponse">
+		<sequence>
+			<element name="directory" type="tns:directory" maxOccurs="unbounded"/>
+			<element name="fileName" type="string" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
 </schema>

@@ -105,7 +105,8 @@ public class ServerConfig {
        forwardingConfigs = forwardingDAO.findAllByisParent(true);
        if(forwardingConfigs.isPresent()){
            for (ForwardingConfig parent:forwardingConfigs.get()){
-             transmitter.sendRequestToParent(parent.getUrl(),directorys);
+               //zum testen
+               // transmitter.sendRequestToParent(parent.getUrl(),directorys);
            }
        }
    }
@@ -121,7 +122,6 @@ public class ServerConfig {
                 directory.setSourceIp(dir.getSourceIp());
                 directorys.add(directory);
             }
-
         }
       return directorys;
     }

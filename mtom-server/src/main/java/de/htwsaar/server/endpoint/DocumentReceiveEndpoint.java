@@ -49,9 +49,7 @@ public class DocumentReceiveEndpoint {
 		File outputFile = new File(serverConfig.fileDirectory+"/"+ document.getName()); //  ort an dem datei gespeichert wird
 
 		try (FileOutputStream outputStream = new FileOutputStream(outputFile); ) { // bytes aus nachricht in datei zurückschreiben
-
 			outputStream.write(demBytes);
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

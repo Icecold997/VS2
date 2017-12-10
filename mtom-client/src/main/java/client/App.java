@@ -1,5 +1,14 @@
 package client;
 
+import javafx.application.Preloader;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
+import de.htwsaar.AbstractJavaFxApp;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Lazy;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -16,9 +25,34 @@ import client.ws.DocumentsClient;
 @Configuration
 @ComponentScan
 @EnableAutoConfiguration
-public class Application {
+public class App  extends AbstractJavaFxApp {
 
-	public static void main(final String[] args) throws Exception {
+	@Autowired
+	Router router;
+
+	@Value("${ui.client.title}")
+	private String windowClientTitle;
+
+	@Override
+	public void start(Stage stage) throws Exception {
+		notifyPreloader(new Preloader.StateChangeNotification(Preloader.StateChangeNotification.Type.BEFORE_START));
+
+		router.setStage(stage);
+		router.setSceneContent("/login.fxml", "/theme.css", 500, 300);
+
+		stage.setTitle(windowClientTitle);
+		stage.setResizable(true);
+		stage.centerOnScreen();
+		stage.show();
+		stage.getIcons().add(new Image("/soap.png"));
+		router.setStage(stage);
+	}
+	public static void main(String args[]) {
+		launchApp(App.class, args);
+	}
+
+
+	/*public static void main(final String[] args) throws Exception {
 		final SpringApplication springApplication = new SpringApplication(
 				Application.class);
 		ApplicationContext ctx = springApplication.run();
@@ -77,5 +111,5 @@ public class Application {
 	private static String readLine() throws IOException {
 		return new BufferedReader(new InputStreamReader(System.in)).readLine();
 	}
-
+*/
 }

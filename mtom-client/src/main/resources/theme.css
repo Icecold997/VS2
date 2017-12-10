@@ -1,0 +1,65 @@
+.messageButton {
+	-fx-background-color:transparent;
+	-fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-image: url('/images/messageIcon2.png');
+    -fx-background-repeat: no-repeat;
+    
+}
+
+.filter{
+	-fx-background-color:transparent;
+	-fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-image: url('/images/filterIcon2.png');
+    -fx-background-repeat: no-repeat;
+    
+}
+	
+.search{
+    -fx-background-color:transparent;
+	-fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-image: url('/images/search.png');
+    -fx-background-repeat: no-repeat;
+}
+
+.standardButton {
+    -fx-background-color: darkgray;
+    -fx-pref-width: 200;
+}
+
+.header {
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+}
+.rmvFilter{
+    -fx-background-color:transparent;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-image: url('/images/deleteIcon.png');
+    -fx-background-repeat: no-repeat;
+}
+.pushBtn {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-image: url('/images/arrowUpIcon.png');
+    -fx-background-repeat: no-repeat;
+}
+
+.userBtn{
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-image: url('/images/newUserIcon.png');
+    -fx-background-repeat: no-repeat;
+}
+
+.configBtn{
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-image: url('/images/configIcon.png');
+    -fx-background-repeat: no-repeat;
+}
