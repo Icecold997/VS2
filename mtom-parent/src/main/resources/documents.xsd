@@ -53,6 +53,7 @@
 		<complexType>
 			<sequence>
 				<element name="found" type="boolean" />
+				<element name="TEST" type="string"/>
 			</sequence>
 		</complexType>
 	</element>

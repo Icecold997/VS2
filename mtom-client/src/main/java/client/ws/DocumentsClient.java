@@ -64,4 +64,13 @@ public class DocumentsClient extends WebServiceGatewaySupport {
    	   return success;
 
    }
+
+   public boolean searchDocument(String fileName) {
+   	SearchDocumentRequest searchRequest = new SearchDocumentRequest();
+   	searchRequest.setDocumentName(fileName);
+   	SearchDocumentResponse response = (SearchDocumentResponse) getWebServiceTemplate().marshalSendAndReceive(searchRequest);
+   	boolean success = response.isFound();
+   	return success;
+   }
+
 }

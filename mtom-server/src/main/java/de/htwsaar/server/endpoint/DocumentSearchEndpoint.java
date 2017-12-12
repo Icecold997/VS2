@@ -21,6 +21,8 @@ public class DocumentSearchEndpoint {
     @ResponsePayload
     public SearchDocumentResponse searchDocument(@RequestPayload SearchDocumentRequest request) throws IOException {
 
+
+
  //TODO usecase: datei in filearrangement suchen ,wen local vorhanden gib found  zurück ,wen nicht suche in kindern weiter
 
         SearchDocumentResponse response = new SearchDocumentResponse();

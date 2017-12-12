@@ -25,9 +25,9 @@ public class Application {
 		DocumentsClient documentsClient = ctx.getBean(DocumentsClient.class);
 
 		String result = null;
-
+		String fileName;
 		while(result == null){
-			System.out.println("Geben Sie eine der Zahlen ein :\n1: Neue Datei anlegen\n2:Datei umbenennen\n3:Datei löschen\n");
+			System.out.println("Geben Sie eine der Zahlen ein :\n1:Neue Datei anlegen\n2:Datei umbenennen\n3:Datei löschen\n4:Datei suchen\n");
 			String line = readLine();
 
 			switch (line){
@@ -44,9 +44,14 @@ public class Application {
 
 				case "3" :
 					System.out.println("DateiNamen der zu löschenden Datei eingeben:\n");
-					String fileName =readLine();
+					fileName =readLine();
 					documentsClient.deleteDocument(fileName);
 					break;
+
+				case "4" :
+					System.out.println("Was suchen Sie?\n");
+					fileName = readLine();
+					documentsClient.searchDocument(fileName);
 				default: break;
 			}
 
