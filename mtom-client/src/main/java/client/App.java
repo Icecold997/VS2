@@ -1,23 +1,30 @@
 package client;
 
 import client.gui.Router;
+import client.ws.DocumentsClient;
 import javafx.application.Preloader;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import de.htwsaar.AbstractJavaFxApp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 @Configuration
 @ComponentScan
 @EnableAutoConfiguration
 public class App  extends AbstractJavaFxApp {
 
-	@Autowired
+/*	@Autowired
     Router router;
 
 	@Value("${ui.client.title}")
@@ -40,11 +47,16 @@ public class App  extends AbstractJavaFxApp {
 	public static void main(String args[]) {
 		launchApp(App.class, args);
 	}
+*/
 
+	@Override
+	public void start(Stage stage) throws Exception {
 
-	/*public static void main(final String[] args) throws Exception {
+	}
+
+	public static void main(final String[] args) throws Exception {
 		final SpringApplication springApplication = new SpringApplication(
-				Application.class);
+				App.class);
 		ApplicationContext ctx = springApplication.run();
 		DocumentsClient documentsClient = ctx.getBean(DocumentsClient.class);
 
@@ -101,5 +113,5 @@ public class App  extends AbstractJavaFxApp {
 	private static String readLine() throws IOException {
 		return new BufferedReader(new InputStreamReader(System.in)).readLine();
 	}
-*/
+
 }

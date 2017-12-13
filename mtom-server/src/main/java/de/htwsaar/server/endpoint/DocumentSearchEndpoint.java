@@ -5,6 +5,8 @@ import java.io.IOException;
 
 import de.htwsaar.SearchDocumentRequest;
 import de.htwsaar.SearchDocumentResponse;
+import de.htwsaar.server.persistence.FileArrangementDAO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
@@ -14,6 +16,9 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 @Endpoint
 public class DocumentSearchEndpoint {
+
+    @Autowired
+    FileArrangementDAO fileArrangementDao;
 
     private static final String NAMESPACE_URI = "http://htwsaar.de/";
 
