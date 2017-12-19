@@ -1,21 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.GridPane?>
+<?import com.jfoenix.controls.JFXButton?>
 
 <VBox prefHeight="200.0" prefWidth="100.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="client.gui.MainController">
   <children>
-    
+
+
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+
          <children>
-            <TableView fx:id="table_view" layoutX="40.0" layoutY="48.0" prefHeight="276.0" prefWidth="546.0">
+             <Label fx:id="downloadDirectoryLabelRawText" text="Download Verzeichnis: " minWidth="100"/>
+             <Label fx:id="downloadDirectoryLabelDynamicText" text="" minWidth="100"/>
+            <TableView fx:id="table_view" layoutX="40.0" layoutY="48.0" prefHeight="276.0" prefWidth="546.0" >
               <columns>
                 <TableColumn fx:id="table_name" prefWidth="256.0" text="Name" />
                   <TableColumn fx:id="table_type" prefWidth="105.0" text="Typ" />
@@ -24,5 +29,12 @@
             </TableView>
          </children>
     </AnchorPane>
+      <GridPane alignment="BOTTOM_CENTER">
+          <HBox GridPane.rowIndex="4" GridPane.columnIndex="1" alignment="CENTER" spacing="10">
+              <padding><Insets top="30"/></padding>
+              <JFXButton fx:id="chooseDownloadDirectoryButton" text="Download Directory einstellen" styleClass="standardButton" onAction="#chanceDownloadDirectory"/>
+              <JFXButton fx:id="uploadFileButton" text="Datei hochladen" styleClass="standardButton" onAction="#uploadChoosenFile"/>
+          </HBox>
+      </GridPane>
   </children>
 </VBox>

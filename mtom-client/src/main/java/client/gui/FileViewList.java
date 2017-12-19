@@ -36,6 +36,7 @@ public class FileViewList {
             }
         }
     }
+
     public void setList(List<FileView> fileViews){
         this.fileViewList.addAll(fileViews);
     }

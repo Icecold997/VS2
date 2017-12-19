@@ -3,10 +3,12 @@ package client.gui;
 
 import client.App;
 import de.htwsaar.SpringFxmlLoader;
-import javafx.application.Platform;
+import java.io.File;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Modality;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +52,14 @@ public class Router {
         return page;
     }
 
-
+    public String startDirectoryChooser(){
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        return directoryChooser.showDialog(stage).toString();
+    }
+    public File startFileChooser(){
+        FileChooser fileChooser = new FileChooser();
+        return fileChooser.showOpenDialog(stage);
+    }
 
     public Parent setSceneContent(String fxml, String stylesheet) {
         return setSceneContent(fxml, stylesheet, 900, 900);

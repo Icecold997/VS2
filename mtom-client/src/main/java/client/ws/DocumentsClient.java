@@ -21,24 +21,23 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 	 * @return
 	 * @throws IOException
      */
-	public boolean storeDocument(String pathToFile) throws IOException {
+	public FileView storeDocument(String pathToFile) throws IOException {
 		Document document = new Document();
 		Path inputPath  = new File(pathToFile).toPath();
 		byte[] array = Files.readAllBytes(inputPath);
 		document.setContent(array);
 		document.setName(inputPath.getFileName().toString());
-		document.setSourceUri("");  //eigene ip an der stelle dynamisch ein
 		StoreDocumentRequest request = new StoreDocumentRequest();
 		request.setDocument(document);
 
 
 		StoreDocumentResponse response = (StoreDocumentResponse) getWebServiceTemplate()
-				.marshalSendAndReceive(request);
-		boolean success = response.isSuccess();
-		if(success){
+				.marshalSendAndReceive("http://localhost:9090/ws/documents",request);
+
+		if(response.isSuccess()){
 			System.out.println("Datei erfolgreich versendet");
 		}
-		return success;
+		return response.getFileInformation();
 	}
 
    public boolean renameDocument(String oldFileName,String newFileName){
@@ -66,12 +65,17 @@ public class DocumentsClient extends WebServiceGatewaySupport {
    }
 
 	public DirectoryInformationResponse sendDirectoryInformationRequest(String url) throws IOException {
-
 		DirectoryInformationRequest request = new DirectoryInformationRequest();
-
 		DirectoryInformationResponse response = (DirectoryInformationResponse) getWebServiceTemplate()
 				.marshalSendAndReceive(request);
-
 		return response;
 	}
+
+	public Document downloadFileFromServer(String fileName,String url){
+	    DownloadDocumentRequest request = new DownloadDocumentRequest();
+        request.setFileName(fileName);
+        DownloadDocumentResponse response = (DownloadDocumentResponse) getWebServiceTemplate()
+                .marshalSendAndReceive("http://localhost:9090/ws/documents",request);
+         return response.getDocument();
+    }
 }

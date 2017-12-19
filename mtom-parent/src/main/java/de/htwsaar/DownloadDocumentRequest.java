@@ -8,8 +8,6 @@
 
 package de.htwsaar;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -27,7 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="directory" type="{http://htwsaar.de/}directory" maxOccurs="unbounded"/>
+ *         &lt;element name="fileName" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -38,41 +36,36 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "directory"
+    "fileName"
 })
-@XmlRootElement(name = "sendDirectoryInformationToParentRequest")
-public class SendDirectoryInformationToParentRequest {
+@XmlRootElement(name = "downloadDocumentRequest")
+public class DownloadDocumentRequest {
 
     @XmlElement(required = true)
-    protected List<Directory> directory;
+    protected String fileName;
 
     /**
-     * Gets the value of the directory property.
+     * Ruft den Wert der fileName-Eigenschaft ab.
      * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the directory property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getDirectory().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Directory }
-     * 
-     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
-    public List<Directory> getDirectory() {
-        if (directory == null) {
-            directory = new ArrayList<Directory>();
-        }
-        return this.directory;
+    public String getFileName() {
+        return fileName;
+    }
+
+    /**
+     * Legt den Wert der fileName-Eigenschaft fest.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setFileName(String value) {
+        this.fileName = value;
     }
 
 }

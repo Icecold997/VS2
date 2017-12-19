@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.7 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2017.12.10 um 11:07:25 PM CET 
+// Generiert: 2017.12.19 um 06:31:33 AM CET 
 //
 
 
@@ -37,14 +37,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link RenameDocumentResponse }
-     * 
-     */
-    public RenameDocumentResponse createRenameDocumentResponse() {
-        return new RenameDocumentResponse();
-    }
-
-    /**
      * Create an instance of {@link DirectoryInformationResponse }
      * 
      */
@@ -74,14 +66,6 @@ public class ObjectFactory {
      */
     public RenameDocumentRequest createRenameDocumentRequest() {
         return new RenameDocumentRequest();
-    }
-
-    /**
-     * Create an instance of {@link SearchDocumentResponse }
-     * 
-     */
-    public SearchDocumentResponse createSearchDocumentResponse() {
-        return new SearchDocumentResponse();
     }
 
     /**
@@ -125,22 +109,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link DeleteDocumentResponse }
-     * 
-     */
-    public DeleteDocumentResponse createDeleteDocumentResponse() {
-        return new DeleteDocumentResponse();
-    }
-
-    /**
-     * Create an instance of {@link DirectoryInformationRequest }
-     * 
-     */
-    public DirectoryInformationRequest createDirectoryInformationRequest() {
-        return new DirectoryInformationRequest();
-    }
-
-    /**
      * Create an instance of {@link StoreDocumentResponse }
      * 
      */
@@ -154,6 +122,54 @@ public class ObjectFactory {
      */
     public SendDirectoryInformationToParentResponse createSendDirectoryInformationToParentResponse() {
         return new SendDirectoryInformationToParentResponse();
+    }
+
+    /**
+     * Create an instance of {@link RenameDocumentResponse }
+     * 
+     */
+    public RenameDocumentResponse createRenameDocumentResponse() {
+        return new RenameDocumentResponse();
+    }
+
+    /**
+     * Create an instance of {@link DownloadDocumentResponse }
+     * 
+     */
+    public DownloadDocumentResponse createDownloadDocumentResponse() {
+        return new DownloadDocumentResponse();
+    }
+
+    /**
+     * Create an instance of {@link DownloadDocumentRequest }
+     * 
+     */
+    public DownloadDocumentRequest createDownloadDocumentRequest() {
+        return new DownloadDocumentRequest();
+    }
+
+    /**
+     * Create an instance of {@link SearchDocumentResponse }
+     * 
+     */
+    public SearchDocumentResponse createSearchDocumentResponse() {
+        return new SearchDocumentResponse();
+    }
+
+    /**
+     * Create an instance of {@link DeleteDocumentResponse }
+     * 
+     */
+    public DeleteDocumentResponse createDeleteDocumentResponse() {
+        return new DeleteDocumentResponse();
+    }
+
+    /**
+     * Create an instance of {@link DirectoryInformationRequest }
+     * 
+     */
+    public DirectoryInformationRequest createDirectoryInformationRequest() {
+        return new DirectoryInformationRequest();
     }
 
 }

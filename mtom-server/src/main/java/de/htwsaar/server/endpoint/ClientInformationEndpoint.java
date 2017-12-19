@@ -37,11 +37,22 @@ public class ClientInformationEndpoint {
         fileList = fileArrangementDAO.findAll();
         for(FileArrangementConfig fileConfig:fileList){
             FileView fileView = new FileView();
-            fileView.setType("");//TODO type in datenbank einfügen
+            if(fileConfig.isDirectory()){
+                fileView.setType("Directory");
+            }else{
+                fileView.setType("File");
+            }
+            if(fileConfig.isLocal()){
+                fileView.setSourceIp("localhost"); //TODO lokale ip adresse eingeben
+            }else{
+                fileView.setSourceIp(fileConfig.getSourceIp());
+            }
             fileView.setDate(fileConfig.getUpdated_at().toString());
             fileView.setFileOrDirectoryName(fileConfig.getFilename());
             respone.getFileConfig().add(fileView);
         }
         return respone;
     }
+
+
 }

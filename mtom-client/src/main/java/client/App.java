@@ -24,7 +24,7 @@ import java.io.InputStreamReader;
 @EnableAutoConfiguration
 public class App  extends AbstractJavaFxApp {
 
-/*	@Autowired
+	@Autowired
     Router router;
 
 	@Value("${ui.client.title}")
@@ -47,9 +47,9 @@ public class App  extends AbstractJavaFxApp {
 	public static void main(String args[]) {
 		launchApp(App.class, args);
 	}
-*/
 
-	@Override
+
+/*	@Override
 	public void start(Stage stage) throws Exception {
 
 	}
@@ -85,8 +85,6 @@ public class App  extends AbstractJavaFxApp {
 					break;
 				default: break;
 			}
-
-
 		}
 
 
@@ -112,6 +110,6 @@ public class App  extends AbstractJavaFxApp {
 
 	private static String readLine() throws IOException {
 		return new BufferedReader(new InputStreamReader(System.in)).readLine();
-	}
+	}*/
 
 }

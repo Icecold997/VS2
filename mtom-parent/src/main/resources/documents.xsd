@@ -18,11 +18,26 @@
 		<complexType>
 			<sequence>
 				<element name="success" type="boolean" />
+				<element name="fileInformation" type="tns:fileView"/>
 			</sequence>
 		</complexType>
 	</element>
 
+   <element name="downloadDocumentRequest">
+	   <complexType>
+		   <sequence>
+			   <element name="fileName" type="string"/>
+		   </sequence>
+	   </complexType>
+   </element>
 
+	<element name="downloadDocumentResponse">
+		<complexType>
+			<sequence>
+				<element name="document" type="tns:document"/>
+			</sequence>
+		</complexType>
+	</element>
 
 	<element name="renameDocumentRequest">
 		<complexType>
@@ -127,7 +142,7 @@
 			<element name="fileOrDirectoryName" type="string"/>
 			<element name="type" type="string"/>
 			<element name="date" type="string"/>
+			<element name="sourceIp" type="string"/>
 		</sequence>
-
 	</complexType>
 </schema>
