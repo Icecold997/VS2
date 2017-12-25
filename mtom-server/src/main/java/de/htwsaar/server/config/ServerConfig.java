@@ -7,6 +7,7 @@ import de.htwsaar.server.persistence.ForwardingConfig;
 import de.htwsaar.server.persistence.ForwardingDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
@@ -32,10 +33,15 @@ public class ServerConfig {
     @Autowired
     ServerInformationTransmitter transmitter;
 
+    @Value("${server.rootDir}")
+    private String rootDirectory;
+
+    @Value("${server.address}")
+    private String serverIp;
+
     public  String fileDirectory;
     public  void startServer(){
         createFileDirectory();
-        sendInformationToParent();
 
     }
 
@@ -43,16 +49,17 @@ public class ServerConfig {
 
     private  void createFileDirectory(){
         String path = System.getProperty("user.dir") + "/";
-        String dirName = "fileSystem";
 
-        File dir = new File(path + dirName);
+
+        File dir = new File(path + rootDirectory);
 
         if (dir.exists()) {
-            fileDirectory = path + dirName;
+            fileDirectory = path + rootDirectory;
             System.out.println("Directory vorhanden");
             checkDirecotory(dir);
+            sendInformationToParent(dir);
         } else if(dir.mkdir()) {
-            fileDirectory = path + dirName;
+            fileDirectory = path + rootDirectory;
             System.out.println("Directory erstellt");
         }
         else{
@@ -98,15 +105,17 @@ public class ServerConfig {
         }
     }
 
-  //TODO beim server start vater informationen schicken
-   private void sendInformationToParent(){
-       List<Directory> directorys = getAllDirectorys();
+  //TODO beim server start vater informationen schicken (
+   private void sendInformationToParent(File dir){
        Optional<List<ForwardingConfig>> forwardingConfigs;
        forwardingConfigs = forwardingDAO.findAllByisParent(true);
+       Directory directory = new Directory();
+       directory.setSourceIp(serverIp);
+       directory.setDirectoryName(dir.getName());
        if(forwardingConfigs.isPresent()){
            for (ForwardingConfig parent:forwardingConfigs.get()){
                //zum testen
-               // transmitter.sendRequestToParent(parent.getUrl(),directorys);
+               // transmitter.sendRequestToParent(parent.getUrl(),directory);
            }
        }
    }
