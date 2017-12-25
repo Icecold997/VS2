@@ -51,6 +51,7 @@ public class ClientInformationEndpoint {
             fileView.setFileOrDirectoryName(fileConfig.getFilename());
             respone.getFileConfig().add(fileView);
         }
+        respone.setSuccess(true);
         return respone;
     }
 

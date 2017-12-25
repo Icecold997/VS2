@@ -132,6 +132,7 @@
 		<complexType>
 		<sequence>
 			<element name="fileConfig" type="tns:fileView" maxOccurs="unbounded" />
+			<element name ="success" type="boolean" />
 		</sequence>
 		</complexType>
 	</element>

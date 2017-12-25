@@ -42,8 +42,10 @@ public class LoginController implements Initializable {
     protected void login() {
         try {
            DirectoryInformationResponse respone = documentsClient.sendDirectoryInformationRequest(hostInput.toString().trim());
-           if(!respone.getFileConfig().isEmpty()){
-               externFileViewList.setList(respone.getFileConfig());
+           if(respone.isSuccess()){
+               if(!respone.getFileConfig().isEmpty()) {
+                   externFileViewList.setList(respone.getFileConfig());
+               }
                router.getStage().setResizable(false);
                router.setSceneContent("/main.fxml");
            }

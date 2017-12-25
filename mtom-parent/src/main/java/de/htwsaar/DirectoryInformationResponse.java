@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.7 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2017.12.19 um 06:31:33 AM CET 
+// Generiert: 2017.12.25 um 05:24:41 PM CET 
 //
 
 
@@ -28,6 +28,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="fileConfig" type="{http://htwsaar.de/}fileView" maxOccurs="unbounded"/>
+ *         &lt;element name="success" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -38,13 +39,15 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "fileConfig"
+    "fileConfig",
+    "success"
 })
 @XmlRootElement(name = "directoryInformationResponse")
 public class DirectoryInformationResponse {
 
     @XmlElement(required = true)
     protected List<FileView> fileConfig;
+    protected boolean success;
 
     /**
      * Gets the value of the fileConfig property.
@@ -73,6 +76,22 @@ public class DirectoryInformationResponse {
             fileConfig = new ArrayList<FileView>();
         }
         return this.fileConfig;
+    }
+
+    /**
+     * Ruft den Wert der success-Eigenschaft ab.
+     * 
+     */
+    public boolean isSuccess() {
+        return success;
+    }
+
+    /**
+     * Legt den Wert der success-Eigenschaft fest.
+     * 
+     */
+    public void setSuccess(boolean value) {
+        this.success = value;
     }
 
 }
