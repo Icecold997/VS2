@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 
+import de.htwsaar.FileView;
 import de.htwsaar.RenameDocumentRequest;
 import de.htwsaar.RenameDocumentResponse;
 import de.htwsaar.server.config.ServerConfig;
@@ -34,18 +35,28 @@ public class DocumentRenameEndpoint {
     public RenameDocumentResponse renameDocument(@RequestPayload RenameDocumentRequest request) throws IOException {
 
        Optional<FileArrangementConfig> fileArrangementConfig =  fileArrangementDao.findByfilename(request.getCurrentDocumentName());
-
+       RenameDocumentResponse response = new RenameDocumentResponse();
         if(fileArrangementConfig.isPresent()){
             File oldFile = new File(fileArrangementConfig.get().getFileLocation()+"/"+fileArrangementConfig.get().getFilename());
             File newFile = new File(fileArrangementConfig.get().getFileLocation()+"/"+request.getNewDocumentName());
             if(oldFile.renameTo(newFile)){
                 System.out.println("File name changed succesful");
+                FileView fileView = new FileView();
+                fileView.setFileOrDirectoryName(request.getNewDocumentName());
+                fileView.setDate(fileArrangementConfig.get().getUpdated_at().toString());
+                if(fileArrangementConfig.get().isDirectory()){
+                    fileView.setType("Directory");
+                }else{
+                    fileView.setType("File");
+                }
+                response.setNewFile(fileView);
             }
             fileArrangementConfig.get().setFilename(request.getNewDocumentName());
             fileArrangementDao.save(fileArrangementConfig.get());
        }
 
-        RenameDocumentResponse response = new RenameDocumentResponse();
+
+
         response.setSuccess(true);
         return response;
     }

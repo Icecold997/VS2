@@ -34,6 +34,7 @@
               <padding><Insets top="30"/></padding>
               <JFXButton fx:id="chooseDownloadDirectoryButton" text="Download Directory einstellen" styleClass="standardButton" onAction="#chanceDownloadDirectory"/>
               <JFXButton fx:id="uploadFileButton" text="Datei hochladen" styleClass="standardButton" onAction="#uploadChoosenFile"/>
+              <JFXButton fx:id="searchFileButton" text="Datei suchen"    styleClass="standardButton" onAction="#searchFile"/>
           </HBox>
       </GridPane>
   </children>

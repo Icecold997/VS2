@@ -12,7 +12,7 @@ import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 
 public class DocumentsClient extends WebServiceGatewaySupport {
 
-
+    public String currentServerUrl;
 	public DocumentsClient() {}
 
 	/**
@@ -32,7 +32,7 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 
 
 		StoreDocumentResponse response = (StoreDocumentResponse) getWebServiceTemplate()
-				.marshalSendAndReceive("http://localhost:9090/ws/documents",request);
+				.marshalSendAndReceive(currentServerUrl,request);
 
 		if(response.isSuccess()){
 			System.out.println("Datei erfolgreich versendet");
@@ -40,22 +40,23 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 		return response.getFileInformation();
 	}
 
-   public boolean renameDocument(String oldFileName,String newFileName){
+   public FileView renameDocument(String oldFileName,String newFileName){
 	   RenameDocumentRequest request = new RenameDocumentRequest();
 	   request.setCurrentDocumentName(oldFileName);
 	   request.setNewDocumentName(newFileName);
-	   RenameDocumentResponse response =(RenameDocumentResponse) getWebServiceTemplate().marshalSendAndReceive(request);
+	   RenameDocumentResponse response =(RenameDocumentResponse) getWebServiceTemplate().marshalSendAndReceive(currentServerUrl,request);
 	   boolean success = response.isSuccess();
 	   if(success){
 	   	System.out.println("Datei erfolgreich umbenannt");
 	   }
-	   return success;
+
+	   return response.getNewFile();
    }
 
    public boolean deleteDocument(String fileName){
    	  DeleteDocumentRequest request = new DeleteDocumentRequest();
 	   request.setDocumentName(fileName);
-	   DeleteDocumentResponse response = (DeleteDocumentResponse) getWebServiceTemplate().marshalSendAndReceive(request);
+	   DeleteDocumentResponse response = (DeleteDocumentResponse) getWebServiceTemplate().marshalSendAndReceive(currentServerUrl,request);
 	   boolean success = response.isSuccess();
 	   if(success){
 	   	System.out.println("Datei erfolgreich gelöscht");
@@ -67,7 +68,7 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 	public DirectoryInformationResponse sendDirectoryInformationRequest(String url) throws IOException {
 		DirectoryInformationRequest request = new DirectoryInformationRequest();
 		DirectoryInformationResponse response = (DirectoryInformationResponse) getWebServiceTemplate()
-				.marshalSendAndReceive(request);
+				.marshalSendAndReceive(url,request);
 		return response;
 	}
 
@@ -75,7 +76,7 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 	    DownloadDocumentRequest request = new DownloadDocumentRequest();
         request.setFileName(fileName);
         DownloadDocumentResponse response = (DownloadDocumentResponse) getWebServiceTemplate()
-                .marshalSendAndReceive("http://localhost:9090/ws/documents",request);
+                .marshalSendAndReceive(currentServerUrl,request);
          return response.getDocument();
     }
 }

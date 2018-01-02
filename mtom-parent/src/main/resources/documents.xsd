@@ -52,6 +52,7 @@
 		<complexType>
 			<sequence>
 				<element name="success" type="boolean" />
+				<element name="newFile" type="tns:fileView"></element>
 			</sequence>
 		</complexType>
 	</element>
@@ -91,7 +92,7 @@
     <element name="sendDirectoryInformationToParentRequest">
 		<complexType>
 			<sequence>
-				<element name="directory" type="tns:directory" maxOccurs="unbounded"/>
+				<element name="directory" type="tns:directory"/>
 			</sequence>
 		</complexType>
 	</element>

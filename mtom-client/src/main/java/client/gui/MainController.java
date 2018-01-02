@@ -1,6 +1,7 @@
 package client.gui;
 
 import client.ws.DocumentsClient;
+import de.htwsaar.DirectoryInformationResponse;
 import de.htwsaar.FileView;
 import de.htwsaar.Document;
 
@@ -11,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.Callback;
 import org.apache.derby.impl.tools.sysinfo.Main;
 import org.slf4j.Logger;
@@ -73,6 +75,15 @@ public class MainController implements Initializable {
        table_date.setCellValueFactory(new PropertyValueFactory<FileView, String>("date"));
        table_type.setCellValueFactory(new PropertyValueFactory<FileView, String>("type"));
 
+       table_view.setEditable(true);
+
+       table_name.setCellFactory(TextFieldTableCell.<FileView>forTableColumn());
+       table_name.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<FileView, String>>() {
+           @Override
+           public void handle(TableColumn.CellEditEvent<FileView, String> event) {
+               renameDocument(event.getNewValue(),event.getOldValue(),event.getRowValue());
+           }
+       });
        table_view.setItems(fileViewList.getFileViewList());
        table_view.setRowFactory(
                new Callback<TableView<FileView>, TableRow<FileView>>() {
@@ -80,14 +91,7 @@ public class MainController implements Initializable {
                    public TableRow<FileView> call(final TableView<FileView> tableView) {
                        final TableRow<FileView> row = new TableRow<>();
                        final ContextMenu rowMenu = new ContextMenu();
-                       MenuItem editItem = new MenuItem("Umbennen");
-                       editItem.setOnAction(new EventHandler<ActionEvent>() {
 
-                           @Override
-                           public void handle(ActionEvent event) {
-                               renameDocument(row.getItem());
-                           }
-                       });
                        MenuItem removeItem = new MenuItem("Löschen");
                        removeItem.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -96,7 +100,7 @@ public class MainController implements Initializable {
                                deleteDocument(row.getItem());
                            }
                        });
-                       rowMenu.getItems().addAll(editItem, removeItem);
+                       rowMenu.getItems().addAll(removeItem);
 
 // only display context menu for non-null items:
 
@@ -109,9 +113,12 @@ public class MainController implements Initializable {
 
                });
     }
-    private void renameDocument(FileView fileView){
-        //documentsClient.renameDocument()
-        System.out.println("testclick");
+    private void renameDocument(String newName,String oldName,FileView fileView){
+       FileView newFileView = documentsClient.renameDocument(oldName,newName);
+       if(newFileView != null){
+            table_view.getItems().remove(fileView);
+            addItem(newFileView);
+       }
     }
 
     private void deleteDocument(FileView fileView){
@@ -132,15 +139,21 @@ public class MainController implements Initializable {
 
         }
     }
+
+    @FXML
+    private void searchFile(){
+
+    }
+
    public void addItem(FileView fileView){
        fileViewList.addFileView(fileView);
        table_view.setItems(fileViewList.getFileViewList());
    }
 
     private void handleDoubleClickOnTableItem(FileView tableItem){
-
+        try{
         if(tableItem.getType().equals("File")){
-            try{
+
                 Document document = documentsClient.downloadFileFromServer(tableItem.getFileOrDirectoryName(),tableItem.getSourceIp());
                 byte[] demBytes = document.getContent();
                 File outputFile = new File(downloadDirectoryLabelDynamicText.getText() + "/" + document.getName());
@@ -149,9 +162,23 @@ public class MainController implements Initializable {
                 outputStream.close();
                 System.out.println("Datei erfolgreich gedownloaded");
 
-           }catch (Exception e){
-               e.printStackTrace();
-           }
+
+        }else if(tableItem.getType().equals("Directory")){
+            DirectoryInformationResponse respone = documentsClient.sendDirectoryInformationRequest("http://"+tableItem.getSourceIp()+":9090/ws/documents");
+            if(respone.isSuccess()) {
+                if(!respone.getFileConfig().isEmpty()) {
+                    table_view.getItems().clear();
+                    fileViewList.getFileViewList().clear();
+                    fileViewList.setList(respone.getFileConfig());
+                    table_view.setItems(fileViewList.getFileViewList());
+                    documentsClient.currentServerUrl = "http://"+tableItem.getSourceIp()+":9090/ws/documents" ;
+
+                }
+            }
+
+         }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
     @FXML

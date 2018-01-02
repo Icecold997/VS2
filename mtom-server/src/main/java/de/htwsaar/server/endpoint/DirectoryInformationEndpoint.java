@@ -36,19 +36,21 @@ public class DirectoryInformationEndpoint {
     public SendDirectoryInformationToParentResponse getInfo(@RequestPayload SendDirectoryInformationToParentRequest request) throws IOException {
 
         //TODO informationen vom kind in datenbank aufnehmen
-        List<Directory> directories = request.getDirectory();
-        for(Directory d:directories){
-            Optional<FileArrangementConfig> fileArrangementConfig = fileArrangementDAO.findByfilenameAndIsDirectory(d.getDirectoryName(),true);
+        Directory directory = request.getDirectory();
+
+            Optional<FileArrangementConfig> fileArrangementConfig = fileArrangementDAO.findByfilenameAndIsDirectory(directory.getDirectoryName(),true);
             if(fileArrangementConfig.isPresent()){
                 //verzeichnis schon vorhanden
             }else{
                 FileArrangementConfig fileArrangementConfig1 = new FileArrangementConfig();
-                fileArrangementConfig1.setSourceIp(d.getSourceIp());
+                fileArrangementConfig1.setSourceIp(directory.getSourceIp());
                 fileArrangementConfig1.setLocal(false);
-                fileArrangementConfig1.setFilename(d.getDirectoryName());
+                fileArrangementConfig1.setDirectory(true);
+                fileArrangementConfig1.setFilename(directory.getDirectoryName());
                 fileArrangementConfig1.setFileLocation(serverConfig.fileDirectory);
+                fileArrangementDAO.save(fileArrangementConfig1);
             }
-        }
+
         SendDirectoryInformationToParentResponse response = new SendDirectoryInformationToParentResponse();
         return  response;
     }

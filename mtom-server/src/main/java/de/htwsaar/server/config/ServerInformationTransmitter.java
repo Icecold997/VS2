@@ -14,12 +14,10 @@ public class ServerInformationTransmitter extends WebServiceGatewaySupport {
 
  //TODO testen
 
-    public boolean sendRequestToParent(String targetUrl,List<Directory> directoryList){
+    public boolean sendRequestToParent(String targetUrl,Directory directory){
 
         SendDirectoryInformationToParentRequest request = new SendDirectoryInformationToParentRequest();
-        for(Directory directory :directoryList){
-            request.getDirectory().add(directory);
-        }
+        request.setDirectory(directory);
         String finalUrl = "http://"+targetUrl+":9090/ws/documents";
         SendDirectoryInformationToParentResponse response = (SendDirectoryInformationToParentResponse) getWebServiceTemplate().marshalSendAndReceive(finalUrl,request);
         return true;
