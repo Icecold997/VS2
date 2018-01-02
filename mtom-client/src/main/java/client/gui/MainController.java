@@ -1,6 +1,7 @@
 package client.gui;
 
 import client.ws.DocumentsClient;
+import com.jfoenix.controls.JFXTextField;
 import de.htwsaar.DirectoryInformationResponse;
 import de.htwsaar.FileView;
 import de.htwsaar.Document;
@@ -46,6 +47,9 @@ public class MainController implements Initializable {
 
     @Autowired
     FileViewList fileViewList;
+
+    @FXML
+    private JFXTextField searchInput;
 
     @FXML
     TableView<FileView> table_view;
@@ -154,7 +158,7 @@ public class MainController implements Initializable {
         try{
         if(tableItem.getType().equals("File")){
 
-                Document document = documentsClient.downloadFileFromServer(tableItem.getFileOrDirectoryName(),tableItem.getSourceIp());
+                Document document = documentsClient.downloadFileFromServer(tableItem.getFileOrDirectoryName());
                 byte[] demBytes = document.getContent();
                 File outputFile = new File(downloadDirectoryLabelDynamicText.getText() + "/" + document.getName());
                 FileOutputStream outputStream = new FileOutputStream(outputFile);
@@ -198,6 +202,11 @@ public class MainController implements Initializable {
 
             }
         }
+    }
+
+    @FXML
+    private void search(){
+        System.out.println(documentsClient.searchFile(searchInput.getText()));
     }
 
     @FXML

@@ -1,8 +1,6 @@
 package de.htwsaar.server.config;
 
-import de.htwsaar.Directory;
-import de.htwsaar.SendDirectoryInformationToParentRequest;
-import de.htwsaar.SendDirectoryInformationToParentResponse;
+import de.htwsaar.*;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 
 import java.util.List;
@@ -22,5 +20,13 @@ public class ServerInformationTransmitter extends WebServiceGatewaySupport {
         String finalUrl = "http://"+targetUrl+":9090/ws/documents";
         SendDirectoryInformationToParentResponse response = (SendDirectoryInformationToParentResponse) getWebServiceTemplate().marshalSendAndReceive(finalUrl,request);
         return true;
+    }
+
+    public boolean sendSearchRequestToChild(String targetUrl,String fileName){
+        SearchDocumentRequest request = new SearchDocumentRequest();
+        request.setDocumentName(fileName);
+        String finalUrl = "http://"+targetUrl+":9090/ws/documents";
+        SearchDocumentResponse response=(SearchDocumentResponse) getWebServiceTemplate().marshalSendAndReceive(targetUrl,request);
+        return response.isFound();
     }
 }

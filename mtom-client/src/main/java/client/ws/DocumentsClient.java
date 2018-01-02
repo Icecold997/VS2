@@ -75,11 +75,18 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 		return response;
 	}
 
-	public Document downloadFileFromServer(String fileName,String url){
+	public Document downloadFileFromServer(String fileName){
 	    DownloadDocumentRequest request = new DownloadDocumentRequest();
         request.setFileName(fileName);
         DownloadDocumentResponse response = (DownloadDocumentResponse) getWebServiceTemplate()
                 .marshalSendAndReceive(urlList.getUrl(),request);
          return response.getDocument();
     }
+
+    public boolean searchFile(String fileName){
+		SearchDocumentRequest request = new SearchDocumentRequest();
+		request.setDocumentName(fileName);
+		SearchDocumentResponse response =(SearchDocumentResponse) getWebServiceTemplate().marshalSendAndReceive(urlList.getUrl(),request);
+		return response.isFound();
+	}
 }

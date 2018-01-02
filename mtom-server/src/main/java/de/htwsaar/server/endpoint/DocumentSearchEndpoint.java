@@ -1,11 +1,17 @@
 package de.htwsaar.server.endpoint;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 
 
 import de.htwsaar.SearchDocumentRequest;
 import de.htwsaar.SearchDocumentResponse;
+import de.htwsaar.server.config.ServerInformationTransmitter;
+import de.htwsaar.server.persistence.FileArrangementConfig;
 import de.htwsaar.server.persistence.FileArrangementDAO;
+import de.htwsaar.server.persistence.ForwardingConfig;
+import de.htwsaar.server.persistence.ForwardingDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -18,7 +24,12 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 public class DocumentSearchEndpoint {
 
     @Autowired
+    ServerInformationTransmitter transmitter;
+
+    @Autowired
     FileArrangementDAO fileArrangementDao;
+    @Autowired
+    ForwardingDAO forwardingDAO;
 
     private static final String NAMESPACE_URI = "http://htwsaar.de/";
 
@@ -28,9 +39,24 @@ public class DocumentSearchEndpoint {
 
  //TODO usecase: datei in filearrangement suchen ,wen local vorhanden gib found  zurück ,wen nicht suche in kindern weiter
 
+        Optional<FileArrangementConfig> files = fileArrangementDao.findByfilename(request.getDocumentName());
         SearchDocumentResponse response = new SearchDocumentResponse();
-        response.setFound(true);
-        return response;
+
+        if(files.isPresent()){
+            response.setFound(true);
+            return response;
+        }else{
+            Optional<List<ForwardingConfig>> childs = forwardingDAO.findAllByisParent(false);
+            if(childs.isPresent()){
+                for (ForwardingConfig f: childs.get()) {
+                   response.setFound(transmitter.sendSearchRequestToChild(f.getUrl(),request.getDocumentName()));
+
+                }
+            }
+        }
+
+
+       return  response;
     }
 
 }
