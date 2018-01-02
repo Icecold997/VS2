@@ -93,6 +93,7 @@
 		<complexType>
 			<sequence>
 				<element name="directory" type="tns:directory"/>
+				<element name="ip" type="string"/>
 			</sequence>
 		</complexType>
 	</element>

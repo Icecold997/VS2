@@ -114,7 +114,7 @@ public class ServerConfig {
        directory.setDirectoryName(dir.getName());
        if(forwardingConfigs.isPresent()){
            for (ForwardingConfig parent:forwardingConfigs.get()){
-                transmitter.sendRequestToParent(parent.getUrl(),directory);
+                transmitter.sendRequestToParent(parent.getUrl(),directory,serverIp);
            }
        }
    }

@@ -44,12 +44,12 @@ public class LoginController implements Initializable {
     protected void login() {
         try {
             //TODO hostinput als url verwenden
-           DirectoryInformationResponse respone = documentsClient.sendDirectoryInformationRequest("http://127.0.0.1:9090/ws/documents");
+           DirectoryInformationResponse respone = documentsClient.sendDirectoryInformationRequest("http://192.168.0.213:9090/ws/documents");
            if(respone.isSuccess()){
                if(!respone.getFileConfig().isEmpty()) {
                    externFileViewList.setList(respone.getFileConfig());
                }
-               documentsClient.urlList.addUrl("http://127.0.0.1:9090/ws/documents");
+               documentsClient.urlList.addUrl("http://192.168.0.213:9090/ws/documents");
                router.getStage().setResizable(false);
                router.setSceneContent("/main.fxml");
            }
