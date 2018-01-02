@@ -171,7 +171,7 @@ public class MainController implements Initializable {
                     fileViewList.getFileViewList().clear();
                     fileViewList.setList(respone.getFileConfig());
                     table_view.setItems(fileViewList.getFileViewList());
-                    documentsClient.currentServerUrl = "http://"+tableItem.getSourceIp()+":9090/ws/documents" ;
+                    documentsClient.urlList.addUrl("http://"+tableItem.getSourceIp()+":9090/ws/documents") ;
 
                 }
             }
@@ -181,6 +181,25 @@ public class MainController implements Initializable {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void goBack(){
+        if(documentsClient.urlList.getSize() > 1) {
+            documentsClient.urlList.remove();
+            try {
+                DirectoryInformationResponse respone = documentsClient.sendDirectoryInformationRequest(documentsClient.urlList.getUrl());
+                if (respone.isSuccess()) {
+                    table_view.getItems().clear();
+                    fileViewList.getFileViewList().clear();
+                    fileViewList.setList(respone.getFileConfig());
+                    table_view.setItems(fileViewList.getFileViewList());
+                }
+            } catch (IOException e) {
+
+            }
+        }
+    }
+
     @FXML
     protected void exit() {
         System.exit(0); //TODO Ordentlicher Exit.

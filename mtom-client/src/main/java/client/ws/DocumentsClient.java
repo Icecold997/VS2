@@ -6,13 +6,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import de.htwsaar.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 
 
 
 public class DocumentsClient extends WebServiceGatewaySupport {
 
-    public String currentServerUrl;
+    @Autowired
+    public UrlList urlList;
+
 	public DocumentsClient() {}
 
 	/**
@@ -32,7 +35,7 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 
 
 		StoreDocumentResponse response = (StoreDocumentResponse) getWebServiceTemplate()
-				.marshalSendAndReceive(currentServerUrl,request);
+				.marshalSendAndReceive(urlList.getUrl(),request);
 
 		if(response.isSuccess()){
 			System.out.println("Datei erfolgreich versendet");
@@ -44,7 +47,7 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 	   RenameDocumentRequest request = new RenameDocumentRequest();
 	   request.setCurrentDocumentName(oldFileName);
 	   request.setNewDocumentName(newFileName);
-	   RenameDocumentResponse response =(RenameDocumentResponse) getWebServiceTemplate().marshalSendAndReceive(currentServerUrl,request);
+	   RenameDocumentResponse response =(RenameDocumentResponse) getWebServiceTemplate().marshalSendAndReceive(urlList.getUrl(),request);
 	   boolean success = response.isSuccess();
 	   if(success){
 	   	System.out.println("Datei erfolgreich umbenannt");
@@ -56,7 +59,7 @@ public class DocumentsClient extends WebServiceGatewaySupport {
    public boolean deleteDocument(String fileName){
    	  DeleteDocumentRequest request = new DeleteDocumentRequest();
 	   request.setDocumentName(fileName);
-	   DeleteDocumentResponse response = (DeleteDocumentResponse) getWebServiceTemplate().marshalSendAndReceive(currentServerUrl,request);
+	   DeleteDocumentResponse response = (DeleteDocumentResponse) getWebServiceTemplate().marshalSendAndReceive(urlList.getUrl(),request);
 	   boolean success = response.isSuccess();
 	   if(success){
 	   	System.out.println("Datei erfolgreich gelöscht");
@@ -76,7 +79,7 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 	    DownloadDocumentRequest request = new DownloadDocumentRequest();
         request.setFileName(fileName);
         DownloadDocumentResponse response = (DownloadDocumentResponse) getWebServiceTemplate()
-                .marshalSendAndReceive(currentServerUrl,request);
+                .marshalSendAndReceive(urlList.getUrl(),request);
          return response.getDocument();
     }
 }

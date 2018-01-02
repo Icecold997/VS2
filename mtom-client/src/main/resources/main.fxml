@@ -35,6 +35,7 @@
               <JFXButton fx:id="chooseDownloadDirectoryButton" text="Download Directory einstellen" styleClass="standardButton" onAction="#chanceDownloadDirectory"/>
               <JFXButton fx:id="uploadFileButton" text="Datei hochladen" styleClass="standardButton" onAction="#uploadChoosenFile"/>
               <JFXButton fx:id="searchFileButton" text="Datei suchen"    styleClass="standardButton" onAction="#searchFile"/>
+              <JFXButton fx:id="goBackButton" text="Pfad Zurück"    styleClass="standardButton" onAction="#goBack"/>
           </HBox>
       </GridPane>
   </children>

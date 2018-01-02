@@ -1,6 +1,7 @@
 package client.gui;
 
 import client.ws.DocumentsClient;
+import client.ws.UrlList;
 import com.jfoenix.controls.JFXTextField;
 import de.htwsaar.DirectoryInformationResponse;
 import javafx.fxml.FXML;
@@ -20,6 +21,7 @@ public class LoginController implements Initializable {
 
 
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+
 
 
    @Autowired
@@ -47,7 +49,7 @@ public class LoginController implements Initializable {
                if(!respone.getFileConfig().isEmpty()) {
                    externFileViewList.setList(respone.getFileConfig());
                }
-               documentsClient.currentServerUrl ="http://127.0.0.1:9090/ws/documents";
+               documentsClient.urlList.addUrl("http://127.0.0.1:9090/ws/documents");
                router.getStage().setResizable(false);
                router.setSceneContent("/main.fxml");
            }
