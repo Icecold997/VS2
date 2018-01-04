@@ -119,20 +119,7 @@ public class ServerConfig {
        }
    }
 
-    private List<Directory> getAllDirectorys(){
-        Optional<List<FileArrangementConfig>> directorysInDatabase = fileArrangementDAO.findAllByisDirectoryAndIsLocal(true,true);
-        List<Directory> directorys = new ArrayList<Directory>();
-        Directory directory;
-        if(directorysInDatabase.isPresent()){
-            for (FileArrangementConfig dir:directorysInDatabase.get()){
-                directory = new Directory();
-                directory.setDirectoryName(dir.getFilename());
-                directory.setSourceIp(dir.getSourceIp());
-                directorys.add(directory);
-            }
-        }
-      return directorys;
-    }
+
 
 
 }
