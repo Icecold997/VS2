@@ -93,3 +93,18 @@ Protokoll Feinkonzeptbesprechung 5.12.17
 - Aktivitätsdiagramm (Grober Entwurf)
 - Prezi aktualisieren
 - Beginn des Entwurfs einer Search-Funktion
+
+Protokoll Besprechung 4.1.18
+- Erinnerung Stundenzettel. 
+- Konzeot fuer Aufgabe 2 steht und muss noch umgesetzt werden
+- Aufgabe 1 nur noch Kosmetik in der GUI
+- Kai/Christian Replikation einer Klasse damit die Applikation läuft (2 Ordner vergleichen - Itterativ gestalten)
+- Bootstrap: parallele Synchronität muss nicht betrachtet werden
+- Verbindungsherstellung via WAN steht noch aus, Patrick& Jan Hand in Hand.
+- Flooding implementieren (SOAP) Mehrfachverarbeitungen ausschliessen (Robert)
+- Präsentation 30.1. geforderte Inhalte prüfen (Marc)
+- Integration Präsentation Patrick (Marc)
+- Patrick testet und macht Doku
+- Patrick bringt switch mit
+- Marc bringt Freitag Kai den Pi mit
+- 
