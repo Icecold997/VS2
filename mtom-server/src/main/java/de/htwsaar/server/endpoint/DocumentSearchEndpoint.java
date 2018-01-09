@@ -41,6 +41,7 @@ public class DocumentSearchEndpoint {
 
         Optional<FileArrangementConfig> files = fileArrangementDao.findByfilename(request.getDocumentName());
         SearchDocumentResponse response = new SearchDocumentResponse();
+        response.setFound(false);
 
         if(files.isPresent()){
             response.setFound(true);
@@ -49,8 +50,9 @@ public class DocumentSearchEndpoint {
             Optional<List<ForwardingConfig>> childs = forwardingDAO.findAllByisParent(false);
             if(childs.isPresent()){
                 for (ForwardingConfig f: childs.get()) {
-                   response.setFound(transmitter.sendSearchRequestToChild(f.getUrl(),request.getDocumentName()));
-
+                    if(transmitter.sendSearchRequestToChild(f.getUrl(),request.getDocumentName())){
+                        response.setFound(true);
+                    }
                 }
             }
         }

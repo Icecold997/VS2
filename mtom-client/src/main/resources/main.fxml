@@ -39,7 +39,6 @@
               <padding><Insets top="30" /></padding>
               <JFXButton fx:id="chooseDownloadDirectoryButton" onAction="#chanceDownloadDirectory" styleClass="standardButton" text="Download Directory einstellen" />
               <JFXButton fx:id="uploadFileButton" onAction="#uploadChoosenFile" styleClass="standardButton" text="Datei hochladen" />
-              <JFXButton fx:id="searchFileButton" onAction="#searchFile" styleClass="standardButton" text="Datei suchen" />
               <JFXButton fx:id="goBackButton" onAction="#goBack" styleClass="standardButton" text="Pfad Zurück" />
           </HBox>
          <columnConstraints>

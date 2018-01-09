@@ -117,6 +117,7 @@ public class MainController implements Initializable {
 
                });
     }
+
     private void renameDocument(String newName,String oldName,FileView fileView){
        FileView newFileView = documentsClient.renameDocument(oldName,newName);
        if(newFileView != null){
@@ -133,21 +134,22 @@ public class MainController implements Initializable {
     
     @FXML
     private void chanceDownloadDirectory(){
-        downloadDirectoryLabelDynamicText.setText(router.startDirectoryChooser());
+       try {
+           downloadDirectoryLabelDynamicText.setText(router.startDirectoryChooser());
+       }
+        catch(Exception e){
+
+       }
     }
     @FXML
     private void uploadChoosenFile(){
         try {
             this.addItem(documentsClient.storeDocument(router.startFileChooser().getAbsolutePath()));
-        }catch(IOException e){
+        }catch(Exception e){
 
         }
     }
 
-    @FXML
-    private void searchFile(){
-
-    }
 
    public void addItem(FileView fileView){
        fileViewList.addFileView(fileView);
