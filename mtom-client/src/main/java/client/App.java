@@ -1,26 +1,62 @@
 package client;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
+import client.gui.Router;
+import client.ws.DocumentsClient;
+import javafx.application.Preloader;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
+import de.htwsaar.AbstractJavaFxApp;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 
-import client.ws.DocumentsClient;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 @Configuration
 @ComponentScan
 @EnableAutoConfiguration
-public class Application {
+public class App  extends AbstractJavaFxApp {
+
+	@Autowired
+    Router router;
+
+	@Value("${ui.client.title}")
+	private String windowClientTitle;
+
+	@Override
+	public void start(Stage stage) throws Exception {
+		notifyPreloader(new Preloader.StateChangeNotification(Preloader.StateChangeNotification.Type.BEFORE_START));
+
+		router.setStage(stage);
+		router.setSceneContent("/login.fxml", "/theme.css", 500, 300);
+
+		stage.setTitle(windowClientTitle);
+		stage.setResizable(true);
+		stage.centerOnScreen();
+		stage.show();
+		stage.getIcons().add(new Image("/soap.png"));
+		router.setStage(stage);
+	}
+	public static void main(String args[]) {
+		launchApp(App.class, args);
+	}
+
+
+/*	@Override
+	public void start(Stage stage) throws Exception {
+
+	}
 
 	public static void main(final String[] args) throws Exception {
 		final SpringApplication springApplication = new SpringApplication(
-				Application.class);
+				App.class);
 		ApplicationContext ctx = springApplication.run();
 		DocumentsClient documentsClient = ctx.getBean(DocumentsClient.class);
 
@@ -49,8 +85,6 @@ public class Application {
 					break;
 				default: break;
 			}
-
-
 		}
 
 
@@ -76,6 +110,6 @@ public class Application {
 
 	private static String readLine() throws IOException {
 		return new BufferedReader(new InputStreamReader(System.in)).readLine();
-	}
+	}*/
 
 }

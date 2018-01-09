@@ -15,19 +15,19 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java-Klasse für document complex type.
+ * <p>Java-Klasse für fileView complex type.
  * 
  * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
  * 
  * <pre>
- * &lt;complexType name="document">
+ * &lt;complexType name="fileView">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="author" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="content" type="{http://www.w3.org/2001/XMLSchema}base64Binary"/>
- *         &lt;element name="sourceUri" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="fileOrDirectoryName" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="type" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="date" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="sourceIp" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -37,115 +37,117 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "document", propOrder = {
-    "name",
-    "author",
-    "content",
-    "sourceUri"
+@XmlType(name = "fileView", propOrder = {
+    "fileOrDirectoryName",
+    "type",
+    "date",
+    "sourceIp"
 })
-public class Document {
+public class FileView {
 
     @XmlElement(required = true)
-    protected String name;
+    protected String fileOrDirectoryName;
     @XmlElement(required = true)
-    protected String author;
+    protected String type;
     @XmlElement(required = true)
-    protected byte[] content;
+    protected String date;
     @XmlElement(required = true)
-    protected String sourceUri;
+    protected String sourceIp;
 
     /**
-     * Ruft den Wert der name-Eigenschaft ab.
+     * Ruft den Wert der fileOrDirectoryName-Eigenschaft ab.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getName() {
-        return name;
+    public String getFileOrDirectoryName() {
+        return fileOrDirectoryName;
     }
 
     /**
-     * Legt den Wert der name-Eigenschaft fest.
+     * Legt den Wert der fileOrDirectoryName-Eigenschaft fest.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setName(String value) {
-        this.name = value;
+    public void setFileOrDirectoryName(String value) {
+        this.fileOrDirectoryName = value;
     }
 
     /**
-     * Ruft den Wert der author-Eigenschaft ab.
+     * Ruft den Wert der type-Eigenschaft ab.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getAuthor() {
-        return author;
+    public String getType() {
+        return type;
     }
 
     /**
-     * Legt den Wert der author-Eigenschaft fest.
+     * Legt den Wert der type-Eigenschaft fest.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setAuthor(String value) {
-        this.author = value;
+    public void setType(String value) {
+        this.type = value;
     }
 
     /**
-     * Ruft den Wert der content-Eigenschaft ab.
-     * 
-     * @return
-     *     possible object is
-     *     byte[]
-     */
-    public byte[] getContent() {
-        return content;
-    }
-
-    /**
-     * Legt den Wert der content-Eigenschaft fest.
-     * 
-     * @param value
-     *     allowed object is
-     *     byte[]
-     */
-    public void setContent(byte[] value) {
-        this.content = value;
-    }
-
-    /**
-     * Ruft den Wert der sourceUri-Eigenschaft ab.
+     * Ruft den Wert der date-Eigenschaft ab.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getSourceUri() {
-        return sourceUri;
+    public String getDate() {
+        return date;
     }
 
     /**
-     * Legt den Wert der sourceUri-Eigenschaft fest.
+     * Legt den Wert der date-Eigenschaft fest.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setSourceUri(String value) {
-        this.sourceUri = value;
+    public void setDate(String value) {
+        this.date = value;
+    }
+
+    /**
+     * Ruft den Wert der sourceIp-Eigenschaft ab.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getSourceIp() {
+        return sourceIp;
+    }
+
+    /**
+     * Legt den Wert der sourceIp-Eigenschaft fest.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setSourceIp(String value) {
+        this.sourceIp = value;
     }
 
 }

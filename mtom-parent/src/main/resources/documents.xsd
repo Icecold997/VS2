@@ -18,11 +18,26 @@
 		<complexType>
 			<sequence>
 				<element name="success" type="boolean" />
+				<element name="fileInformation" type="tns:fileView"/>
 			</sequence>
 		</complexType>
 	</element>
 
+   <element name="downloadDocumentRequest">
+	   <complexType>
+		   <sequence>
+			   <element name="fileName" type="string"/>
+		   </sequence>
+	   </complexType>
+   </element>
 
+	<element name="downloadDocumentResponse">
+		<complexType>
+			<sequence>
+				<element name="document" type="tns:document"/>
+			</sequence>
+		</complexType>
+	</element>
 
 	<element name="renameDocumentRequest">
 		<complexType>
@@ -37,6 +52,7 @@
 		<complexType>
 			<sequence>
 				<element name="success" type="boolean" />
+				<element name="newFile" type="tns:fileView"></element>
 			</sequence>
 		</complexType>
 	</element>
@@ -76,7 +92,8 @@
     <element name="sendDirectoryInformationToParentRequest">
 		<complexType>
 			<sequence>
-				<element name="directory" type="tns:directory" maxOccurs="unbounded"/>
+				<element name="directory" type="tns:directory"/>
+				<element name="ip" type="string"/>
 			</sequence>
 		</complexType>
 	</element>
@@ -101,6 +118,33 @@
 	<complexType name="directory">
 		<sequence>
 			<element name="directoryName" type="string"/>
+			<element name="sourceIp" type="string"/>
+		</sequence>
+	</complexType>
+
+	<element name="directoryInformationRequest">
+		<complexType>
+			<sequence>
+				<element name="received" type="boolean"/>
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="directoryInformationResponse">
+		<complexType>
+		<sequence>
+			<element name="fileConfig" type="tns:fileView" maxOccurs="unbounded" />
+			<element name ="success" type="boolean" />
+		</sequence>
+		</complexType>
+	</element>
+
+
+	<complexType name="fileView">
+		<sequence>
+			<element name="fileOrDirectoryName" type="string"/>
+			<element name="type" type="string"/>
+			<element name="date" type="string"/>
 			<element name="sourceIp" type="string"/>
 		</sequence>
 	</complexType>

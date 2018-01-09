@@ -13,6 +13,8 @@ import de.htwsaar.*;
 import de.htwsaar.server.config.ServerConfig;
 import de.htwsaar.server.persistence.FileArrangementConfig;
 import de.htwsaar.server.persistence.FileArrangementDAO;
+import de.htwsaar.server.persistence.ForwardingConfig;
+import de.htwsaar.server.persistence.ForwardingDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -28,6 +30,8 @@ public class DirectoryInformationEndpoint {
     FileArrangementDAO fileArrangementDAO;
     @Autowired
     ServerConfig serverConfig;
+    @Autowired
+    ForwardingDAO forwardingDAO;
 
     private static final String NAMESPACE_URI = "http://htwsaar.de/";
 
@@ -35,20 +39,30 @@ public class DirectoryInformationEndpoint {
     @ResponsePayload
     public SendDirectoryInformationToParentResponse getInfo(@RequestPayload SendDirectoryInformationToParentRequest request) throws IOException {
 
-        //TODO informationen vom kind in datenbank aufnehmen
-        List<Directory> directories = request.getDirectory();
-        for(Directory d:directories){
-            Optional<FileArrangementConfig> fileArrangementConfig = fileArrangementDAO.findByfilenameAndIsDirectory(d.getDirectoryName(),true);
+
+        Directory directory = request.getDirectory();
+
+            Optional<FileArrangementConfig> fileArrangementConfig = fileArrangementDAO.findByfilenameAndIsDirectory(directory.getDirectoryName(),true);
             if(fileArrangementConfig.isPresent()){
                 //verzeichnis schon vorhanden
             }else{
                 FileArrangementConfig fileArrangementConfig1 = new FileArrangementConfig();
-                fileArrangementConfig1.setSourceIp(d.getSourceIp());
+                fileArrangementConfig1.setSourceIp(directory.getSourceIp());
                 fileArrangementConfig1.setLocal(false);
-                fileArrangementConfig1.setFilename(d.getDirectoryName());
+                fileArrangementConfig1.setDirectory(true);
+                fileArrangementConfig1.setFilename(directory.getDirectoryName());
                 fileArrangementConfig1.setFileLocation(serverConfig.fileDirectory);
+                fileArrangementDAO.save(fileArrangementConfig1);
             }
-        }
+        Optional<ForwardingConfig> forwardingConfig = forwardingDAO.findByUrl(request.getIp());
+         if(forwardingConfig.isPresent()){
+           //schon in datenbank vorhanden
+         }else{
+             ForwardingConfig forwardingConfig1 = new ForwardingConfig();
+             forwardingConfig1.setParent(false);
+             forwardingConfig1.setUrl(request.getIp());
+             forwardingDAO.save(forwardingConfig1);
+         }
         SendDirectoryInformationToParentResponse response = new SendDirectoryInformationToParentResponse();
         return  response;
     }

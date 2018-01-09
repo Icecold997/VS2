@@ -25,8 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="success" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
- *         &lt;element name="newFile" type="{http://htwsaar.de/}fileView"/>
+ *         &lt;element name="fileName" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -37,54 +36,36 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "success",
-    "newFile"
+    "fileName"
 })
-@XmlRootElement(name = "renameDocumentResponse")
-public class RenameDocumentResponse {
+@XmlRootElement(name = "downloadDocumentRequest")
+public class DownloadDocumentRequest {
 
-    protected boolean success;
     @XmlElement(required = true)
-    protected FileView newFile;
+    protected String fileName;
 
     /**
-     * Ruft den Wert der success-Eigenschaft ab.
-     * 
-     */
-    public boolean isSuccess() {
-        return success;
-    }
-
-    /**
-     * Legt den Wert der success-Eigenschaft fest.
-     * 
-     */
-    public void setSuccess(boolean value) {
-        this.success = value;
-    }
-
-    /**
-     * Ruft den Wert der newFile-Eigenschaft ab.
+     * Ruft den Wert der fileName-Eigenschaft ab.
      * 
      * @return
      *     possible object is
-     *     {@link FileView }
+     *     {@link String }
      *     
      */
-    public FileView getNewFile() {
-        return newFile;
+    public String getFileName() {
+        return fileName;
     }
 
     /**
-     * Legt den Wert der newFile-Eigenschaft fest.
+     * Legt den Wert der fileName-Eigenschaft fest.
      * 
      * @param value
      *     allowed object is
-     *     {@link FileView }
+     *     {@link String }
      *     
      */
-    public void setNewFile(FileView value) {
-        this.newFile = value;
+    public void setFileName(String value) {
+        this.fileName = value;
     }
 
 }

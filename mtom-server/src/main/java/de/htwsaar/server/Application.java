@@ -1,18 +1,16 @@
 package de.htwsaar.server;
 
 
+import de.htwsaar.AbstractJavaFxApp;
 import de.htwsaar.server.config.ServerConfig;
 import javafx.application.Preloader;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.ws.WebServiceException;
-
 
 
 /**

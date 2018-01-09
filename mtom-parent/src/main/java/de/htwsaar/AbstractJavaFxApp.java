@@ -1,16 +1,13 @@
-package de.htwsaar.server;
+package de.htwsaar;
 
 import javafx.application.Application;
-import org.hibernate.validator.internal.util.logging.Log_$logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Lazy;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Abstrakte Oberklasse der Applikation welche die JavaFX Application Klasse um die Initialisierung

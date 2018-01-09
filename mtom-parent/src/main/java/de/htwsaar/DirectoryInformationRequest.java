@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="found" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
+ *         &lt;element name="received" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -35,27 +35,27 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "found"
+    "received"
 })
-@XmlRootElement(name = "searchDocumentResponse")
-public class SearchDocumentResponse {
+@XmlRootElement(name = "directoryInformationRequest")
+public class DirectoryInformationRequest {
 
-    protected boolean found;
+    protected boolean received;
 
     /**
-     * Ruft den Wert der found-Eigenschaft ab.
+     * Ruft den Wert der received-Eigenschaft ab.
      * 
      */
-    public boolean isFound() {
-        return found;
+    public boolean isReceived() {
+        return received;
     }
 
     /**
-     * Legt den Wert der found-Eigenschaft fest.
+     * Legt den Wert der received-Eigenschaft fest.
      * 
      */
-    public void setFound(boolean value) {
-        this.found = value;
+    public void setReceived(boolean value) {
+        this.received = value;
     }
 
 }

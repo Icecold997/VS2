@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Label?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.geometry.Insets?>
+<?import com.jfoenix.controls.JFXButton?>
+
+<?import javafx.scene.text.Text?>
+<BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="client.gui.LoginController">
+    <center>
+        <GridPane alignment="CENTER">
+            <HBox GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2" >
+                <padding><Insets bottom="20" /></padding>
+                <Text text="Welcome" styleClass="header" />
+            </HBox>
+            <padding><Insets right="50" left="50" /></padding>
+
+
+            <Label text="Host:" GridPane.columnIndex="0" GridPane.rowIndex="3" minWidth="100"/>
+            <JFXTextField fx:id="hostInput" GridPane.columnIndex="1" GridPane.rowIndex="3" minWidth="200" />
+
+            <HBox GridPane.rowIndex="4" GridPane.columnIndex="1" alignment="CENTER" spacing="10">
+                <padding><Insets top="30"/></padding>
+                <JFXButton fx:id="exitButton" text="Exit" styleClass="standardButton" onAction="#exit" />
+                <JFXButton fx:id="connectButton" text="Connect" styleClass="standardButton" onAction="#login" />
+            </HBox>
+        </GridPane>
+    </center>
+</BorderPane>
