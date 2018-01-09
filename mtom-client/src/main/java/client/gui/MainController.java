@@ -158,31 +158,33 @@ public class MainController implements Initializable {
 
     private void handleDoubleClickOnTableItem(FileView tableItem){
         try{
-        if(tableItem.getType().equals("File")){
+            if(tableItem != null) {
+                if (tableItem.getType().equals("File")) {
 
-                Document document = documentsClient.downloadFileFromServer(tableItem.getFileOrDirectoryName());
-                byte[] demBytes = document.getContent();
-                File outputFile = new File(downloadDirectoryLabelDynamicText.getText() + "/" + document.getName());
-                FileOutputStream outputStream = new FileOutputStream(outputFile);
-                outputStream.write(demBytes);
-                outputStream.close();
-                System.out.println("Datei erfolgreich gedownloaded");
-
-
-        }else if(tableItem.getType().equals("Directory")){
-            DirectoryInformationResponse respone = documentsClient.sendDirectoryInformationRequest("http://"+tableItem.getSourceIp()+":9090/ws/documents");
-            if(respone.isSuccess()) {
-
-                    table_view.getItems().clear();
-                    fileViewList.getFileViewList().clear();
-                    fileViewList.setList(respone.getFileConfig());
-                    table_view.setItems(fileViewList.getFileViewList());
-                    documentsClient.urlList.addUrl("http://"+tableItem.getSourceIp()+":9090/ws/documents") ;
+                    Document document = documentsClient.downloadFileFromServer(tableItem.getFileOrDirectoryName());
+                    byte[] demBytes = document.getContent();
+                    File outputFile = new File(downloadDirectoryLabelDynamicText.getText() + "/" + document.getName());
+                    FileOutputStream outputStream = new FileOutputStream(outputFile);
+                    outputStream.write(demBytes);
+                    outputStream.close();
+                    System.out.println("Datei erfolgreich gedownloaded");
 
 
+                } else if (tableItem.getType().equals("Directory")) {
+                    DirectoryInformationResponse respone = documentsClient.sendDirectoryInformationRequest("http://" + tableItem.getSourceIp() + ":9090/ws/documents");
+                    if (respone.isSuccess()) {
+
+                        table_view.getItems().clear();
+                        fileViewList.getFileViewList().clear();
+                        fileViewList.setList(respone.getFileConfig());
+                        table_view.setItems(fileViewList.getFileViewList());
+                        documentsClient.urlList.addUrl("http://" + tableItem.getSourceIp() + ":9090/ws/documents");
+
+
+                    }
+
+                }
             }
-
-         }
         }catch (Exception e){
             e.printStackTrace();
         }
