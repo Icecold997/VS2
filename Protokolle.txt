@@ -107,4 +107,11 @@ Protokoll Besprechung 4.1.18
 - Patrick testet und macht Doku
 - Patrick bringt switch mit
 - Marc bringt Freitag Kai den Pi mit
-- 
+ 
+Protokoll Arbeitstreffen 09.01.18
+- Verbindung funktionierte zu Beginn nicht bei jedem.
+- Teilweise Libs nicht integriert,Server teils nicht lauffähig
+- Client konnte teils nicht connecten (Linux)
+- Absprache Herr Sauer: Wöchentliche Meldung mit Tätigkeitsbericht obligatorisch.
+ Wichtig ist: Stundenanzahl und das das Tätigkeitsfeld zuordnenbar ist.
+ - Prezi anpassen an Abschlusspräsentation ph1+Aufg 2
