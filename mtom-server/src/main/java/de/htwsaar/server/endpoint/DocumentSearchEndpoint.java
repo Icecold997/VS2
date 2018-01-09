@@ -56,8 +56,6 @@ public class DocumentSearchEndpoint {
                 }
             }
         }
-
-
        return  response;
     }
 

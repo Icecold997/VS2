@@ -172,14 +172,14 @@ public class MainController implements Initializable {
         }else if(tableItem.getType().equals("Directory")){
             DirectoryInformationResponse respone = documentsClient.sendDirectoryInformationRequest("http://"+tableItem.getSourceIp()+":9090/ws/documents");
             if(respone.isSuccess()) {
-                if(!respone.getFileConfig().isEmpty()) {
+
                     table_view.getItems().clear();
                     fileViewList.getFileViewList().clear();
                     fileViewList.setList(respone.getFileConfig());
                     table_view.setItems(fileViewList.getFileViewList());
                     documentsClient.urlList.addUrl("http://"+tableItem.getSourceIp()+":9090/ws/documents") ;
 
-                }
+
             }
 
          }

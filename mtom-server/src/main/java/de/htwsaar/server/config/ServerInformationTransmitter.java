@@ -26,7 +26,7 @@ public class ServerInformationTransmitter extends WebServiceGatewaySupport {
         SearchDocumentRequest request = new SearchDocumentRequest();
         request.setDocumentName(fileName);
         String finalUrl = "http://"+targetUrl+":9090/ws/documents";
-        SearchDocumentResponse response=(SearchDocumentResponse) getWebServiceTemplate().marshalSendAndReceive(targetUrl,request);
+        SearchDocumentResponse response=(SearchDocumentResponse) getWebServiceTemplate().marshalSendAndReceive(finalUrl,request);
         return response.isFound();
     }
 }
