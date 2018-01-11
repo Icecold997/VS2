@@ -149,7 +149,7 @@ public class MainController implements Initializable {
     @FXML
     private void uploadChoosenFile(){
         try {
-            this.addItem(documentsClient.storeDocument(router.startFileChooser().getAbsolutePath()));
+            documentsClient.storeDocument(router.startFileChooser().getAbsolutePath());
         }catch(Exception e){
 
         }

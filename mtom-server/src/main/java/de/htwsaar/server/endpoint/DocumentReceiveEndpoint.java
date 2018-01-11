@@ -12,6 +12,8 @@ import de.htwsaar.StoreDocumentResponse;
 import de.htwsaar.server.config.FloodingTransmitter;
 import de.htwsaar.server.config.ServerConfig;
 import de.htwsaar.server.config.ServerInformationTransmitter;
+import de.htwsaar.server.gui.FileViewList;
+import de.htwsaar.server.gui.MainController;
 import de.htwsaar.server.persistence.FileArrangementDAO;
 import de.htwsaar.server.persistence.FileArrangementConfig;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,9 @@ public class DocumentReceiveEndpoint {
 
 	@Autowired
 	FloodingTransmitter floodingTransmitter;
+
+	@Autowired
+	FileViewList fileViewList;
 
 	private static final String NAMESPACE_URI = "http://htwsaar.de/";
 
@@ -69,6 +74,7 @@ public class DocumentReceiveEndpoint {
 				outputStream.close();
 				response.setSuccess(true);
 				response.setFileInformation(fileArragementConfigToFileView(fileArrangementConfig));
+				fileViewList.addFileView(response.getFileInformation());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
