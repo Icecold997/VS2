@@ -1,5 +1,6 @@
 package de.htwsaar.server;
 
+import de.htwsaar.server.config.FloodingTransmitter;
 import de.htwsaar.server.gui.MainController;
 import de.htwsaar.server.ws.DocumentsClient;
 import org.springframework.context.annotation.Bean;
@@ -7,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
 /**
- * @author cedosw
+ * @author tsander
  */
 @Configuration
 public class ClientConfiguration {
@@ -23,4 +24,6 @@ public class ClientConfiguration {
     DocumentsClient documentsClient() {
         return new DocumentsClient();
     }
+
+
 }

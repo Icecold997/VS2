@@ -1,6 +1,10 @@
 package de.htwsaar.server.config;
 
+import com.mysql.fabric.Server;
 import de.htwsaar.*;
+import de.htwsaar.server.persistence.ForwardingConfig;
+import de.htwsaar.server.persistence.ForwardingDAO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 
 import java.util.List;
@@ -11,6 +15,7 @@ import java.util.List;
 public class ServerInformationTransmitter extends WebServiceGatewaySupport {
 
  //TODO testen
+
 
     public boolean sendRequestToParent(String targetUrl,Directory directory,String ownUrl){
 
@@ -54,4 +59,6 @@ public class ServerInformationTransmitter extends WebServiceGatewaySupport {
         }
         return null;
     }
+
+
 }

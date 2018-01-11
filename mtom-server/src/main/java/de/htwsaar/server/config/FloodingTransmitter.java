@@ -19,8 +19,8 @@ import java.util.Optional;
 /**
  * Klasse die das Flooding im peer to peer netzwerk übernimmt
  */
-@Component
-public class FloodingTransmitter extends WebServiceGatewaySupport {
+
+public class FloodingTransmitter  extends WebServiceGatewaySupport{
 
  @Autowired
  ForwardingDAO forwardingDAO;
@@ -28,40 +28,44 @@ public class FloodingTransmitter extends WebServiceGatewaySupport {
  @Autowired
  ServerConfig serverConfig;
 
- @Autowired
- DocumentsClient documentsClient;
+ public FloodingTransmitter(){}
 
- public void floodReceivedFile(StoreDocumentRequest storeDocumentRequest){
-     Iterable<ForwardingConfig> forwardingConfigs;
-     forwardingConfigs = forwardingDAO.findAll();
-     for(ForwardingConfig forwardingConfig : forwardingConfigs){
-         if(!forwardingConfig.getUrl().equals(serverConfig.getServerIp())) {
-             StoreDocumentResponse response = (StoreDocumentResponse) getWebServiceTemplate()
-                     .marshalSendAndReceive("http://" + forwardingConfig.getUrl() + ":9090/ws/documents", storeDocumentRequest);
-         }
-     }
- }
+    public void floodReceivedFile(StoreDocumentRequest storeDocumentRequest){
+        Iterable<ForwardingConfig> forwardingConfigs;
+        forwardingConfigs = forwardingDAO.findAll();
+        for(ForwardingConfig forwardingConfig : forwardingConfigs){
+            if(!forwardingConfig.getUrl().equals(serverConfig.getServerIp())) {
+                System.out.println("Floode an :" + forwardingConfig.getUrl());
+                try {
+                    StoreDocumentResponse response = (StoreDocumentResponse) getWebServiceTemplate()
+                            .marshalSendAndReceive("http://" + forwardingConfig.getUrl()+ ":9090/ws/documents", storeDocumentRequest);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
- public void floodDeleteFileRequest(DeleteDocumentRequest deleteDocumentRequest){
-     Iterable<ForwardingConfig> forwardingConfigs;
-     forwardingConfigs = forwardingDAO.findAll();
-     for(ForwardingConfig forwardingConfig : forwardingConfigs) {
-         if (!forwardingConfig.getUrl().equals(serverConfig.getServerIp())) {
-             DeleteDocumentResponse response = (DeleteDocumentResponse) getWebServiceTemplate()
-                     .marshalSendAndReceive("http://" + forwardingConfig.getUrl() + ":9090/ws/documents", deleteDocumentRequest);
-         }
-     }
- }
+    public void floodDeleteFileRequest(DeleteDocumentRequest deleteDocumentRequest){
+        Iterable<ForwardingConfig> forwardingConfigs;
+        forwardingConfigs = forwardingDAO.findAll();
+        for(ForwardingConfig forwardingConfig : forwardingConfigs) {
+            if (!forwardingConfig.getUrl().equals(serverConfig.getServerIp())) {
+                DeleteDocumentResponse response = (DeleteDocumentResponse) getWebServiceTemplate()
+                        .marshalSendAndReceive("http://" + forwardingConfig.getUrl() + ":9090/ws/documents", deleteDocumentRequest);
+            }
+        }
+    }
 
- public void floodRenameRequest(RenameDocumentRequest renameDocumentRequest){
-     Iterable<ForwardingConfig> forwardingConfigs;
-     forwardingConfigs = forwardingDAO.findAll();
-     for(ForwardingConfig forwardingConfig : forwardingConfigs) {
-         if (!forwardingConfig.getUrl().equals(serverConfig.getServerIp())) {
-             RenameDocumentResponse response = (RenameDocumentResponse) getWebServiceTemplate()
-                     .marshalSendAndReceive("http://" + forwardingConfig.getUrl() + ":9090/ws/documents", renameDocumentRequest);
-         }
-     }
- }
+    public void floodRenameRequest(RenameDocumentRequest renameDocumentRequest){
+        Iterable<ForwardingConfig> forwardingConfigs;
+        forwardingConfigs = forwardingDAO.findAll();
+        for(ForwardingConfig forwardingConfig : forwardingConfigs) {
+            if (!forwardingConfig.getUrl().equals(serverConfig.getServerIp())) {
+                RenameDocumentResponse response = (RenameDocumentResponse) getWebServiceTemplate()
+                        .marshalSendAndReceive("http://" + forwardingConfig.getUrl() + ":9090/ws/documents", renameDocumentRequest);
+            }
+        }
+    }
 
 }

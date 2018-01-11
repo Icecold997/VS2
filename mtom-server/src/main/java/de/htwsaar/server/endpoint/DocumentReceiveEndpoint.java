@@ -11,6 +11,7 @@ import de.htwsaar.StoreDocumentRequest;
 import de.htwsaar.StoreDocumentResponse;
 import de.htwsaar.server.config.FloodingTransmitter;
 import de.htwsaar.server.config.ServerConfig;
+import de.htwsaar.server.config.ServerInformationTransmitter;
 import de.htwsaar.server.persistence.FileArrangementDAO;
 import de.htwsaar.server.persistence.FileArrangementConfig;
 import org.springframework.beans.factory.annotation.Autowired;
