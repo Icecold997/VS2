@@ -50,7 +50,7 @@
 	<element name="networkConnectionResponse">
 		<complexType>
 			<sequence>
-				<element name="connectionConfig" type="tns:connectionConfig" maxOccurs="unbounded"/>
+				<element name="connectionConfig" type="tns:connectionConfig" />
 			</sequence>
 		</complexType>
 	</element>

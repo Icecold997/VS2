@@ -44,8 +44,9 @@ public class NetworkInformationEndpoint {
 
     private List<ConnectionConfig> forwardingConfigListToConnectionConfig(Iterable<ForwardingConfig> forwardingConfigList){
         List<ConnectionConfig> connectionConfigList = new ArrayList<ConnectionConfig>();
-        ConnectionConfig connectionConfig = new ConnectionConfig();
+
         for(ForwardingConfig forwardingConfig : forwardingConfigList){
+            ConnectionConfig connectionConfig = new ConnectionConfig();
             connectionConfig.setConnections(forwardingConfig.getConnections());
             connectionConfig.setIp(forwardingConfig.getUrl());
             connectionConfigList.add(connectionConfig);

@@ -37,6 +37,13 @@ public class ConnectToPeerEndpoint {
         System.out.println("NetzwerkVerbindungsEndpunkt erreicht verbinde mit: " + request.getConnectionConfig().getIp() );
         NetworkConnectionResponse response = new NetworkConnectionResponse();
         this.setUpConnection(request.getConnectionConfig());
+        Optional<ForwardingConfig> forwardingConfig = forwardingDAO.findByUrl(serverConfig.getServerIp());
+        if(forwardingConfig.isPresent()){
+            ConnectionConfig connectionConfig = new ConnectionConfig();
+            connectionConfig.setConnections(forwardingConfig.get().getConnections());
+            connectionConfig.setIp(forwardingConfig.get().getUrl());
+            response.setConnectionConfig(connectionConfig);
+        }
         return response;
     }
 
@@ -55,7 +62,6 @@ public class ConnectToPeerEndpoint {
     if(!serverConfig.getServerIp().equals(connectionConfig.getIp())) {
         System.out.println("source ip: " + connectionConfig.getIp());
         ForwardingConfig sourceForwardingConfig = new ForwardingConfig();
-
         System.out.println("source in datenbank aufnehmen und connections ums eins erhöhen");
         sourceForwardingConfig.setConnections(connectionConfig.getConnections() + 1);
         sourceForwardingConfig.setUrl(connectionConfig.getIp());

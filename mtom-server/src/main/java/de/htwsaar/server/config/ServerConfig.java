@@ -2,6 +2,7 @@ package de.htwsaar.server.config;
 
 import de.htwsaar.*;
 import de.htwsaar.server.persistence.*;
+import de.htwsaar.server.ws.ConnectionConfigComperator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +15,7 @@ import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -126,22 +128,47 @@ public class ServerConfig {
             System.out.println("kein supernode verbinde mit netzwerk");
             Iterable<ServerInfo> superNodes;
             superNodes = serverDAO.findAll();     //finde supernodes in db
-            Optional<ForwardingConfig> forwardingConfig = forwardingDAO.findByUrl(serverIp); // sich selbst in der datenbank finden
-            ConnectionConfig connectionConfig = new ConnectionConfig();
-            connectionConfig.setIp(forwardingConfig.get().getUrl());
-            connectionConfig.setConnections(forwardingConfig.get().getConnections());
+            Optional<ForwardingConfig> forwardingConfigFromMe = forwardingDAO.findByUrl(serverIp); // sich selbst in der datenbank finden
+            ConnectionConfig connectionConfigFromMe = new ConnectionConfig();
+            connectionConfigFromMe.setIp(forwardingConfigFromMe.get().getUrl());
+            connectionConfigFromMe.setConnections(forwardingConfigFromMe.get().getConnections());
             for(ServerInfo serverInfo : superNodes){
                 System.out.println("supernode url: "+serverInfo.getServerIp());
                 List<ConnectionConfig> connectionConfigList =transmitter.sendConnectionRequest(serverInfo.getServerIp());
                 if(!connectionConfigList.isEmpty()){
-                    //TODO zwei peers mit wenigstens verbindungen auswählen
-                    System.out.println("verbinde mit peer : "+ connectionConfigList.get(0).getIp());
-                    transmitter.connectWithPeer(connectionConfigList.get(0).getIp(),connectionConfig);
+                    Collections.sort(connectionConfigList,new ConnectionConfigComperator());
+                   for(ConnectionConfig connection : connectionConfigList){
+                       if((!connection.getIp().equals(serverIp)) && (forwardingConfigFromMe.get().getConnections() < 2) ){ //wen nicht eigene ip und eigene connections < 2
+                           System.out.println("Verbinde mit peer: "+connection.getIp());
+                           connectWithPeer(connection.getIp(),connectionConfigFromMe);
+                           System.out.println("Erhöhe eigene Connections um 1 ");
+                           forwardingConfigFromMe.get().setConnections(forwardingConfigFromMe.get().getConnections()+1);
+
+                           if(connectionConfigFromMe.getConnections() == 2){
+                               break;
+                           }
+                       }
+                   }
+                    System.out.println("Speicher eigene neue Verbindungsdetails in Datenbank");
+                    forwardingDAO.save(forwardingConfigFromMe.get());
                     break;
                 }
             }
         }
+    }
 
+    private void connectWithPeer(String peerIp ,ConnectionConfig connectionConfig){
+        ConnectionConfig connectionConfigFromTarget = transmitter.connectWithPeer(peerIp,connectionConfig);
+        Optional<ForwardingConfig> forwardingConfig = forwardingDAO.findByUrl(connectionConfigFromTarget.getIp());
+        if(forwardingConfig.isPresent()){
+            forwardingConfig.get().setConnections(connectionConfigFromTarget.getConnections());
+            forwardingDAO.save(forwardingConfig.get());
+        }else{
+            ForwardingConfig forwardingConfigFromTarget = new ForwardingConfig();
+            forwardingConfigFromTarget.setConnections(connectionConfigFromTarget.getConnections());
+            forwardingConfigFromTarget.setUrl(connectionConfigFromTarget.getIp());
+            forwardingDAO.save(forwardingConfigFromTarget);
+        }
     }
 
     public String getServerIp(){

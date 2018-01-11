@@ -42,16 +42,16 @@ public class ServerInformationTransmitter extends WebServiceGatewaySupport {
         return null;
     }
 
-    public boolean connectWithPeer(String targetUrl ,ConnectionConfig connectionConfig){
+    public ConnectionConfig connectWithPeer(String targetUrl ,ConnectionConfig connectionConfig){
         try{
             NetworkConnectionRequest request = new NetworkConnectionRequest();
             request.setConnectionConfig(connectionConfig);
             String finalUrl = "http://" + targetUrl + ":9090/ws/documents";
             NetworkConnectionResponse response =(NetworkConnectionResponse) getWebServiceTemplate().marshalSendAndReceive(finalUrl,request);
-            return true;
+            return response.getConnectionConfig();
         }catch(Exception e){
 
         }
-        return false;
+        return null;
     }
 }
