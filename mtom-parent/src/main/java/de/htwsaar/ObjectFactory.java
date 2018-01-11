@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.7 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2018.01.02 um 01:50:59 PM CET 
+// Generiert: 2018.01.11 um 04:30:27 AM CET 
 //
 
 
@@ -133,11 +133,43 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link NetworkInformationResponse }
+     * 
+     */
+    public NetworkInformationResponse createNetworkInformationResponse() {
+        return new NetworkInformationResponse();
+    }
+
+    /**
+     * Create an instance of {@link ConnectionConfig }
+     * 
+     */
+    public ConnectionConfig createConnectionConfig() {
+        return new ConnectionConfig();
+    }
+
+    /**
+     * Create an instance of {@link NetworkConnectionRequest }
+     * 
+     */
+    public NetworkConnectionRequest createNetworkConnectionRequest() {
+        return new NetworkConnectionRequest();
+    }
+
+    /**
      * Create an instance of {@link DownloadDocumentResponse }
      * 
      */
     public DownloadDocumentResponse createDownloadDocumentResponse() {
         return new DownloadDocumentResponse();
+    }
+
+    /**
+     * Create an instance of {@link NetworkInformationRequest }
+     * 
+     */
+    public NetworkInformationRequest createNetworkInformationRequest() {
+        return new NetworkInformationRequest();
     }
 
     /**
@@ -170,6 +202,14 @@ public class ObjectFactory {
      */
     public DirectoryInformationRequest createDirectoryInformationRequest() {
         return new DirectoryInformationRequest();
+    }
+
+    /**
+     * Create an instance of {@link NetworkConnectionResponse }
+     * 
+     */
+    public NetworkConnectionResponse createNetworkConnectionResponse() {
+        return new NetworkConnectionResponse();
     }
 
 }

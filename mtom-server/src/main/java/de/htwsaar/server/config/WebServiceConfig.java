@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.htwsaar.server.persistence.ServerInfo;
+import de.htwsaar.server.ws.DocumentsClient;
 import org.springframework.boot.context.embedded.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -88,5 +89,15 @@ public class WebServiceConfig extends WsConfigurationSupport {
 		serverInformationTransmitter.setMarshaller(marshaller);
 		serverInformationTransmitter.setUnmarshaller(marshaller);
 		return serverInformationTransmitter;
+	}
+
+
+	@Bean
+	public DocumentsClient documentsClient(Jaxb2Marshaller marshaller) {
+		DocumentsClient client = new DocumentsClient();
+		client.setDefaultUri("http://localhost:9090/ws/documents");
+		client.setMarshaller(marshaller);
+		client.setUnmarshaller(marshaller);
+		return client;
 	}
 }

@@ -1,9 +1,9 @@
-package client.gui;
+package de.htwsaar.server.gui;
 
-
-import client.App;
 import de.htwsaar.SpringFxmlLoader;
 import java.io.File;
+
+import de.htwsaar.server.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -40,9 +40,9 @@ public class Router {
     }
 
     public Parent setSceneContent(String fxml, String stylesheet, int width, int height) {
-        Parent page = (Parent) fxmlLoader.load(App.class.getResource(fxml), null);
+        Parent page = (Parent) fxmlLoader.load(Application.class.getResource(fxml), null);
         Scene scene = new Scene(page, width, height);
-        scene.getStylesheets().add(App.class.getResource(stylesheet).toExternalForm());
+        scene.getStylesheets().add(Application.class.getResource(stylesheet).toExternalForm());
         stage.hide();
         stage.getIcons().add(new Image("/soap.png"));
         stage.setScene(scene);
@@ -74,10 +74,10 @@ public class Router {
         dialog.getIcons().add(new Image("/soap.png"));
         //dialog.initStyle(StageStyle.UNDECORATED);
         dialog.setTitle(title);
-        Scene scene = new Scene((Parent) fxmlLoader.load(App.class.getResource(fxml), null));
+        Scene scene = new Scene((Parent) fxmlLoader.load(Application.class.getResource(fxml), null));
         dialog.setHeight(height);
         dialog.setWidth(width);
-        scene.getStylesheets().add(App.class.getResource(stylesheet).toExternalForm());
+        scene.getStylesheets().add(Application.class.getResource(stylesheet).toExternalForm());
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.setScene(scene);
         dialog.setResizable(false);

@@ -47,14 +47,12 @@ public class DocumentSearchEndpoint {
             response.setFound(true);
             return response;
         }else{
-            Optional<List<ForwardingConfig>> childs = forwardingDAO.findAllByisParent(false);
-            if(childs.isPresent()){
-                for (ForwardingConfig f: childs.get()) {
+            Iterable<ForwardingConfig> childs = forwardingDAO.findAll();
+                for (ForwardingConfig f: childs) {
                     if(transmitter.sendSearchRequestToChild(f.getUrl(),request.getDocumentName())){
                         response.setFound(true);
                     }
                 }
-            }
         }
 
 

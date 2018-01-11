@@ -1,4 +1,4 @@
-package client.ws;
+package de.htwsaar.server.ws;
 
 import org.springframework.stereotype.Component;
 

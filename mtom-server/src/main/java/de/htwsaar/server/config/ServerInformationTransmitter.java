@@ -26,7 +26,32 @@ public class ServerInformationTransmitter extends WebServiceGatewaySupport {
         SearchDocumentRequest request = new SearchDocumentRequest();
         request.setDocumentName(fileName);
         String finalUrl = "http://"+targetUrl+":9090/ws/documents";
-        SearchDocumentResponse response=(SearchDocumentResponse) getWebServiceTemplate().marshalSendAndReceive(targetUrl,request);
+        SearchDocumentResponse response=(SearchDocumentResponse) getWebServiceTemplate().marshalSendAndReceive(finalUrl,request);
         return response.isFound();
+    }
+
+    public List<ConnectionConfig> sendConnectionRequest(String targetUrl){
+        try {
+            NetworkInformationRequest request = new NetworkInformationRequest();
+            String finalUrl = "http://" + targetUrl + ":9090/ws/documents";
+            NetworkInformationResponse response = (NetworkInformationResponse) getWebServiceTemplate().marshalSendAndReceive(finalUrl, request);
+            return response.getConnectionConfig();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean connectWithPeer(String targetUrl ,ConnectionConfig connectionConfig){
+        try{
+            NetworkConnectionRequest request = new NetworkConnectionRequest();
+            request.setConnectionConfig(connectionConfig);
+            String finalUrl = "http://" + targetUrl + ":9090/ws/documents";
+            NetworkConnectionResponse response =(NetworkConnectionResponse) getWebServiceTemplate().marshalSendAndReceive(finalUrl,request);
+            return true;
+        }catch(Exception e){
+
+        }
+        return false;
     }
 }

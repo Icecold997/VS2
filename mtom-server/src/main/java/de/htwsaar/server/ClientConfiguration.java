@@ -1,8 +1,8 @@
-package client;
+package de.htwsaar.server;
 
-import client.gui.LoginController;
-import client.gui.MainController;
-import client.ws.DocumentsClient;
+import de.htwsaar.server.gui.LoginController;
+import de.htwsaar.server.gui.MainController;
+import de.htwsaar.server.ws.DocumentsClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;

@@ -1,4 +1,4 @@
-package client.gui;
+package de.htwsaar.server.gui;
 
 import de.htwsaar.Directory;
 import de.htwsaar.FileView;

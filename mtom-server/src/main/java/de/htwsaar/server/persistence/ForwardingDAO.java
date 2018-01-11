@@ -12,7 +12,6 @@ import java.util.Optional;
 @Transactional
 public interface ForwardingDAO extends CrudRepository<ForwardingConfig, Integer> {
     ForwardingConfig save(ForwardingConfig forwardingConfig);
-    Optional<List<ForwardingConfig>>findAllByisParent(boolean isParent);
     Optional<ForwardingConfig>findByUrl(String url);
 
 }

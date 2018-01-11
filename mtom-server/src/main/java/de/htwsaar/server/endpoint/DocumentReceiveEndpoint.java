@@ -9,6 +9,7 @@ import de.htwsaar.Document;
 import de.htwsaar.FileView;
 import de.htwsaar.StoreDocumentRequest;
 import de.htwsaar.StoreDocumentResponse;
+import de.htwsaar.server.config.FloodingTransmitter;
 import de.htwsaar.server.config.ServerConfig;
 import de.htwsaar.server.persistence.FileArrangementDAO;
 import de.htwsaar.server.persistence.FileArrangementConfig;
@@ -28,6 +29,9 @@ public class DocumentReceiveEndpoint {
 
 	@Autowired
 	ServerConfig serverConfig;
+
+	@Autowired
+	FloodingTransmitter floodingTransmitter;
 
 	private static final String NAMESPACE_URI = "http://htwsaar.de/";
 
@@ -54,6 +58,7 @@ public class DocumentReceiveEndpoint {
 				  System.out.println("Datei schon vorhanden wird überschrieben");
 			  }
 
+
 			byte[] demBytes = document.getContent();  // datei in byteform aus der soap nachricht holen
 
 			File outputFile = new File(serverConfig.fileDirectory + "/" + document.getName()); //  ort an dem datei gespeichert wird
@@ -67,7 +72,7 @@ public class DocumentReceiveEndpoint {
 				e.printStackTrace();
 			}
 
-
+		floodingTransmitter.floodReceivedFile(request);
 
 		return response;
 	}

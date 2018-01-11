@@ -52,16 +52,16 @@ public class ConnectToPeerEndpoint {
          forwardingDAO.save(forwardingConfig.get());
        }
 
-
-       System.out.println("source ip: "+ connectionConfig.getIp());
-       ForwardingConfig sourceForwardingConfig = new ForwardingConfig();
+    if(!serverConfig.getServerIp().equals(connectionConfig.getIp())) {
+        System.out.println("source ip: " + connectionConfig.getIp());
+        ForwardingConfig sourceForwardingConfig = new ForwardingConfig();
 
         System.out.println("source in datenbank aufnehmen und connections ums eins erhöhen");
-        sourceForwardingConfig.setConnections(connectionConfig.getConnections()+1);
+        sourceForwardingConfig.setConnections(connectionConfig.getConnections() + 1);
         sourceForwardingConfig.setUrl(connectionConfig.getIp());
         forwardingDAO.save(sourceForwardingConfig);
 
-
+    }
     }
 
 

@@ -3,11 +3,14 @@ package de.htwsaar.server;
 
 import de.htwsaar.AbstractJavaFxApp;
 import de.htwsaar.server.config.ServerConfig;
+import de.htwsaar.server.gui.Router;
 import javafx.application.Preloader;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Lazy;
@@ -30,7 +33,11 @@ public class Application extends AbstractJavaFxApp {
     @Autowired
 	ServerConfig serverConfig;
 
+	@Autowired
+	Router router;
 
+	@Value("${ui.client.title}")
+	private String windowClientTitle;
 
 	/**
 	 * Startet die JavaFX Stage.
@@ -45,6 +52,15 @@ public class Application extends AbstractJavaFxApp {
 
 		notifyPreloader(new Preloader.StateChangeNotification(Preloader.StateChangeNotification.Type.BEFORE_START));
 
+		router.setStage(stage);
+		router.setSceneContent("/login.fxml", "/theme.css", 500, 300);
+
+		stage.setTitle(windowClientTitle);
+		stage.setResizable(true);
+		stage.centerOnScreen();
+		stage.show();
+		stage.getIcons().add(new Image("/soap.png"));
+		router.setStage(stage);
 
 		serverConfig.startServer();
 	}

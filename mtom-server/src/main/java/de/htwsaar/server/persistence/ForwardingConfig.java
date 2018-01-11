@@ -13,10 +13,13 @@ import javax.persistence.*;
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public class ForwardingConfig extends AbstractEntity{
 
-    private String url;  //ip addresse der kinder/des parent
-    private boolean isParent;
+    private String url;  //ip addresse des verbundenenen peers
+    private int connections; // anzahl der verbindungen
 
 
+    public int getConnections() { return connections; }
+
+    public void setConnections(int connections) { this.connections = connections; }
 
     public String getUrl() {
         return url;
@@ -25,16 +28,6 @@ public class ForwardingConfig extends AbstractEntity{
     public void setUrl(String url) {
         this.url = url;
     }
-
-    public boolean isParent() {
-        return isParent;
-    }
-
-    public void setParent(boolean parent) {
-        isParent = parent;
-    }
-
-
 
 
 

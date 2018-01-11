@@ -1,7 +1,6 @@
-package client.gui;
+package de.htwsaar.server.gui;
 
-import client.ws.DocumentsClient;
-import client.ws.UrlList;
+import de.htwsaar.server.ws.DocumentsClient;
 import com.jfoenix.controls.JFXTextField;
 import de.htwsaar.DirectoryInformationResponse;
 import javafx.fxml.FXML;

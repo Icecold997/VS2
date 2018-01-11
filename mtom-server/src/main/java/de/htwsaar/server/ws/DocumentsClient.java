@@ -1,4 +1,4 @@
-package client.ws;
+package de.htwsaar.server.ws;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,6 +42,7 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 		}
 		return response.getFileInformation();
 	}
+
 
    public FileView renameDocument(String oldFileName,String newFileName){
 	   RenameDocumentRequest request = new RenameDocumentRequest();

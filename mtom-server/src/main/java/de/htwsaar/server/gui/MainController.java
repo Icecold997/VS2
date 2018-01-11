@@ -1,6 +1,6 @@
-package client.gui;
+package de.htwsaar.server.gui;
 
-import client.ws.DocumentsClient;
+import de.htwsaar.server.ws.DocumentsClient;
 import com.jfoenix.controls.JFXTextField;
 import de.htwsaar.DirectoryInformationResponse;
 import de.htwsaar.FileView;
@@ -15,15 +15,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.Callback;
-import org.apache.derby.impl.tools.sysinfo.Main;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
-import javax.swing.*;
-import javax.swing.plaf.FileChooserUI;
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
