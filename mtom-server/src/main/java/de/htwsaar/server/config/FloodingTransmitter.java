@@ -31,10 +31,11 @@ public class FloodingTransmitter  extends WebServiceGatewaySupport{
  public FloodingTransmitter(){}
 
     public void floodReceivedFile(StoreDocumentRequest storeDocumentRequest){
+        String sourceIp = storeDocumentRequest.getDocument().getSourceUri();
         Iterable<ForwardingConfig> forwardingConfigs;
         forwardingConfigs = forwardingDAO.findAll();
         for(ForwardingConfig forwardingConfig : forwardingConfigs){
-            if(!forwardingConfig.getUrl().equals(serverConfig.getServerIp())) {
+            if(!forwardingConfig.getUrl().equals(serverConfig.getServerIp()) && !forwardingConfig.getUrl().equals(sourceIp)){
                 System.out.println("Floode an :" + forwardingConfig.getUrl());
                 try {
                     StoreDocumentResponse response = (StoreDocumentResponse) getWebServiceTemplate()

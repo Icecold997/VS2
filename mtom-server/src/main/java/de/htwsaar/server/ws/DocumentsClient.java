@@ -32,6 +32,7 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 		byte[] array = Files.readAllBytes(inputPath);
 		document.setContent(array);
 		document.setName(inputPath.getFileName().toString());
+		document.setSourceUri(serverConfig.getServerIp());
 		StoreDocumentRequest request = new StoreDocumentRequest();
 		request.setDocument(document);
 
