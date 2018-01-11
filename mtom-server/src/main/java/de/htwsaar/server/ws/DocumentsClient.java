@@ -49,6 +49,7 @@ public class DocumentsClient extends WebServiceGatewaySupport {
    public FileView renameDocument(String oldFileName,String newFileName){
 	   RenameDocumentRequest request = new RenameDocumentRequest();
 	   request.setCurrentDocumentName(oldFileName);
+	   request.setSourceIp(serverConfig.getServerIp());
 	   request.setNewDocumentName(newFileName);
 	   RenameDocumentResponse response =(RenameDocumentResponse) getWebServiceTemplate().marshalSendAndReceive("http://"+serverConfig.getServerIp()+":9090/ws/documents",request);
 	   boolean success = response.isSuccess();
@@ -62,6 +63,7 @@ public class DocumentsClient extends WebServiceGatewaySupport {
    public boolean deleteDocument(String fileName){
    	  DeleteDocumentRequest request = new DeleteDocumentRequest();
 	   request.setDocumentName(fileName);
+	   request.setSourceIp(serverConfig.getServerIp());
 	   DeleteDocumentResponse response = (DeleteDocumentResponse) getWebServiceTemplate().marshalSendAndReceive("http://"+serverConfig.getServerIp()+":9090/ws/documents",request);
 	   boolean success = response.isSuccess();
 	   if(success){

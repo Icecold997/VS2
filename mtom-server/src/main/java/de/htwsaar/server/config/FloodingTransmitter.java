@@ -48,10 +48,11 @@ public class FloodingTransmitter  extends WebServiceGatewaySupport{
     }
 
     public void floodDeleteFileRequest(DeleteDocumentRequest deleteDocumentRequest){
+        String sourceIp = deleteDocumentRequest.getSourceIp();
         Iterable<ForwardingConfig> forwardingConfigs;
         forwardingConfigs = forwardingDAO.findAll();
         for(ForwardingConfig forwardingConfig : forwardingConfigs) {
-            if (!forwardingConfig.getUrl().equals(serverConfig.getServerIp())) {
+            if (!forwardingConfig.getUrl().equals(serverConfig.getServerIp()) && !forwardingConfig.getUrl().equals(sourceIp)) {
                 DeleteDocumentResponse response = (DeleteDocumentResponse) getWebServiceTemplate()
                         .marshalSendAndReceive("http://" + forwardingConfig.getUrl() + ":9090/ws/documents", deleteDocumentRequest);
             }
@@ -59,10 +60,11 @@ public class FloodingTransmitter  extends WebServiceGatewaySupport{
     }
 
     public void floodRenameRequest(RenameDocumentRequest renameDocumentRequest){
+        String sourceIp = renameDocumentRequest.getSourceIp();
         Iterable<ForwardingConfig> forwardingConfigs;
         forwardingConfigs = forwardingDAO.findAll();
         for(ForwardingConfig forwardingConfig : forwardingConfigs) {
-            if (!forwardingConfig.getUrl().equals(serverConfig.getServerIp())) {
+            if (!forwardingConfig.getUrl().equals(serverConfig.getServerIp())  && !forwardingConfig.getUrl().equals(sourceIp)) {
                 RenameDocumentResponse response = (RenameDocumentResponse) getWebServiceTemplate()
                         .marshalSendAndReceive("http://" + forwardingConfig.getUrl() + ":9090/ws/documents", renameDocumentRequest);
             }

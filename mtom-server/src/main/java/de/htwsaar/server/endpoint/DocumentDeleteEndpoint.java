@@ -8,6 +8,7 @@ import de.htwsaar.DeleteDocumentRequest;
 import de.htwsaar.DeleteDocumentResponse;
 
 
+import de.htwsaar.server.config.FloodingTransmitter;
 import de.htwsaar.server.persistence.FileArrangementConfig;
 import de.htwsaar.server.persistence.FileArrangementDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class DocumentDeleteEndpoint {
     @Autowired
     FileArrangementDAO fileArrangementDao;
 
+    @Autowired
+    FloodingTransmitter floodingTransmitter;
+
     private static final String NAMESPACE_URI = "http://htwsaar.de/";
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "deleteDocumentRequest")
@@ -36,6 +40,7 @@ public class DocumentDeleteEndpoint {
             if(file.delete()){
                 System.out.println(file.getName()+" is deleted");
                 fileArrangementDao.deleteByfilename(request.getDocumentName());
+                floodingTransmitter.floodDeleteFileRequest(request);
             }
         }
         DeleteDocumentResponse response = new DeleteDocumentResponse();

@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.7 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2018.01.11 um 07:24:03 AM CET 
+// Generiert: 2018.01.11 um 08:50:18 AM CET 
 //
 
 
@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="currentDocumentName" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="newDocumentName" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="sourceIp" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -38,7 +39,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "currentDocumentName",
-    "newDocumentName"
+    "newDocumentName",
+    "sourceIp"
 })
 @XmlRootElement(name = "renameDocumentRequest")
 public class RenameDocumentRequest {
@@ -47,6 +49,8 @@ public class RenameDocumentRequest {
     protected String currentDocumentName;
     @XmlElement(required = true)
     protected String newDocumentName;
+    @XmlElement(required = true)
+    protected String sourceIp;
 
     /**
      * Ruft den Wert der currentDocumentName-Eigenschaft ab.
@@ -94,6 +98,30 @@ public class RenameDocumentRequest {
      */
     public void setNewDocumentName(String value) {
         this.newDocumentName = value;
+    }
+
+    /**
+     * Ruft den Wert der sourceIp-Eigenschaft ab.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getSourceIp() {
+        return sourceIp;
+    }
+
+    /**
+     * Legt den Wert der sourceIp-Eigenschaft fest.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setSourceIp(String value) {
+        this.sourceIp = value;
     }
 
 }
