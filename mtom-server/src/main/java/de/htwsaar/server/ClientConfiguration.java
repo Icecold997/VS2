@@ -1,6 +1,5 @@
 package de.htwsaar.server;
 
-import de.htwsaar.server.gui.LoginController;
 import de.htwsaar.server.gui.MainController;
 import de.htwsaar.server.ws.DocumentsClient;
 import org.springframework.context.annotation.Bean;
@@ -12,12 +11,6 @@ import org.springframework.context.annotation.Scope;
  */
 @Configuration
 public class ClientConfiguration {
-
-    @Bean
-    @Scope("prototype")
-    LoginController loginController() {
-        return new LoginController();
-    }
 
     @Bean
     @Scope("prototype")

@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import de.htwsaar.*;
+import de.htwsaar.server.config.ServerConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 
@@ -13,10 +14,11 @@ import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 
 public class DocumentsClient extends WebServiceGatewaySupport {
 
-    @Autowired
-    public UrlList urlList;
+	@Autowired
+	ServerConfig serverConfig;
 
 	public DocumentsClient() {}
+
 
 	/**
 	 *
@@ -33,9 +35,8 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 		StoreDocumentRequest request = new StoreDocumentRequest();
 		request.setDocument(document);
 
-
 		StoreDocumentResponse response = (StoreDocumentResponse) getWebServiceTemplate()
-				.marshalSendAndReceive(urlList.getUrl(),request);
+				.marshalSendAndReceive("http://"+serverConfig.getServerIp()+":9090/ws/documents",request);
 
 		if(response.isSuccess()){
 			System.out.println("Datei erfolgreich versendet");
@@ -48,7 +49,7 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 	   RenameDocumentRequest request = new RenameDocumentRequest();
 	   request.setCurrentDocumentName(oldFileName);
 	   request.setNewDocumentName(newFileName);
-	   RenameDocumentResponse response =(RenameDocumentResponse) getWebServiceTemplate().marshalSendAndReceive(urlList.getUrl(),request);
+	   RenameDocumentResponse response =(RenameDocumentResponse) getWebServiceTemplate().marshalSendAndReceive("http://"+serverConfig.getServerIp()+":9090/ws/documents",request);
 	   boolean success = response.isSuccess();
 	   if(success){
 	   	System.out.println("Datei erfolgreich umbenannt");
@@ -60,7 +61,7 @@ public class DocumentsClient extends WebServiceGatewaySupport {
    public boolean deleteDocument(String fileName){
    	  DeleteDocumentRequest request = new DeleteDocumentRequest();
 	   request.setDocumentName(fileName);
-	   DeleteDocumentResponse response = (DeleteDocumentResponse) getWebServiceTemplate().marshalSendAndReceive(urlList.getUrl(),request);
+	   DeleteDocumentResponse response = (DeleteDocumentResponse) getWebServiceTemplate().marshalSendAndReceive("http://"+serverConfig.getServerIp()+":9090/ws/documents",request);
 	   boolean success = response.isSuccess();
 	   if(success){
 	   	System.out.println("Datei erfolgreich gelöscht");
@@ -76,18 +77,4 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 		return response;
 	}
 
-	public Document downloadFileFromServer(String fileName){
-	    DownloadDocumentRequest request = new DownloadDocumentRequest();
-        request.setFileName(fileName);
-        DownloadDocumentResponse response = (DownloadDocumentResponse) getWebServiceTemplate()
-                .marshalSendAndReceive(urlList.getUrl(),request);
-         return response.getDocument();
-    }
-
-    public boolean searchFile(String fileName){
-		SearchDocumentRequest request = new SearchDocumentRequest();
-		request.setDocumentName(fileName);
-		SearchDocumentResponse response =(SearchDocumentResponse) getWebServiceTemplate().marshalSendAndReceive(urlList.getUrl(),request);
-		return response.isFound();
-	}
 }

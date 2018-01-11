@@ -53,7 +53,7 @@ public class Application extends AbstractJavaFxApp {
 		notifyPreloader(new Preloader.StateChangeNotification(Preloader.StateChangeNotification.Type.BEFORE_START));
 
 		router.setStage(stage);
-		router.setSceneContent("/login.fxml", "/theme.css", 500, 300);
+		router.setSceneContent("/main.fxml");
 
 		stage.setTitle(windowClientTitle);
 		stage.setResizable(true);

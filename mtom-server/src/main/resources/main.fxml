@@ -18,12 +18,7 @@
 
 
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
-
          <children>
-             <Label fx:id="downloadDirectoryLabelRawText" minWidth="100" text="Download Verzeichnis: " />
-             <Label fx:id="downloadDirectoryLabelDynamicText" layoutX="6.0" layoutY="23.0" minWidth="100" prefHeight="17.0" prefWidth="202.0" text="" />
-             <JFXTextField fx:id="searchInput" layoutX="231.0" layoutY="18.0" minWidth="191.0" prefHeight="17.0" prefWidth="191.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-
             <TableView fx:id="table_view" layoutX="40.0" layoutY="48.0" prefHeight="276.0" prefWidth="546.0">
               <columns>
                 <TableColumn fx:id="table_name" prefWidth="256.0" text="Name" />
@@ -31,13 +26,11 @@
                   <TableColumn fx:id="table_date" prefWidth="184.0" text="Datum" />
               </columns>
             </TableView>
-              <JFXButton fx:id="searchButton" layoutX="421.0" layoutY="18.0" onAction="#search" styleClass="standardButton" text="SearchFile" />
          </children>
     </AnchorPane>
       <GridPane alignment="BOTTOM_CENTER">
           <HBox alignment="CENTER" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="4">
               <padding><Insets top="30" /></padding>
-              <JFXButton fx:id="chooseDownloadDirectoryButton" onAction="#chanceDownloadDirectory" styleClass="standardButton" text="Download Directory einstellen" />
               <JFXButton fx:id="uploadFileButton" onAction="#uploadChoosenFile" styleClass="standardButton" text="Datei hochladen" />
               <JFXButton fx:id="goBackButton" onAction="#goBack" styleClass="standardButton" text="Pfad Zurück" />
           </HBox>

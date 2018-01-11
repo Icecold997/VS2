@@ -1,5 +1,7 @@
 package de.htwsaar.server.gui;
 
+import de.htwsaar.server.config.ServerConfig;
+import de.htwsaar.server.persistence.ServerInfo;
 import de.htwsaar.server.ws.DocumentsClient;
 import com.jfoenix.controls.JFXTextField;
 import de.htwsaar.DirectoryInformationResponse;
@@ -42,10 +44,11 @@ public class MainController implements Initializable {
     private Router router;
 
     @Autowired
+    private ServerConfig serverConfig;
+
+    @Autowired
     FileViewList fileViewList;
 
-    @FXML
-    private JFXTextField searchInput;
 
     @FXML
     TableView<FileView> table_view;
@@ -56,8 +59,6 @@ public class MainController implements Initializable {
     @FXML
     TableColumn<FileView, String> table_type;
 
-    @FXML
-    Label downloadDirectoryLabelDynamicText;
 
 
    @Override
@@ -84,6 +85,8 @@ public class MainController implements Initializable {
                renameDocument(event.getNewValue(),event.getOldValue(),event.getRowValue());
            }
        });
+
+       this.getFileInformation();
        table_view.setItems(fileViewList.getFileViewList());
        table_view.setRowFactory(
                new Callback<TableView<FileView>, TableRow<FileView>>() {
@@ -112,8 +115,23 @@ public class MainController implements Initializable {
                    }
 
                });
+
+
     }
 
+    private void getFileInformation(){
+       try {
+           DirectoryInformationResponse respone = documentsClient.sendDirectoryInformationRequest("http://" + serverConfig.getServerIp() + ":9090/ws/documents");
+
+           if (respone.isSuccess()) {
+               if (!respone.getFileConfig().isEmpty()) {
+                   fileViewList.setList(respone.getFileConfig());
+               }
+           }
+       }catch (Exception e){
+           e.printStackTrace();
+       }
+    }
     private void renameDocument(String newName,String oldName,FileView fileView){
        FileView newFileView = documentsClient.renameDocument(oldName,newName);
        if(newFileView != null){
@@ -127,16 +145,7 @@ public class MainController implements Initializable {
             table_view.getItems().remove(fileView);
         }
     }
-    
-    @FXML
-    private void chanceDownloadDirectory(){
-       try {
-           downloadDirectoryLabelDynamicText.setText(router.startDirectoryChooser());
-       }
-        catch(Exception e){
 
-       }
-    }
     @FXML
     private void uploadChoosenFile(){
         try {
@@ -153,59 +162,15 @@ public class MainController implements Initializable {
    }
 
     private void handleDoubleClickOnTableItem(FileView tableItem){
-        try{
-        if(tableItem.getType().equals("File")){
 
-                Document document = documentsClient.downloadFileFromServer(tableItem.getFileOrDirectoryName());
-                byte[] demBytes = document.getContent();
-                File outputFile = new File(downloadDirectoryLabelDynamicText.getText() + "/" + document.getName());
-                FileOutputStream outputStream = new FileOutputStream(outputFile);
-                outputStream.write(demBytes);
-                outputStream.close();
-                System.out.println("Datei erfolgreich gedownloaded");
-
-
-        }else if(tableItem.getType().equals("Directory")){
-            DirectoryInformationResponse respone = documentsClient.sendDirectoryInformationRequest("http://"+tableItem.getSourceIp()+":9090/ws/documents");
-            if(respone.isSuccess()) {
-                if(!respone.getFileConfig().isEmpty()) {
-                    table_view.getItems().clear();
-                    fileViewList.getFileViewList().clear();
-                    fileViewList.setList(respone.getFileConfig());
-                    table_view.setItems(fileViewList.getFileViewList());
-                    documentsClient.urlList.addUrl("http://"+tableItem.getSourceIp()+":9090/ws/documents") ;
-
-                }
-            }
-
-         }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
     }
 
     @FXML
     private void goBack(){
-        if(documentsClient.urlList.getSize() > 1) {
-            documentsClient.urlList.remove();
-            try {
-                DirectoryInformationResponse respone = documentsClient.sendDirectoryInformationRequest(documentsClient.urlList.getUrl());
-                if (respone.isSuccess()) {
-                    table_view.getItems().clear();
-                    fileViewList.getFileViewList().clear();
-                    fileViewList.setList(respone.getFileConfig());
-                    table_view.setItems(fileViewList.getFileViewList());
-                }
-            } catch (IOException e) {
 
-            }
-        }
     }
 
-    @FXML
-    private void search(){
-        System.out.println(documentsClient.searchFile(searchInput.getText()));
-    }
+
 
     @FXML
     protected void exit() {
