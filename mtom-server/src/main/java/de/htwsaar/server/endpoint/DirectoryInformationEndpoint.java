@@ -35,6 +35,13 @@ public class DirectoryInformationEndpoint {
 
     private static final String NAMESPACE_URI = "http://htwsaar.de/";
 
+    /**
+     * Endpoint für die Weitergabe der Directory-Informationen
+     *
+     * @param request request
+     * @return Directory-Informationen
+     * @throws IOException Exception für Dateioperationen
+     */
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "sendDirectoryInformationToParentRequest")
     @ResponsePayload
     public SendDirectoryInformationToParentResponse getInfo(@RequestPayload SendDirectoryInformationToParentRequest request) throws IOException {

@@ -46,6 +46,9 @@ public class ServerConfig {
 
     public  String fileDirectory;
 
+    /**
+     * Startet den Server
+     */
     public  void startServer(){
         try {
             createFileDirectory();
@@ -62,7 +65,9 @@ public class ServerConfig {
     }
 
 
-
+    /**
+     * Erstelle Directory
+     */
     private  void createFileDirectory(){
         String path = System.getProperty("user.dir") + "/";
 
@@ -82,8 +87,11 @@ public class ServerConfig {
         }
     }
 
-
-    //durchsuche dir und füge alle directories und files in datenbank
+    /**
+     * Durchsuchen des Directories und Ablegen der Files in der Datenbank
+     *
+     * @param dir Directory
+     */
     private void checkDirecotory(File dir)  {
         File[] files = dir.listFiles();
 
@@ -157,6 +165,12 @@ public class ServerConfig {
         }
     }
 
+    /**
+     * Verbinde zum Peer
+     *
+     * @param peerIp IP des Peer
+     * @param connectionConfig  Verbindungskonfiguration
+     */
     private void connectWithPeer(String peerIp ,ConnectionConfig connectionConfig){
         ConnectionConfig connectionConfigFromTarget = transmitter.connectWithPeer(peerIp,connectionConfig);
         Optional<ForwardingConfig> forwardingConfig = forwardingDAO.findByUrl(connectionConfigFromTarget.getIp());
@@ -171,6 +185,11 @@ public class ServerConfig {
         }
     }
 
+    /**
+     * Erhalte Server IP
+     *
+     * @return IP
+     */
     public String getServerIp(){
         return this.serverIp;
     }

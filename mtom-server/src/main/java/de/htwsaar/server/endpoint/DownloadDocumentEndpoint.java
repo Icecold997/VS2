@@ -30,6 +30,12 @@ public class DownloadDocumentEndpoint {
 
     private static final String NAMESPACE_URI = "http://htwsaar.de/";
 
+    /**
+     * Endpoint für den Download von Dateien.
+     * @param request request
+     * @return response
+     * @throws IOException Exception für Dateioperationen
+     */
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "downloadDocumentRequest")
     @ResponsePayload
     public DownloadDocumentResponse downloadDocument(@RequestPayload DownloadDocumentRequest request) throws IOException {

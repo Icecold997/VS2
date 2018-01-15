@@ -61,6 +61,12 @@ public class MainController implements Initializable {
 
 
 
+    /**
+     * Initialisierung der Darstellung
+     *
+     * @param url URL
+     * @param bundle Bundle
+     */
    @Override
     public void initialize(URL url, ResourceBundle bundle) {
 
@@ -119,6 +125,9 @@ public class MainController implements Initializable {
 
     }
 
+    /**
+     * Erhalte Dateiinformatoonen
+     */
     private void getFileInformation(){
        try {
            DirectoryInformationResponse respone = documentsClient.sendDirectoryInformationRequest("http://" + serverConfig.getServerIp() + ":9090/ws/documents");
@@ -132,6 +141,14 @@ public class MainController implements Initializable {
            e.printStackTrace();
        }
     }
+
+    /**
+     * Dateiumbenennung
+     *
+     * @param newName neuer Name
+     * @param oldName alter Name
+     * @param fileView Darstellung
+     */
     private void renameDocument(String newName,String oldName,FileView fileView){
        FileView newFileView = documentsClient.renameDocument(oldName,newName);
        if(newFileView != null){
@@ -140,12 +157,20 @@ public class MainController implements Initializable {
        }
     }
 
+    /**
+     * Dateilöschung
+     *
+     * @param fileView Darstellung
+     */
     private void deleteDocument(FileView fileView){
         if( documentsClient.deleteDocument(fileView.getFileOrDirectoryName())) {
             table_view.getItems().remove(fileView);
         }
     }
 
+    /**
+     * Dateiupload
+     */
     @FXML
     private void uploadChoosenFile(){
         try {
@@ -155,23 +180,37 @@ public class MainController implements Initializable {
         }
     }
 
-
-   public void addItem(FileView fileView){
+    /**
+     * Element zur Darstellung hinzufügen
+     *
+     * @param fileView Darstellung
+     */
+    public void addItem(FileView fileView){
        fileViewList.addFileView(fileView);
        table_view.setItems(fileViewList.getFileViewList());
-   }
+    }
 
+    /**
+     * deprecated
+     *
+     * @param tableItem --
+     */
     private void handleDoubleClickOnTableItem(FileView tableItem){
 
     }
 
+    /**
+     * deprecated --
+     */
     @FXML
     private void goBack(){
 
     }
 
 
-
+    /**
+     * exit
+     */
     @FXML
     protected void exit() {
         System.exit(0); //TODO Ordentlicher Exit.

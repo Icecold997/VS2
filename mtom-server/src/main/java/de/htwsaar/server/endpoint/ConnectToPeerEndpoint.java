@@ -30,6 +30,13 @@ public class ConnectToPeerEndpoint {
 
     private static final String NAMESPACE_URI = "http://htwsaar.de/";
 
+    /**
+     * Endpoint für die Verbindung zum Peer
+     *
+     * @param request request
+     * @return response
+     * @throws IOException Exception für Schreiboperationen
+     */
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "networkConnectionRequest")
     @ResponsePayload
     public NetworkConnectionResponse connectWithNetwork(@RequestPayload NetworkConnectionRequest request) throws IOException {

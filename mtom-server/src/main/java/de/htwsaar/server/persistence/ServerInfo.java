@@ -26,13 +26,22 @@ public class ServerInfo extends AbstractEntity {
     }
 
 
+    /**
+     * Erhalte Server IP
+     *
+     * @return IP
+     */
     public String getServerIp() {
         return serverIp;
     }
 
+    /**
+     * Setze Server IP
+     *
+     * @param serverIp IP
+     */
     public void setServerIp(String serverIp) {
         this.serverIp = serverIp;
     }
-
 
 }

@@ -30,6 +30,11 @@ public class FloodingTransmitter  extends WebServiceGatewaySupport{
 
  public FloodingTransmitter(){}
 
+    /**
+     * Verteile & speichere erhaltenes Document
+     *
+     * @param storeDocumentRequest Request
+     */
     public void floodReceivedFile(StoreDocumentRequest storeDocumentRequest){
         String sourceIp = storeDocumentRequest.getDocument().getSourceUri();
         Iterable<ForwardingConfig> forwardingConfigs;
@@ -47,6 +52,11 @@ public class FloodingTransmitter  extends WebServiceGatewaySupport{
         }
     }
 
+    /**
+     * Verteile Löschung des File
+     *
+     * @param deleteDocumentRequest request
+     */
     public void floodDeleteFileRequest(DeleteDocumentRequest deleteDocumentRequest){
         String sourceIp = deleteDocumentRequest.getSourceIp();
         Iterable<ForwardingConfig> forwardingConfigs;
@@ -59,6 +69,11 @@ public class FloodingTransmitter  extends WebServiceGatewaySupport{
         }
     }
 
+    /**
+     * Verteile und speichere Rename Request
+     *
+     * @param renameDocumentRequest request
+     */
     public void floodRenameRequest(RenameDocumentRequest renameDocumentRequest){
         String sourceIp = renameDocumentRequest.getSourceIp();
         Iterable<ForwardingConfig> forwardingConfigs;

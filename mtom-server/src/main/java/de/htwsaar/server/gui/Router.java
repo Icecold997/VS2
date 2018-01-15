@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 /**
  * Der Router für die ClientApplication. Kann injiziert werden um auf eine andere Szene zu navigieren.
  *
- * @author cedosw mgoebel
+ * @author wirth
  */
 @Component
 public class Router {
@@ -39,6 +39,15 @@ public class Router {
         stage.sizeToScene();
     }
 
+    /**
+     * Setzen des Szenen-Inhalts
+     *
+     * @param fxml          fxml
+     * @param stylesheet    Stylesheet
+     * @param width         Breite
+     * @param height        Höhe
+     * @return Seite
+     */
     public Parent setSceneContent(String fxml, String stylesheet, int width, int height) {
         Parent page = (Parent) fxmlLoader.load(Application.class.getResource(fxml), null);
         Scene scene = new Scene(page, width, height);
@@ -52,23 +61,54 @@ public class Router {
         return page;
     }
 
+    /**
+     * Directory-Chooser
+     *
+     * @return Directory c:/.../mydir/
+     */
     public String startDirectoryChooser(){
         DirectoryChooser directoryChooser = new DirectoryChooser();
         return directoryChooser.showDialog(stage).toString();
     }
+
+    /**
+     * File-Chooser
+     *
+     * @return c:/.../myfile
+     */
     public File startFileChooser(){
         FileChooser fileChooser = new FileChooser();
         return fileChooser.showOpenDialog(stage);
     }
 
+    /**
+     * Scene Content für Parents
+     *
+     * @param fxml          fxml
+     * @param stylesheet    stylesheet
+     * @return page (scene content)
+     */
     public Parent setSceneContent(String fxml, String stylesheet) {
         return setSceneContent(fxml, stylesheet, 900, 900);
     }
 
+    /**
+     * Inhalt für Parents
+     * @param fxml fxml
+     * @return Scene Content
+     */
     public Parent setSceneContent(String fxml) {
         return setSceneContent(fxml, "/theme.css", 700, 400);
     }
 
+    /**
+     * Zeige Parent
+     * @param fxml  fxml
+     * @param stylesheet stylesheet
+     * @param width Breite
+     * @param height Höhe
+     * @param title Titel
+     */
     public void showModal(String fxml, String stylesheet, int width, int height, String title) {
         Stage dialog = new Stage();
         dialog.getIcons().add(new Image("/soap.png"));
@@ -86,15 +126,30 @@ public class Router {
 
     }
 
+    /**
+     * Schließen des Parents
+     *
+     * @param scene Szene
+     */
     public void closeModal(Parent scene){
         Stage stage = (Stage) scene.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Erhalte Stage
+     *
+     * @return Stage
+     */
     public Stage getStage() {
         return stage;
     }
 
+    /**
+     * Setze Stage
+     *
+     * @param stage Stage
+     */
     public void setStage(Stage stage) {
         this.stage = stage;
 

@@ -30,6 +30,13 @@ public class NetworkInformationEndpoint {
 
     private static final String NAMESPACE_URI = "http://htwsaar.de/";
 
+    /**
+     * Endpoint für die Netzwerkinformationen
+     *
+     * @param request request
+     * @return response
+     * @throws IOException Exception für Schreiboperationen
+     */
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "networkInformationRequest")
     @ResponsePayload
     public NetworkInformationResponse getNetworkInformation(@RequestPayload NetworkInformationRequest request) throws IOException {

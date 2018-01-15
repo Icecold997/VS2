@@ -34,6 +34,13 @@ public class DocumentRenameEndpoint {
 
     private static final String NAMESPACE_URI = "http://htwsaar.de/";
 
+    /**
+     * Endpoint für die Dateiumbenennung.
+     *
+     * @param request request
+     * @return response
+     * @throws IOException Exception für Dateioperationen
+     */
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "renameDocumentRequest")
     @ResponsePayload
     public RenameDocumentResponse renameDocument(@RequestPayload RenameDocumentRequest request) throws IOException {

@@ -16,7 +16,14 @@ public class ServerInformationTransmitter extends WebServiceGatewaySupport {
 
  //TODO testen
 
-
+    /**
+     * Handler für die Requests an den Parent.
+     *
+     * @param targetUrl Parent URL
+     * @param directory Directory
+     * @param ownUrl    eigene URL
+     * @return  true
+     */
     public boolean sendRequestToParent(String targetUrl,Directory directory,String ownUrl){
 
         SendDirectoryInformationToParentRequest request = new SendDirectoryInformationToParentRequest();
@@ -27,6 +34,13 @@ public class ServerInformationTransmitter extends WebServiceGatewaySupport {
         return true;
     }
 
+    /**
+     * Suchanfrage an das Child
+     *
+     * @param targetUrl Child-URL
+     * @param fileName  Dateiname
+     * @return          Dateifund true/false
+     */
     public boolean sendSearchRequestToChild(String targetUrl,String fileName){
         SearchDocumentRequest request = new SearchDocumentRequest();
         request.setDocumentName(fileName);
@@ -35,6 +49,12 @@ public class ServerInformationTransmitter extends WebServiceGatewaySupport {
         return response.isFound();
     }
 
+    /**
+     * Connection-Request senden
+     *
+     * @param targetUrl Ziel URL
+     * @return null
+     */
     public List<ConnectionConfig> sendConnectionRequest(String targetUrl){
         try {
             NetworkInformationRequest request = new NetworkInformationRequest();
@@ -47,6 +67,13 @@ public class ServerInformationTransmitter extends WebServiceGatewaySupport {
         return null;
     }
 
+    /**
+     * Mit Peer verbinden
+     *
+     * @param targetUrl        Ziel URL
+     * @param connectionConfig Verbindungskonfiguration
+     * @return null
+     */
     public ConnectionConfig connectWithPeer(String targetUrl ,ConnectionConfig connectionConfig){
         try{
             NetworkConnectionRequest request = new NetworkConnectionRequest();
