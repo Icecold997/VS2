@@ -12,6 +12,14 @@ public class ServerInformationTransmitter extends WebServiceGatewaySupport {
 
  //TODO testen
 
+    /**
+     * Handler für die Requests an den Parent.
+     *
+     * @param targetUrl Parent URL
+     * @param directory Directory
+     * @param ownUrl    eigene URL
+     * @return  true
+     */
     public boolean sendRequestToParent(String targetUrl,Directory directory,String ownUrl){
 
         SendDirectoryInformationToParentRequest request = new SendDirectoryInformationToParentRequest();
@@ -22,6 +30,13 @@ public class ServerInformationTransmitter extends WebServiceGatewaySupport {
         return true;
     }
 
+    /**
+     * Suchanfrage an das Child
+     *
+     * @param targetUrl Child-URL
+     * @param fileName  Dateiname
+     * @return          Dateifund true/false
+     */
     public boolean sendSearchRequestToChild(String targetUrl,String fileName){
         SearchDocumentRequest request = new SearchDocumentRequest();
         request.setDocumentName(fileName);

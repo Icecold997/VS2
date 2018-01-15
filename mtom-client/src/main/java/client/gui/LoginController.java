@@ -15,7 +15,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * @author cedosw
+ * @author wirth
  */
 public class LoginController implements Initializable {
 
@@ -37,13 +37,21 @@ public class LoginController implements Initializable {
     @FXML
     private JFXTextField hostInput;
 
+    /**
+     * Initialisierung
+     *
+     * @param url URL
+     * @param bundle Bundle
+     */
     public void initialize(URL url, ResourceBundle bundle) {
     }
 
+    /**
+     * Melden am Zielserver
+     */
     @FXML
     protected void login() {
         try {
-            //TODO hostinput als url verwenden
            DirectoryInformationResponse respone = documentsClient.sendDirectoryInformationRequest("http://"+hostInput.getText()+":9090/ws/documents");
 
            if(respone.isSuccess()){
@@ -60,6 +68,9 @@ public class LoginController implements Initializable {
     }
 
 
+    /**
+     * exit
+     */
     @FXML
     protected void exit() {
         System.exit(0); //TODO Ordentlicher Exit.

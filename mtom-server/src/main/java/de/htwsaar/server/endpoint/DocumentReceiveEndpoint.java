@@ -31,6 +31,13 @@ public class DocumentReceiveEndpoint {
 
 	private static final String NAMESPACE_URI = "http://htwsaar.de/";
 
+	/**
+	 * Endpoint für den Dateiempfang
+	 *
+	 * @param request request
+	 * @return response
+	 * @throws IOException Exception für Dateioperationen
+	 */
 	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "storeDocumentRequest")
 	@ResponsePayload
 	public StoreDocumentResponse storeDocument(@RequestPayload StoreDocumentRequest request) throws IOException {

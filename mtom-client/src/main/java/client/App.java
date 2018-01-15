@@ -30,6 +30,12 @@ public class App  extends AbstractJavaFxApp {
 	@Value("${ui.client.title}")
 	private String windowClientTitle;
 
+	/**
+	 * Startet die JavaFX Stage.
+	 *
+	 * @param stage Die MainStage der Anwendung.
+	 * @throws Exception Exceptions während dem Starten der JavaFX Stage.
+	 */
 	@Override
 	public void start(Stage stage) throws Exception {
 		notifyPreloader(new Preloader.StateChangeNotification(Preloader.StateChangeNotification.Type.BEFORE_START));
@@ -44,6 +50,12 @@ public class App  extends AbstractJavaFxApp {
 		stage.getIcons().add(new Image("/soap.png"));
 		router.setStage(stage);
 	}
+
+	/**
+	 * Die Main Methode des Programms.
+	 *
+	 * @param args Kommandozeilenparameter.
+	 */
 	public static void main(String args[]) {
 		launchApp(App.class, args);
 	}

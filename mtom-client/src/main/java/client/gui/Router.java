@@ -39,6 +39,15 @@ public class Router {
         stage.sizeToScene();
     }
 
+    /**
+     * Setzen des Szenen-Inhalts
+     *
+     * @param fxml          fxml
+     * @param stylesheet    Stylesheet
+     * @param width         Breite
+     * @param height        Höhe
+     * @return Seite
+     */
     public Parent setSceneContent(String fxml, String stylesheet, int width, int height) {
         Parent page = (Parent) fxmlLoader.load(App.class.getResource(fxml), null);
         Scene scene = new Scene(page, width, height);
@@ -52,19 +61,42 @@ public class Router {
         return page;
     }
 
+    /**
+     * Directory-Chooser
+     *
+     * @return Directory c:/.../mydir/
+     */
     public String startDirectoryChooser(){
         DirectoryChooser directoryChooser = new DirectoryChooser();
         return directoryChooser.showDialog(stage).toString();
     }
+
+    /**
+     * File-Chooser
+     *
+     * @return c:/.../myfile
+     */
     public File startFileChooser(){
         FileChooser fileChooser = new FileChooser();
         return fileChooser.showOpenDialog(stage);
     }
 
+    /**
+     * Scene Content für Parents
+     *
+     * @param fxml          fxml
+     * @param stylesheet    stylesheet
+     * @return page (scene content)
+     */
     public Parent setSceneContent(String fxml, String stylesheet) {
         return setSceneContent(fxml, stylesheet, 900, 900);
     }
 
+    /**
+     * Inhalt für Parents
+     * @param fxml fxml
+     * @return Scene Content
+     */
     public Parent setSceneContent(String fxml) {
         return setSceneContent(fxml, "/theme.css", 700, 400);
     }
@@ -86,15 +118,30 @@ public class Router {
 
     }
 
+    /**
+     * Schließen des Parents
+     *
+     * @param scene Szene
+     */
     public void closeModal(Parent scene){
         Stage stage = (Stage) scene.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Erhalte Stage
+     *
+     * @return Stage
+     */
     public Stage getStage() {
         return stage;
     }
 
+    /**
+     * Setze Stage
+     *
+     * @param stage Stage
+     */
     public void setStage(Stage stage) {
         this.stage = stage;
 

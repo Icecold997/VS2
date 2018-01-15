@@ -47,6 +47,11 @@ public class ServerConfig implements EmbeddedServletContainerCustomizer {
 
     public  String fileDirectory;
 
+    /**
+     * Feststellung und Ausgabe der Server-IP
+     *
+     * @param container Container
+     */
     @Override
     public void customize(ConfigurableEmbeddedServletContainer container) {
         try {
@@ -62,12 +67,18 @@ public class ServerConfig implements EmbeddedServletContainerCustomizer {
         }
     }
 
+    /**
+     * Startet den Server
+     */
     public  void startServer(){
         //String ip = request.getRemoteAddr();
         createFileDirectory();
 
     }
 
+    /**
+     * Erstellung eines Directories
+     */
     private  void createFileDirectory(){
 
         String path = System.getProperty("user.dir") + "/";
@@ -90,7 +101,11 @@ public class ServerConfig implements EmbeddedServletContainerCustomizer {
     }
 
 
-    //durchsuche dir und füge alle directories und files in datenbank
+    /**
+     * Durchsuchen des Directories und Ablegen der Files in der Datenbank
+     *
+     * @param dir Directory
+     */
     private void checkDirecotory(File dir)  {
         File[] files = dir.listFiles();
 
@@ -127,6 +142,11 @@ public class ServerConfig implements EmbeddedServletContainerCustomizer {
         }
     }
 
+    /**
+     * Übersenden der IP- und Directory-Informationen ans Parent
+     *
+     * @param dir Directory
+     */
   //TODO beim server start vater informationen schicken (
    private void sendInformationToParent(File dir){
        Optional<List<ForwardingConfig>> forwardingConfigs;

@@ -26,6 +26,13 @@ public class DocumentDeleteEndpoint {
 
     private static final String NAMESPACE_URI = "http://htwsaar.de/";
 
+    /**
+     * Endpoint für die Dateilöschung
+     *
+     * @param request Anfrage
+     * @return response
+     * @throws IOException Exception für Dateioperationen
+     */
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "deleteDocumentRequest")
     @ResponsePayload
     public DeleteDocumentResponse deleteDocument(@RequestPayload DeleteDocumentRequest request) throws IOException {

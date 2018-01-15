@@ -21,8 +21,8 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 	/**
 	 *
 	 * @param pathToFile im format C:/../myfile.t
-	 * @return
-	 * @throws IOException
+	 * @return Dateiinformation
+	 * @throws IOException Exception für den Reader
      */
 	public FileView storeDocument(String pathToFile) throws IOException {
 		Document document = new Document();
@@ -43,7 +43,14 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 		return response.getFileInformation();
 	}
 
-   public FileView renameDocument(String oldFileName,String newFileName){
+	/**
+	 * Dateiumbenennung
+	 *
+	 * @param oldFileName alter Dateiname
+	 * @param newFileName neuer Dateiname
+	 * @return response Neue Datei
+	 */
+	public FileView renameDocument(String oldFileName,String newFileName){
 	   RenameDocumentRequest request = new RenameDocumentRequest();
 	   request.setCurrentDocumentName(oldFileName);
 	   request.setNewDocumentName(newFileName);
@@ -54,9 +61,15 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 	   }
 
 	   return response.getNewFile();
-   }
+	}
 
-   public boolean deleteDocument(String fileName){
+	/**
+	 * Dateilöschung
+	 *
+	 * @param fileName Zieldatei
+	 * @return success
+	 */
+	public boolean deleteDocument(String fileName){
    	  DeleteDocumentRequest request = new DeleteDocumentRequest();
 	   request.setDocumentName(fileName);
 	   DeleteDocumentResponse response = (DeleteDocumentResponse) getWebServiceTemplate().marshalSendAndReceive(urlList.getUrl(),request);
@@ -65,9 +78,15 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 	   	System.out.println("Datei erfolgreich gelöscht");
 	   }
    	   return success;
+	}
 
-   }
-
+	/**
+	 * Senden der Directory-Informationen
+	 *
+	 * @param url Ziel-URL
+	 * @return response
+	 * @throws IOException Exception für sendandrecieve
+	 */
 	public DirectoryInformationResponse sendDirectoryInformationRequest(String url) throws IOException {
 		DirectoryInformationRequest request = new DirectoryInformationRequest();
 		DirectoryInformationResponse response = (DirectoryInformationResponse) getWebServiceTemplate()
@@ -75,6 +94,12 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 		return response;
 	}
 
+	/**
+	 * Datei-Download
+	 *
+	 * @param fileName Dateiname
+	 * @return response Download
+	 */
 	public Document downloadFileFromServer(String fileName){
 	    DownloadDocumentRequest request = new DownloadDocumentRequest();
         request.setFileName(fileName);
@@ -83,7 +108,13 @@ public class DocumentsClient extends WebServiceGatewaySupport {
          return response.getDocument();
     }
 
-    public boolean searchFile(String fileName){
+	/**
+	 * Datei-Suche
+	 *
+	 * @param fileName Datei-Name
+	 * @return response zum Fund
+	 */
+	public boolean searchFile(String fileName){
 		SearchDocumentRequest request = new SearchDocumentRequest();
 		request.setDocumentName(fileName);
 		SearchDocumentResponse response =(SearchDocumentResponse) getWebServiceTemplate().marshalSendAndReceive(urlList.getUrl(),request);
