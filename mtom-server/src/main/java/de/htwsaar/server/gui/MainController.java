@@ -184,7 +184,11 @@ public class MainController implements Initializable {
      */
     public void addItem(FileView fileView){
        fileViewList.addFileView(fileView);
-       table_view.setItems(fileViewList.getFileViewList());
+       //table_view.setItems(fileViewList.getFileViewList());
+    }
+
+    public void deleteFile(FileView fileView){
+        fileViewList.deleteFileView(fileView);
     }
 
     /**

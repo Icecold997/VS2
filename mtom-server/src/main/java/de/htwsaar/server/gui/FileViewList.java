@@ -2,6 +2,7 @@ package de.htwsaar.server.gui;
 
 import de.htwsaar.Directory;
 import de.htwsaar.FileView;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.springframework.stereotype.Component;
@@ -31,11 +32,16 @@ public class FileViewList {
     }
 
     public void deleteFileView(FileView fileView){
-        for(FileView f: fileViewList){
-            if(f.getFileOrDirectoryName().equals(fileView.getFileOrDirectoryName())){
-                fileViewList.remove(f);
-            }
-        }
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                    for (FileView f : fileViewList) {
+                        if (f.getFileOrDirectoryName().equals(fileView.getFileOrDirectoryName())) {
+                            fileViewList.remove(f);
+                        }
+                    }
+                }
+            });
     }
 
     public void setList(List<FileView> fileViews){

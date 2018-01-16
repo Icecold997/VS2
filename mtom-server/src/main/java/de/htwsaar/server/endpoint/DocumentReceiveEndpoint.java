@@ -38,7 +38,7 @@ public class DocumentReceiveEndpoint {
 	FloodingTransmitter floodingTransmitter;
 
 	@Autowired
-	FileViewList fileViewList;
+	MainController mainController;
 
 	private static final String NAMESPACE_URI = "http://htwsaar.de/";
 
@@ -82,14 +82,13 @@ public class DocumentReceiveEndpoint {
 				outputStream.close();
 				response.setSuccess(true);
 				response.setFileInformation(fileArragementConfigToFileView(fileArrangementConfig));
-				if(!response.getFileInformation().getSourceIp().equals(serverConfig.getServerIp())) {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-                           fileViewList.addFileView(response.getFileInformation());
+                            mainController.addItem(response.getFileInformation());
                         }
                     });
-				}
+
 			} catch (Exception e) {
 				//e.printStackTrace();
 			}

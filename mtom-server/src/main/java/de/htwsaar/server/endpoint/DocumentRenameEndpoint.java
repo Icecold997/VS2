@@ -11,6 +11,7 @@ import de.htwsaar.RenameDocumentResponse;
 import de.htwsaar.server.config.FloodingTransmitter;
 import de.htwsaar.server.config.ServerConfig;
 import de.htwsaar.server.gui.FileViewList;
+import de.htwsaar.server.gui.MainController;
 import de.htwsaar.server.persistence.FileArrangementConfig;
 import de.htwsaar.server.persistence.FileArrangementDAO;
 import javafx.application.Platform;
@@ -35,7 +36,7 @@ public class DocumentRenameEndpoint {
     FloodingTransmitter floodingTransmitter;
 
     @Autowired
-    FileViewList fileViewList;
+    MainController mainController;
 
     private static final String NAMESPACE_URI = "http://htwsaar.de/";
 
@@ -73,18 +74,25 @@ public class DocumentRenameEndpoint {
                     oldFileView.setType("File");
                     fileView.setType("File");
                 }
-                System.out.println("lösche datei aus gui : " + oldFileView.getFileOrDirectoryName());
-                fileViewList.deleteFileView(oldFileView);
+
                 fileView.setFileOrDirectoryName(request.getNewDocumentName());
-                System.out.println("füge neue datei in gui hinzu" + fileView.getFileOrDirectoryName());
+
+
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        fileViewList.addFileView(fileView);
+                        try {
+                            System.out.println("lösche datei aus gui : " + oldFileView.getFileOrDirectoryName());
+                            mainController.deleteFile(oldFileView);
+                            Thread.currentThread().sleep(1000);
+                            System.out.println("füge neue datei in gui hinzu" + fileView.getFileOrDirectoryName());
+                            mainController.addItem(fileView);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
                     }
                 });
 
-                fileViewList.addFileView(fileView);
                 response.setNewFile(fileView);
             }
             fileArrangementConfig.get().setFilename(request.getNewDocumentName());

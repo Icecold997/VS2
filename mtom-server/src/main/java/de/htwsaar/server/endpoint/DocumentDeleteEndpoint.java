@@ -11,6 +11,7 @@ import de.htwsaar.DeleteDocumentResponse;
 import de.htwsaar.FileView;
 import de.htwsaar.server.config.FloodingTransmitter;
 import de.htwsaar.server.gui.FileViewList;
+import de.htwsaar.server.gui.MainController;
 import de.htwsaar.server.persistence.FileArrangementConfig;
 import de.htwsaar.server.persistence.FileArrangementDAO;
 import javafx.application.Platform;
@@ -32,7 +33,7 @@ public class DocumentDeleteEndpoint {
     FloodingTransmitter floodingTransmitter;
 
     @Autowired
-    FileViewList fileViewList;
+    MainController mainController;
 
     private static final String NAMESPACE_URI = "http://htwsaar.de/";
 
@@ -55,7 +56,7 @@ public class DocumentDeleteEndpoint {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        fileViewList.deleteFileView(fileArragementConfigToFileView(fileArrangementConfig.get()));
+                        mainController.deleteFile(fileArragementConfigToFileView(fileArrangementConfig.get()));
                     }
                 });
 
