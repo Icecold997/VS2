@@ -18,15 +18,16 @@ public class FileViewList {
         return this.fileViewList;
     }
 
-    public void addFileView(FileView fileView){
-        ArrayList<FileView> delFileView = new ArrayList<FileView>();
-        for(FileView f : fileViewList){
-            if(f.getFileOrDirectoryName().equals(fileView.getFileOrDirectoryName())){
-                delFileView.add(f);
+    public void addFileView(FileView fileView) {
+
+            ArrayList<FileView> delFileView = new ArrayList<FileView>();
+            for (FileView f : fileViewList) {
+                if (f.getFileOrDirectoryName().equals(fileView.getFileOrDirectoryName())) {
+                    delFileView.add(f);
+                }
             }
-        }
-        this.fileViewList.removeAll(delFileView);
-        this.fileViewList.add(fileView);
+            this.fileViewList.removeAll(delFileView);
+            this.fileViewList.add(fileView);
     }
 
     public void deleteFileView(FileView fileView){

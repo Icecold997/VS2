@@ -13,6 +13,7 @@ import de.htwsaar.server.config.FloodingTransmitter;
 import de.htwsaar.server.gui.FileViewList;
 import de.htwsaar.server.persistence.FileArrangementConfig;
 import de.htwsaar.server.persistence.FileArrangementDAO;
+import javafx.application.Platform;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -51,7 +52,13 @@ public class DocumentDeleteEndpoint {
             File file = new File(fileArrangementConfig.get().getFileLocation()+"/"+fileArrangementConfig.get().getFilename());
             if(file.delete()){
                 System.out.println(file.getName()+" is deleted update gui");
-             //   fileViewList.deleteFileView(this.fileArragementConfigToFileView(fileArrangementConfig.get()));
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        fileViewList.deleteFileView(fileArragementConfigToFileView(fileArrangementConfig.get()));
+                    }
+                });
+
                 fileArrangementDao.deleteByfilename(request.getDocumentName());
                 floodingTransmitter.floodDeleteFileRequest(request);
             }

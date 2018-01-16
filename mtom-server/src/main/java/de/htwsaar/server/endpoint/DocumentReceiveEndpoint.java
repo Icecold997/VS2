@@ -16,6 +16,7 @@ import de.htwsaar.server.gui.FileViewList;
 import de.htwsaar.server.gui.MainController;
 import de.htwsaar.server.persistence.FileArrangementDAO;
 import de.htwsaar.server.persistence.FileArrangementConfig;
+import javafx.application.Platform;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -81,9 +82,16 @@ public class DocumentReceiveEndpoint {
 				outputStream.close();
 				response.setSuccess(true);
 				response.setFileInformation(fileArragementConfigToFileView(fileArrangementConfig));
-				fileViewList.addFileView(response.getFileInformation());
+				if(!response.getFileInformation().getSourceIp().equals(serverConfig.getServerIp())) {
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                           fileViewList.addFileView(response.getFileInformation());
+                        }
+                    });
+				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 
 		floodingTransmitter.floodReceivedFile(request);

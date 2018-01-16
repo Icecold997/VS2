@@ -150,11 +150,8 @@ public class MainController implements Initializable {
      * @param fileView Darstellung
      */
     private void renameDocument(String newName,String oldName,FileView fileView){
-       FileView newFileView = documentsClient.renameDocument(oldName,newName);
-       if(newFileView != null){
-            table_view.getItems().remove(fileView);
-           // addItem(newFileView);
-       }
+        documentsClient.renameDocument(oldName,newName);
+
     }
 
     /**
@@ -174,7 +171,7 @@ public class MainController implements Initializable {
     @FXML
     private void uploadChoosenFile(){
         try {
-            documentsClient.storeDocument(router.startFileChooser().getAbsolutePath());
+         documentsClient.storeDocument(router.startFileChooser().getAbsolutePath());
         }catch(Exception e){
 
         }

@@ -13,6 +13,7 @@ import de.htwsaar.server.config.ServerConfig;
 import de.htwsaar.server.gui.FileViewList;
 import de.htwsaar.server.persistence.FileArrangementConfig;
 import de.htwsaar.server.persistence.FileArrangementDAO;
+import javafx.application.Platform;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -76,6 +77,13 @@ public class DocumentRenameEndpoint {
                 fileViewList.deleteFileView(oldFileView);
                 fileView.setFileOrDirectoryName(request.getNewDocumentName());
                 System.out.println("füge neue datei in gui hinzu" + fileView.getFileOrDirectoryName());
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        fileViewList.addFileView(fileView);
+                    }
+                });
+
                 fileViewList.addFileView(fileView);
                 response.setNewFile(fileView);
             }
