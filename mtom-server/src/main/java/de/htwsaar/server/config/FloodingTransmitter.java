@@ -41,7 +41,7 @@ public class FloodingTransmitter  extends WebServiceGatewaySupport{
         forwardingConfigs = forwardingDAO.findAll();
         for(ForwardingConfig forwardingConfig : forwardingConfigs){
             if(!forwardingConfig.getUrl().equals(serverConfig.getServerIp()) && !forwardingConfig.getUrl().equals(sourceIp)){
-                System.out.println("Floode an :" + forwardingConfig.getUrl());
+                System.out.println("Floode empfangene datei an :" + forwardingConfig.getUrl());
                 try {
                     StoreDocumentResponse response = (StoreDocumentResponse) getWebServiceTemplate()
                             .marshalSendAndReceive("http://" + forwardingConfig.getUrl()+ ":9090/ws/documents", storeDocumentRequest);
@@ -63,6 +63,7 @@ public class FloodingTransmitter  extends WebServiceGatewaySupport{
         forwardingConfigs = forwardingDAO.findAll();
         for(ForwardingConfig forwardingConfig : forwardingConfigs) {
             if (!forwardingConfig.getUrl().equals(serverConfig.getServerIp()) && !forwardingConfig.getUrl().equals(sourceIp)) {
+                System.out.println("Floode gelöschte datei an :" + forwardingConfig.getUrl());
                 DeleteDocumentResponse response = (DeleteDocumentResponse) getWebServiceTemplate()
                         .marshalSendAndReceive("http://" + forwardingConfig.getUrl() + ":9090/ws/documents", deleteDocumentRequest);
             }
