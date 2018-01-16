@@ -33,6 +33,13 @@ public class DocumentSearchEndpoint {
 
     private static final String NAMESPACE_URI = "http://htwsaar.de/";
 
+    /**
+     * Endpoint für die Dateisuche
+     *
+     * @param request request
+     * @return response
+     * @throws IOException Exception für Dateioperationen
+     */
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "searchDocumentRequest")
     @ResponsePayload
     public SearchDocumentResponse searchDocument(@RequestPayload SearchDocumentRequest request) throws IOException {
@@ -56,8 +63,6 @@ public class DocumentSearchEndpoint {
                 }
             }
         }
-
-
        return  response;
     }
 

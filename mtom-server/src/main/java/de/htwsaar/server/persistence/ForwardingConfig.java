@@ -17,19 +17,38 @@ public class ForwardingConfig extends AbstractEntity{
     private boolean isParent;
 
 
-
+    /**
+     * Erhalte URL
+     *
+     * @return URL
+     */
     public String getUrl() {
         return url;
     }
 
+    /**
+     * Setze URL
+     *
+     * @param url URL
+     */
     public void setUrl(String url) {
         this.url = url;
     }
 
+    /**
+     * Ist Parent?
+     *
+     * @return true/false
+     */
     public boolean isParent() {
         return isParent;
     }
 
+    /**
+     * Setze Parent
+     *
+     * @param parent parent
+     */
     public void setParent(boolean parent) {
         isParent = parent;
     }

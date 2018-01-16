@@ -64,6 +64,12 @@ public class MainController implements Initializable {
     Label downloadDirectoryLabelDynamicText;
 
 
+    /**
+     * Initialisierung der Darstellung
+     *
+     * @param url URL
+     * @param bundle Bundle
+     */
    @Override
     public void initialize(URL url, ResourceBundle bundle) {
 
@@ -118,6 +124,13 @@ public class MainController implements Initializable {
                });
     }
 
+    /**
+     * Dateiumbenennung
+     *
+     * @param newName neuer Name
+     * @param oldName alter Name
+     * @param fileView Darstellung
+     */
     private void renameDocument(String newName,String oldName,FileView fileView){
        FileView newFileView = documentsClient.renameDocument(oldName,newName);
        if(newFileView != null){
@@ -126,12 +139,20 @@ public class MainController implements Initializable {
        }
     }
 
+    /**
+     * Dateilöschung
+     *
+     * @param fileView Darstellung
+     */
     private void deleteDocument(FileView fileView){
         if( documentsClient.deleteDocument(fileView.getFileOrDirectoryName())) {
             table_view.getItems().remove(fileView);
         }
     }
-    
+
+    /**
+     * Setzen des Download-Ziel
+     */
     @FXML
     private void chanceDownloadDirectory(){
        try {
@@ -141,6 +162,10 @@ public class MainController implements Initializable {
 
        }
     }
+
+    /**
+     * Dateiupload
+     */
     @FXML
     private void uploadChoosenFile(){
         try {
@@ -150,44 +175,58 @@ public class MainController implements Initializable {
         }
     }
 
-
-   public void addItem(FileView fileView){
+    /**
+     * Element zur Darstellung hinzufügen
+     *
+     * @param fileView Darstellung
+     */
+    public void addItem(FileView fileView){
        fileViewList.addFileView(fileView);
        table_view.setItems(fileViewList.getFileViewList());
-   }
+    }
 
+    /**
+     * Doppelklick Handler für den Download
+     *
+     * @param tableItem Tabellen-Objekt
+     */
     private void handleDoubleClickOnTableItem(FileView tableItem){
         try{
-        if(tableItem.getType().equals("File")){
+            if(tableItem != null) {
+                if (tableItem.getType().equals("File")) {
 
-                Document document = documentsClient.downloadFileFromServer(tableItem.getFileOrDirectoryName());
-                byte[] demBytes = document.getContent();
-                File outputFile = new File(downloadDirectoryLabelDynamicText.getText() + "/" + document.getName());
-                FileOutputStream outputStream = new FileOutputStream(outputFile);
-                outputStream.write(demBytes);
-                outputStream.close();
-                System.out.println("Datei erfolgreich gedownloaded");
+                    Document document = documentsClient.downloadFileFromServer(tableItem.getFileOrDirectoryName());
+                    byte[] demBytes = document.getContent();
+                    File outputFile = new File(downloadDirectoryLabelDynamicText.getText() + "/" + document.getName());
+                    FileOutputStream outputStream = new FileOutputStream(outputFile);
+                    outputStream.write(demBytes);
+                    outputStream.close();
+                    System.out.println("Datei erfolgreich gedownloaded");
 
 
-        }else if(tableItem.getType().equals("Directory")){
-            DirectoryInformationResponse respone = documentsClient.sendDirectoryInformationRequest("http://"+tableItem.getSourceIp()+":9090/ws/documents");
-            if(respone.isSuccess()) {
-                if(!respone.getFileConfig().isEmpty()) {
-                    table_view.getItems().clear();
-                    fileViewList.getFileViewList().clear();
-                    fileViewList.setList(respone.getFileConfig());
-                    table_view.setItems(fileViewList.getFileViewList());
-                    documentsClient.urlList.addUrl("http://"+tableItem.getSourceIp()+":9090/ws/documents") ;
+                } else if (tableItem.getType().equals("Directory")) {
+                    DirectoryInformationResponse respone = documentsClient.sendDirectoryInformationRequest("http://" + tableItem.getSourceIp() + ":9090/ws/documents");
+                    if (respone.isSuccess()) {
+
+                        table_view.getItems().clear();
+                        fileViewList.getFileViewList().clear();
+                        fileViewList.setList(respone.getFileConfig());
+                        table_view.setItems(fileViewList.getFileViewList());
+                        documentsClient.urlList.addUrl("http://" + tableItem.getSourceIp() + ":9090/ws/documents");
+
+
+                    }
 
                 }
             }
-
-         }
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
+    /**
+     * Navigationsfunktion
+     */
     @FXML
     private void goBack(){
         if(documentsClient.urlList.getSize() > 1) {
@@ -206,11 +245,17 @@ public class MainController implements Initializable {
         }
     }
 
+    /**
+     * Dateisuche
+     */
     @FXML
     private void search(){
         System.out.println(documentsClient.searchFile(searchInput.getText()));
     }
 
+    /**
+     * exit
+     */
     @FXML
     protected void exit() {
         System.exit(0); //TODO Ordentlicher Exit.

@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.net.URL;
 
 /**
- * @author cedosw
+ * @author wirth
  */
 @Component
 public class SpringFxmlLoader {

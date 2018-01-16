@@ -13,7 +13,7 @@ import java.util.Arrays;
  * Abstrakte Oberklasse der Applikation welche die JavaFX Application Klasse um die Initialisierung
  * von SpringBoot erweitert.
  *
- * @author cedosw
+ * @author wirth
  */
 @Lazy
 @SpringBootApplication
