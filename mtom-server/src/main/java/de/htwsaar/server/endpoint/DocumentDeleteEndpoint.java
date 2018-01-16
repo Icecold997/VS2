@@ -53,10 +53,11 @@ public class DocumentDeleteEndpoint {
             File file = new File(fileArrangementConfig.get().getFileLocation()+"/"+fileArrangementConfig.get().getFilename());
             if(file.delete()){
                 System.out.println(file.getName()+" is deleted update gui");
+                FileView oldfile = fileArragementConfigToFileView(fileArrangementConfig.get());
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        mainController.deleteFile(fileArragementConfigToFileView(fileArrangementConfig.get()));
+                        mainController.deleteFile(oldfile);
                     }
                 });
 

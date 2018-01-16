@@ -160,9 +160,7 @@ public class MainController implements Initializable {
      * @param fileView Darstellung
      */
     private void deleteDocument(FileView fileView){
-        if( documentsClient.deleteDocument(fileView.getFileOrDirectoryName())) {
-            table_view.getItems().remove(fileView);
-        }
+         documentsClient.deleteDocument(fileView.getFileOrDirectoryName());
     }
 
     /**

@@ -35,13 +35,15 @@ public class FileViewList {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
+                try {
                     for (FileView f : fileViewList) {
                         if (f.getFileOrDirectoryName().equals(fileView.getFileOrDirectoryName())) {
                             fileViewList.remove(f);
                         }
                     }
-                }
-            });
+                } catch (Exception e) {}
+            }
+        });
     }
 
     public void setList(List<FileView> fileViews){
