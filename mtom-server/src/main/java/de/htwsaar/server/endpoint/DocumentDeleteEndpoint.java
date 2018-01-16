@@ -8,7 +8,9 @@ import de.htwsaar.DeleteDocumentRequest;
 import de.htwsaar.DeleteDocumentResponse;
 
 
+import de.htwsaar.FileView;
 import de.htwsaar.server.config.FloodingTransmitter;
+import de.htwsaar.server.gui.FileViewList;
 import de.htwsaar.server.persistence.FileArrangementConfig;
 import de.htwsaar.server.persistence.FileArrangementDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,9 @@ public class DocumentDeleteEndpoint {
     @Autowired
     FloodingTransmitter floodingTransmitter;
 
+    @Autowired
+    FileViewList fileViewList;
+
     private static final String NAMESPACE_URI = "http://htwsaar.de/";
 
     /**
@@ -45,14 +50,28 @@ public class DocumentDeleteEndpoint {
         if(fileArrangementConfig.isPresent()) {
             File file = new File(fileArrangementConfig.get().getFileLocation()+"/"+fileArrangementConfig.get().getFilename());
             if(file.delete()){
-                System.out.println(file.getName()+" is deleted");
+                System.out.println(file.getName()+" is deleted update gui");
+                fileViewList.deleteFileView(this.fileArragementConfigToFileView(fileArrangementConfig.get()));
                 fileArrangementDao.deleteByfilename(request.getDocumentName());
                 floodingTransmitter.floodDeleteFileRequest(request);
             }
         }
+
         DeleteDocumentResponse response = new DeleteDocumentResponse();
         response.setSuccess(true);
         return response;
     }
 
+    private FileView fileArragementConfigToFileView(FileArrangementConfig fileArrangementConfig) {
+        FileView fileInformation = new FileView();
+        fileInformation.setSourceIp(fileArrangementConfig.getSourceIp());
+        fileInformation.setFileOrDirectoryName(fileArrangementConfig.getFilename());
+        fileInformation.setDate(fileArrangementConfig.getUpdated_at().toString());
+        if (fileArrangementConfig.isDirectory()) {
+            fileInformation.setType("Directory");
+        }else{
+            fileInformation.setType("File");
+        }
+        return fileInformation;
+    }
 }
