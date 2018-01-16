@@ -57,15 +57,19 @@ public class FloodingTransmitter  extends WebServiceGatewaySupport{
      *
      * @param deleteDocumentRequest request
      */
-    public void floodDeleteFileRequest(DeleteDocumentRequest deleteDocumentRequest){
+    public void floodDeleteFileRequest(DeleteDocumentRequest deleteDocumentRequest) {
         String sourceIp = deleteDocumentRequest.getSourceIp();
         Iterable<ForwardingConfig> forwardingConfigs;
         forwardingConfigs = forwardingDAO.findAll();
-        for(ForwardingConfig forwardingConfig : forwardingConfigs) {
+        for (ForwardingConfig forwardingConfig : forwardingConfigs) {
             if (!forwardingConfig.getUrl().equals(serverConfig.getServerIp()) && !forwardingConfig.getUrl().equals(sourceIp)) {
                 System.out.println("Floode gelöschte datei an :" + forwardingConfig.getUrl());
-                DeleteDocumentResponse response = (DeleteDocumentResponse) getWebServiceTemplate()
-                        .marshalSendAndReceive("http://" + forwardingConfig.getUrl() + ":9090/ws/documents", deleteDocumentRequest);
+                try {
+                    DeleteDocumentResponse response = (DeleteDocumentResponse) getWebServiceTemplate()
+                            .marshalSendAndReceive("http://" + forwardingConfig.getUrl() + ":9090/ws/documents", deleteDocumentRequest);
+                } catch (Exception e) {
+
+                }
             }
         }
     }
@@ -81,6 +85,7 @@ public class FloodingTransmitter  extends WebServiceGatewaySupport{
         forwardingConfigs = forwardingDAO.findAll();
         for(ForwardingConfig forwardingConfig : forwardingConfigs) {
             if (!forwardingConfig.getUrl().equals(serverConfig.getServerIp())  && !forwardingConfig.getUrl().equals(sourceIp)) {
+                System.out.println("Floode rename an: " + forwardingConfig.getUrl());
                 RenameDocumentResponse response = (RenameDocumentResponse) getWebServiceTemplate()
                         .marshalSendAndReceive("http://" + forwardingConfig.getUrl() + ":9090/ws/documents", renameDocumentRequest);
             }

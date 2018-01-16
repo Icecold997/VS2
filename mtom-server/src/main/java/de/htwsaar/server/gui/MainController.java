@@ -153,7 +153,7 @@ public class MainController implements Initializable {
        FileView newFileView = documentsClient.renameDocument(oldName,newName);
        if(newFileView != null){
             table_view.getItems().remove(fileView);
-            addItem(newFileView);
+           // addItem(newFileView);
        }
     }
 

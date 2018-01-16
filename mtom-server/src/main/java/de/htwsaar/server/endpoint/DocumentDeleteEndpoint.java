@@ -51,7 +51,7 @@ public class DocumentDeleteEndpoint {
             File file = new File(fileArrangementConfig.get().getFileLocation()+"/"+fileArrangementConfig.get().getFilename());
             if(file.delete()){
                 System.out.println(file.getName()+" is deleted update gui");
-                fileViewList.deleteFileView(this.fileArragementConfigToFileView(fileArrangementConfig.get()));
+             //   fileViewList.deleteFileView(this.fileArragementConfigToFileView(fileArrangementConfig.get()));
                 fileArrangementDao.deleteByfilename(request.getDocumentName());
                 floodingTransmitter.floodDeleteFileRequest(request);
             }
