@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.7 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2018.01.11 um 08:50:18 AM CET 
+// Generiert: 2018.01.16 um 09:18:10 AM CET 
 //
 
 
@@ -50,6 +50,14 @@ public class ObjectFactory {
      */
     public FileView createFileView() {
         return new FileView();
+    }
+
+    /**
+     * Create an instance of {@link SuperNodeInformationResponse }
+     * 
+     */
+    public SuperNodeInformationResponse createSuperNodeInformationResponse() {
+        return new SuperNodeInformationResponse();
     }
 
     /**
@@ -210,6 +218,14 @@ public class ObjectFactory {
      */
     public NetworkConnectionResponse createNetworkConnectionResponse() {
         return new NetworkConnectionResponse();
+    }
+
+    /**
+     * Create an instance of {@link SuperNodeInformationRequest }
+     * 
+     */
+    public SuperNodeInformationRequest createSuperNodeInformationRequest() {
+        return new SuperNodeInformationRequest();
     }
 
 }

@@ -39,6 +39,21 @@
 		</complexType>
 	</element>
 
+	<element name="superNodeInformationRequest">
+		<complexType>
+			<sequence>
+				<element name="connectionConfig" type="tns:connectionConfig" maxOccurs="unbounded"/>
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="superNodeInformationResponse">
+		<complexType>
+			<sequence>
+			</sequence>
+		</complexType>
+	</element>
+
 	<element name="networkConnectionRequest">
 		<complexType>
 			<sequence>

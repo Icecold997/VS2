@@ -41,7 +41,7 @@ public class NetworkInformationEndpoint {
     @ResponsePayload
     public NetworkInformationResponse getNetworkInformation(@RequestPayload NetworkInformationRequest request) throws IOException {
 
-        System.out.println("NetzwerkInformation Endpunkt erreicht.Leite Netzwerk Informationen weiter: ");
+        System.out.println("NetzwerkInformation Endpunkt erreicht.Sende Netzwerk Informationen zurück ");
         NetworkInformationResponse response = new NetworkInformationResponse();
         Iterable<ForwardingConfig> forwardingConfigList = forwardingDAO.findAll();
         response.getConnectionConfig().addAll(forwardingConfigListToConnectionConfig(forwardingConfigList));

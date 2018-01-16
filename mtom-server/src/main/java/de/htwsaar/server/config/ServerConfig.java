@@ -135,6 +135,7 @@ public class ServerConfig {
         if(!serverStatus.equals("supernode")){
             System.out.println("kein supernode verbinde mit netzwerk");
             Iterable<ServerInfo> superNodes;
+            List<ConnectionConfig> savedConnectionsToPeers = new ArrayList<ConnectionConfig>();
             superNodes = serverDAO.findAll();     //finde supernodes in db
             Optional<ForwardingConfig> forwardingConfigFromMe = forwardingDAO.findByUrl(serverIp); // sich selbst in der datenbank finden
             ConnectionConfig connectionConfigFromMe = new ConnectionConfig();
@@ -142,13 +143,13 @@ public class ServerConfig {
             connectionConfigFromMe.setConnections(forwardingConfigFromMe.get().getConnections());
             for(ServerInfo serverInfo : superNodes){
                 System.out.println("supernode url: "+serverInfo.getServerIp());
-                List<ConnectionConfig> connectionConfigList =transmitter.sendConnectionRequest(serverInfo.getServerIp());
+                List<ConnectionConfig> connectionConfigList =transmitter.sendConnectionRequest(serverInfo.getServerIp()); //zustand des netzwerkes von supernode holen
                 if(!connectionConfigList.isEmpty()){
-                    Collections.sort(connectionConfigList,new ConnectionConfigComperator());
+                    Collections.sort(connectionConfigList,new ConnectionConfigComperator()); // netzwerkzustandsliste nach anzahl verbindungen sortieren
                    for(ConnectionConfig connection : connectionConfigList){
                        if((!connection.getIp().equals(serverIp)) && (forwardingConfigFromMe.get().getConnections() < 2) ){ //wen nicht eigene ip und eigene connections < 2
                            System.out.println("Verbinde mit peer: "+connection.getIp());
-                           connectWithPeer(connection.getIp(),connectionConfigFromMe);
+                           savedConnectionsToPeers.add( connectWithPeer(connection.getIp(),connectionConfigFromMe));
                            System.out.println("Erhöhe eigene Connections um 1 ");
                            forwardingConfigFromMe.get().setConnections(forwardingConfigFromMe.get().getConnections()+1);
 
@@ -159,6 +160,8 @@ public class ServerConfig {
                    }
                     System.out.println("Speicher eigene neue Verbindungsdetails in Datenbank");
                     forwardingDAO.save(forwardingConfigFromMe.get());
+                    System.out.println("Sende Supernodes meine neuen Verbindungen");
+                    this.sendNetworkInformationToSupernode(savedConnectionsToPeers);
                     break;
                 }
             }
@@ -166,12 +169,27 @@ public class ServerConfig {
     }
 
     /**
+     * Sendet die neuen netzwerkinformationen zu den Supernodes
+     *
+     *@param connectionConfigs Liste der neuen Verbindungen die im SuperNode geupdatet werden sollen
+     */
+    private void sendNetworkInformationToSupernode(List<ConnectionConfig> connectionConfigs){
+        Iterable<ServerInfo> superNodes;
+        superNodes = serverDAO.findAll();     //finde supernodes in db
+
+        for(ServerInfo serverInfo : superNodes) {
+           transmitter.sendNetworkInformationToSuperNode(serverInfo.getServerIp(),connectionConfigs);
+        }
+    }
+
+
+    /**
      * Verbinde zum Peer
      *
      * @param peerIp IP des Peer
      * @param connectionConfig  Verbindungskonfiguration
      */
-    private void connectWithPeer(String peerIp ,ConnectionConfig connectionConfig){
+    private ConnectionConfig connectWithPeer(String peerIp ,ConnectionConfig connectionConfig){
         ConnectionConfig connectionConfigFromTarget = transmitter.connectWithPeer(peerIp,connectionConfig);
         Optional<ForwardingConfig> forwardingConfig = forwardingDAO.findByUrl(connectionConfigFromTarget.getIp());
         if(forwardingConfig.isPresent()){
@@ -183,6 +201,7 @@ public class ServerConfig {
             forwardingConfigFromTarget.setUrl(connectionConfigFromTarget.getIp());
             forwardingDAO.save(forwardingConfigFromTarget);
         }
+        return connectionConfigFromTarget;
     }
 
     /**

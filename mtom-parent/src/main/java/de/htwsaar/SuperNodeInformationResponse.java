@@ -24,7 +24,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="found" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -34,28 +33,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "found"
-})
-@XmlRootElement(name = "searchDocumentResponse")
-public class SearchDocumentResponse {
+@XmlType(name = "")
+@XmlRootElement(name = "superNodeInformationResponse")
+public class SuperNodeInformationResponse {
 
-    protected boolean found;
-
-    /**
-     * Ruft den Wert der found-Eigenschaft ab.
-     * 
-     */
-    public boolean isFound() {
-        return found;
-    }
-
-    /**
-     * Legt den Wert der found-Eigenschaft fest.
-     * 
-     */
-    public void setFound(boolean value) {
-        this.found = value;
-    }
 
 }

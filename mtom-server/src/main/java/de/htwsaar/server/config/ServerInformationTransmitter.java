@@ -82,10 +82,25 @@ public class ServerInformationTransmitter extends WebServiceGatewaySupport {
             NetworkConnectionResponse response =(NetworkConnectionResponse) getWebServiceTemplate().marshalSendAndReceive(finalUrl,request);
             return response.getConnectionConfig();
         }catch(Exception e){
-
+           e.printStackTrace();
         }
         return null;
     }
 
-
+    /**
+     *  Sendet neue NetzwerkInformationen zur Supernode
+     *
+     *  @param  superNodeTargetUrl SuperNode Ip Adress
+     *  @param  connectionConfig   Neuen Verbindungsinformationen
+     */
+    public void sendNetworkInformationToSuperNode(String superNodeTargetUrl,List<ConnectionConfig> connectionConfig){
+        try{
+            SuperNodeInformationRequest request = new SuperNodeInformationRequest();
+            request.getConnectionConfig().addAll(connectionConfig);
+            String finalUrl ="http://"+ superNodeTargetUrl +":9090/ws/documents";
+            SuperNodeInformationResponse response =(SuperNodeInformationResponse) getWebServiceTemplate().marshalSendAndReceive(finalUrl,request);
+        }catch (Exception e){
+             e.printStackTrace();
+        }
+    }
 }
