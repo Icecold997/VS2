@@ -52,7 +52,7 @@
 		<complexType>
 			<sequence>
 				<element name="success" type="boolean" />
-				<element name="newFile" type="tns:fileView"></element>
+				<element name="newFile" type="tns:fileView" ></element>
 			</sequence>
 		</complexType>
 	</element>
@@ -69,6 +69,7 @@
 		<complexType>
 			<sequence>
 				<element name="found" type="boolean" />
+				<element name="file"  type="tns:fileView" maxOccurs="unbounded"/>
 			</sequence>
 		</complexType>
 	</element>

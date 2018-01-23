@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 import de.htwsaar.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,10 +115,10 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 	 * @param fileName Datei-Name
 	 * @return response zum Fund
 	 */
-	public boolean searchFile(String fileName){
+	public List<FileView> searchFile(String fileName){
 		SearchDocumentRequest request = new SearchDocumentRequest();
 		request.setDocumentName(fileName);
 		SearchDocumentResponse response =(SearchDocumentResponse) getWebServiceTemplate().marshalSendAndReceive(urlList.getUrl(),request);
-		return response.isFound();
+		return response.getFile();
 	}
 }
