@@ -26,7 +26,6 @@ public class App  extends AbstractJavaFxApp {
 	 * Startet die JavaFX Stage.
 	 *
 	 * @param stage Die MainStage der Anwendung.
-	 * @throws Exception Exceptions während dem Starten der JavaFX Stage.
 	 */
 	@Override
 	public void start(Stage stage) {

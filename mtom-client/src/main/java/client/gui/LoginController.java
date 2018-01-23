@@ -1,7 +1,6 @@
 package client.gui;
 
 import client.ws.DocumentsClient;
-import client.ws.UrlList;
 import com.jfoenix.controls.JFXTextField;
 import de.htwsaar.DirectoryInformationResponse;
 import javafx.fxml.FXML;
@@ -17,7 +16,7 @@ import java.util.ResourceBundle;
 /**
  * @author wirth
  */
-public class LoginController implements Initializable {
+public class LoginController extends IOException implements Initializable {
 
 
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
@@ -63,7 +62,7 @@ public class LoginController implements Initializable {
                router.setSceneContent("/main.fxml");
            }
         }catch(IOException e){
-
+            e.printStackTrace();
         }
     }
 

@@ -3,9 +3,8 @@ package client.gui;
 import client.ws.DocumentsClient;
 import com.jfoenix.controls.JFXTextField;
 import de.htwsaar.DirectoryInformationResponse;
-import de.htwsaar.FileView;
 import de.htwsaar.Document;
-
+import de.htwsaar.FileView;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -15,15 +14,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.Callback;
-import org.apache.derby.impl.tools.sysinfo.Main;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-
-import javax.swing.*;
-import javax.swing.plaf.FileChooserUI;
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -160,7 +154,7 @@ public class MainController implements Initializable {
            downloadDirectoryLabelDynamicText.setText(router.startDirectoryChooser());
        }
         catch(Exception e){
-
+            e.printStackTrace();
        }
     }
 
@@ -172,7 +166,7 @@ public class MainController implements Initializable {
         try {
             this.addItem(documentsClient.storeDocument(router.startFileChooser().getAbsolutePath()));
         }catch(Exception e){
-
+            e.printStackTrace();
         }
     }
 
@@ -181,7 +175,7 @@ public class MainController implements Initializable {
      *
      * @param fileView Darstellung
      */
-    public void addItem(FileView fileView){
+    private void addItem(FileView fileView){
        fileViewList.addFileView(fileView);
        table_view.setItems(fileViewList.getFileViewList());
     }
@@ -235,7 +229,7 @@ public class MainController implements Initializable {
             try {
                this.refresh();
             } catch (IOException e) {
-
+                e.printStackTrace();
             }
         }
     }
@@ -260,7 +254,9 @@ public class MainController implements Initializable {
         if(searchInput.getText().isEmpty()) {
             try{
                 this.refresh();
-            }catch (IOException e){}
+            }catch (IOException e){
+                e.printStackTrace();
+            }
         }else {
             List<FileView> foundFiles = documentsClient.searchFile(searchInput.getText());
             table_view.getItems().clear();
