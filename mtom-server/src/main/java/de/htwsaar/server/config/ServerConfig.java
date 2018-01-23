@@ -54,8 +54,6 @@ public class ServerConfig {
     public  String fileDirectory;
 
 
-
-
     /**
      * Startet den Server
      */
