@@ -1,6 +1,7 @@
 package de.htwsaar.server.endpoint;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,24 +49,34 @@ public class DocumentSearchEndpoint {
     @ResponsePayload
     public SearchDocumentResponse searchDocument(@RequestPayload SearchDocumentRequest request) throws IOException {
 
- //TODO usecase: datei in filearrangement suchen ,wen local vorhanden gib found  zurück ,wen nicht suche in kindern weiter
 
-        Optional<FileArrangementConfig> files = fileArrangementDao.findByfilename(request.getDocumentName());
+
+        List<FileArrangementConfig> allFiles = fileArrangementDao.findAll();
+        List<FileArrangementConfig> foundFiles = new ArrayList<>();
+        for(FileArrangementConfig file : allFiles){
+           if(file.getFilename().contains(request.getDocumentName())){
+               foundFiles.add(file);
+           }
+        }
         SearchDocumentResponse response = new SearchDocumentResponse();
         response.setFound(false);
 
-        if(files.isPresent()){
-            FileView foundData = new FileView();
-            foundData.setDate(files.get().getUpdated_at().toString());
-            foundData.setFileOrDirectoryName(files.get().getFilename());
-            if(files.get().isDirectory()){
-                foundData.setType("Directory");
-            }else{
-                foundData.setType("File");
+        if(!foundFiles.isEmpty()){
+            for(FileArrangementConfig file : foundFiles) {
+                FileView foundData = new FileView();
+                foundData.setDate(file.getUpdated_at().toString());
+                foundData.setFileOrDirectoryName(file.getFilename());
+                if(file.isDirectory()){
+                    foundData.setType("Directory");
+                }else{
+                    foundData.setType("File");
+                }
+                foundData.setSourceIp(serverConfig.getServerIp());
+                response.getFile().add(foundData);
             }
-            foundData.setSourceIp(serverConfig.getServerIp());
+
             response.setFound(true);
-            response.getFile().add(foundData);
+
         }
             Optional<List<ForwardingConfig>> childs = forwardingDAO.findAllByisParent(false);
             if(childs.isPresent()){

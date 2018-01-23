@@ -2,7 +2,7 @@
 <wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
 	xmlns:sch="http://htwsaar.de/vssoap/domain" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
 	xmlns:tns="http://htwsaar.de/vssoap/domain" targetNamespace="http://htwsaar.de/vssoap/domain"
-	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="2.0">
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb">
 	<wsdl:types>
 		<xs:schema xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
 			xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xs="http://www.w3.org/2001/XMLSchema"

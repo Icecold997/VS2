@@ -3,8 +3,10 @@ package client.gui;
 import client.ws.DocumentsClient;
 import com.jfoenix.controls.JFXTextField;
 import de.htwsaar.DirectoryInformationResponse;
-import de.htwsaar.Document;
 import de.htwsaar.FileView;
+import de.htwsaar.Document;
+
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,10 +16,15 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.Callback;
+import org.apache.derby.impl.tools.sysinfo.Main;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+
+import javax.swing.*;
+import javax.swing.plaf.FileChooserUI;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -252,19 +259,27 @@ public class MainController implements Initializable {
     @FXML
     private void search(){
         if(searchInput.getText().isEmpty()) {
-            try{
-                this.refresh();
-            }catch (IOException e){
-                e.printStackTrace();
-            }
+              try{
+                  this.refresh();
+              }catch (IOException e){
+                  e.printStackTrace();
+              }
         }else {
-            List<FileView> foundFiles = documentsClient.searchFile(searchInput.getText());
-            table_view.getItems().clear();
-            fileViewList.getFileViewList().clear();
-            if (!foundFiles.isEmpty()) {
-                fileViewList.setList(foundFiles);
-                table_view.setItems(fileViewList.getFileViewList());
-            }
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        List<FileView> foundFiles = documentsClient.searchFile(searchInput.getText());
+                        table_view.getItems().clear();
+                        fileViewList.getFileViewList().clear();
+                        if (!foundFiles.isEmpty()) {
+                            fileViewList.setList(foundFiles);
+                            table_view.setItems(fileViewList.getFileViewList());
+                        }
+                    } catch (Exception e) {}
+                }
+            });
+
         }
     }
 

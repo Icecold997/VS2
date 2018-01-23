@@ -54,8 +54,6 @@ public class ServerConfig {
     public  String fileDirectory;
 
 
-
-
     /**
      * Startet den Server
      */
@@ -107,12 +105,7 @@ public class ServerConfig {
                   fileArrangementConfig.setFilename(files[i].getName());
                   fileArrangementConfig.setFileLocation(fileDirectory);
                   fileArrangementConfig.setDirectory(true);
-                    try{
-                        fileArrangementConfig.setSourceIp(LocalIpAddress.getExternalIpAddress());
-                    }catch(IOException e){
-                        fileArrangementConfig.setSourceIp("localhost");
-                    }
-
+                  fileArrangementConfig.setSourceIp(this.serverIp);
                   fileArrangementConfig.setLocal(true);
                   fileArrangementDAO.save(fileArrangementConfig);
                 }else {

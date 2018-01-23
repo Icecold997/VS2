@@ -93,7 +93,7 @@ public class Application extends AbstractJavaFxApp implements EmbeddedServletCon
 			for (; a.hasMoreElements(); ) {
 				InetAddress addr = a.nextElement();
 				if (addr.getHostAddress().length() <= 16) {
-					if (!addr.getHostAddress().contains("127") && !addr.getHostAddress().contains("25.92")){
+					if (!addr.getHostAddress().contains("127") && !addr.getHostAddress().contains("25.92") && !addr.getHostAddress().contains(":")){
 						return addr;
 					}
 
