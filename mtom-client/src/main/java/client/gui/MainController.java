@@ -83,6 +83,9 @@ public class MainController implements Initializable {
                }
            }
        });
+
+
+
        table_name.setCellValueFactory(new PropertyValueFactory<FileView, String>("fileOrDirectoryName"));
        table_date.setCellValueFactory(new PropertyValueFactory<FileView, String>("date"));
        table_type.setCellValueFactory(new PropertyValueFactory<FileView, String>("type"));
@@ -90,13 +93,16 @@ public class MainController implements Initializable {
        table_view.setEditable(true);
 
        table_name.setCellFactory(TextFieldTableCell.<FileView>forTableColumn());
+
        table_name.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<FileView, String>>() {
            @Override
            public void handle(TableColumn.CellEditEvent<FileView, String> event) {
                renameDocument(event.getNewValue(),event.getOldValue(),event.getRowValue());
            }
        });
+
        table_view.setItems(fileViewList.getFileViewList());
+
        table_view.setRowFactory(
                new Callback<TableView<FileView>, TableRow<FileView>>() {
                    @Override
@@ -120,6 +126,18 @@ public class MainController implements Initializable {
                                Bindings.when(Bindings.isNotNull(row.itemProperty()) )
                                        .then(rowMenu)
                                        .otherwise((ContextMenu)null));
+
+
+                       row.setOnMouseEntered((new EventHandler<javafx.scene.input.MouseEvent>
+                               () {
+
+                           @Override
+                           public void handle(javafx.scene.input.MouseEvent t) {
+
+                               TableRow<FileView> currentMouseTarget = (TableRow)t.getSource();
+                               handleMouseOver(currentMouseTarget.getIndex());
+                           }
+                       }));
                        return row;
                    }
 
@@ -141,6 +159,12 @@ public class MainController implements Initializable {
        }
     }
 
+    private void handleMouseOver(int index){
+      if(!searchInput.getText().isEmpty() && table_view.getItems().size() > index)  {
+          System.out.println(table_view.getItems().get(index).getFileOrDirectoryName());
+          ToastView.makeMessage(router.getStage(),table_view.getItems().get(index).getSourceDirectoryName(),1000,100,100);
+       }
+    }
     /**
      * Dateilöschung
      *
@@ -195,32 +219,35 @@ public class MainController implements Initializable {
     private void handleDoubleClickOnTableItem(FileView tableItem){
         try{
             if(tableItem != null) {
-                if (tableItem.getType().equals("File")) {
+                    if (tableItem.getType().equals("File")) {
+                        if (!downloadDirectoryLabelDynamicText.getText().isEmpty()) {
+                            Document document = documentsClient.downloadFileFromServer(tableItem.getFileOrDirectoryName());
+                            byte[] demBytes = document.getContent();
+                            File outputFile = new File(downloadDirectoryLabelDynamicText.getText() + "/" + document.getName());
+                            FileOutputStream outputStream = new FileOutputStream(outputFile);
+                            outputStream.write(demBytes);
+                            outputStream.close();
+                            System.out.println("Datei erfolgreich gedownloaded");
+                        }else{
+                            ToastView.makeErrorMessage(router.getStage(),"Bitte Downloadverzeichnis auswählen",2500,250,250);
+                        }
 
-                    Document document = documentsClient.downloadFileFromServer(tableItem.getFileOrDirectoryName());
-                    byte[] demBytes = document.getContent();
-                    File outputFile = new File(downloadDirectoryLabelDynamicText.getText() + "/" + document.getName());
-                    FileOutputStream outputStream = new FileOutputStream(outputFile);
-                    outputStream.write(demBytes);
-                    outputStream.close();
-                    System.out.println("Datei erfolgreich gedownloaded");
+                    } else if (tableItem.getType().equals("Directory")) {
+                        DirectoryInformationResponse respone = documentsClient.sendDirectoryInformationRequest("http://" + tableItem.getSourceIp() + ":9090/ws/documents");
+                        if (respone.isSuccess()) {
+
+                            table_view.getItems().clear();
+                            fileViewList.getFileViewList().clear();
+                            fileViewList.setList(respone.getFileConfig());
+                            table_view.setItems(fileViewList.getFileViewList());
+                            documentsClient.urlList.addUrl("http://" + tableItem.getSourceIp() + ":9090/ws/documents");
 
 
-                } else if (tableItem.getType().equals("Directory")) {
-                    DirectoryInformationResponse respone = documentsClient.sendDirectoryInformationRequest("http://" + tableItem.getSourceIp() + ":9090/ws/documents");
-                    if (respone.isSuccess()) {
-
-                        table_view.getItems().clear();
-                        fileViewList.getFileViewList().clear();
-                        fileViewList.setList(respone.getFileConfig());
-                        table_view.setItems(fileViewList.getFileViewList());
-                        documentsClient.urlList.addUrl("http://" + tableItem.getSourceIp() + ":9090/ws/documents");
-
+                        }
 
                     }
-
                 }
-            }
+
         }catch (Exception e){
             e.printStackTrace();
         }

@@ -144,6 +144,6 @@ public class ServerConfig {
 
    public String getServerIp(){return this.serverIp;}
 
-
+   public String getRootDirectory() {return  this.rootDirectory;}
 
 }

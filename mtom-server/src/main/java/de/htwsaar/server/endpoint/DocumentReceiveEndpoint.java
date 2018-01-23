@@ -92,6 +92,7 @@ public class DocumentReceiveEndpoint {
 			fileInformation.setType("Directory");
 		}else{
 			fileInformation.setType("File");
+			fileInformation.setSourceDirectoryName(serverConfig.getRootDirectory());
 		}
 		return fileInformation;
 	}

@@ -4,8 +4,10 @@ import client.ws.DocumentsClient;
 import client.ws.UrlList;
 import com.jfoenix.controls.JFXTextField;
 import de.htwsaar.DirectoryInformationResponse;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.input.MouseEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +46,7 @@ public class LoginController implements Initializable {
      * @param bundle Bundle
      */
     public void initialize(URL url, ResourceBundle bundle) {
+
     }
 
     /**

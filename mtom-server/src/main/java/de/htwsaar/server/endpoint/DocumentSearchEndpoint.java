@@ -69,6 +69,7 @@ public class DocumentSearchEndpoint {
                 if(file.isDirectory()){
                     foundData.setType("Directory");
                 }else{
+                    foundData.setSourceDirectoryName(serverConfig.getRootDirectory());
                     foundData.setType("File");
                 }
                 foundData.setSourceIp(serverConfig.getServerIp());

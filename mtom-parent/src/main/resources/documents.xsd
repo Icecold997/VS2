@@ -147,6 +147,7 @@
 			<element name="type" type="string"/>
 			<element name="date" type="string"/>
 			<element name="sourceIp" type="string"/>
+			<element name ="sourceDirectoryName" type="string"/>
 		</sequence>
 	</complexType>
 </schema>
