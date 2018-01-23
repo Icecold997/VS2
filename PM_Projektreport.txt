@@ -1,8 +1,12 @@
 Todo: 
 
 Korrekturlesen (Robert)
-Projektstrukturplan (Patrick ivm. Robert?!?)
-Projektrückblick (Alle mit Robert)
+Projektstrukturplan (Patrick ivm. Robert?!?) -> Patrick auf Arbeit mit Visio
+Projektrückblick (Alle mit Robert) -> Robert Wochenende
+Struktur, Big Picture ->Patrick in Visio
+
+-Meilensteine bzw Präsentationen benennen
+Projektphasen umbenennen analog zu Sauers Vorlage
 
 Quelle des Rohmaterials: Vorgaben_Projektreport V1.1 aus dem KIL-LMS.
 https://kil-lms.htwsaar.de/moodle/pluginfile.php/4006/mod_resource/content/1/Vorgaben_Projektreport_VS2%20Esch_Sauer.pdf
