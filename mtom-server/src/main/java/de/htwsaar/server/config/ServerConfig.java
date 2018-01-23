@@ -31,7 +31,7 @@ import java.util.Optional;
 
 @Service
 @Configurable
-public class ServerConfig implements EmbeddedServletContainerCustomizer {
+public class ServerConfig {
 
     @Autowired
     FileArrangementDAO fileArrangementDAO;
@@ -49,58 +49,19 @@ public class ServerConfig implements EmbeddedServletContainerCustomizer {
     private boolean allowServerAddress;
 
     @Value("${server.address}")
-    private String serverIp;
+    public String serverIp;
 
     public  String fileDirectory;
 
-    /**
-     * Feststellung und Ausgabe der Server-IP
-     *
-     * @param container Container
-     */
-    @Override
-    public void customize(ConfigurableEmbeddedServletContainer container) {
-        if (!allowServerAddress) {
-            if (solveIP() != "IP_not_solved") {
-                serverIp = solveIP();
-                System.out.println("##### Server is running on: " + serverIp + ":9090 #####");
-            }
-        } else {
-            System.out.println("##### Server is running on: " + serverIp + ":9090 #####");
-        }
-    }
 
-    static String solveIP() {
-        Enumeration<NetworkInterface> n = null;
-        try {
-            n = NetworkInterface.getNetworkInterfaces();
-        } catch (SocketException e) {
-            e.printStackTrace();
-        }
-        for (; n != null && n.hasMoreElements(); ) {
-            NetworkInterface e = n.nextElement();
 
-            Enumeration<InetAddress> a = e.getInetAddresses();
-            for (; a.hasMoreElements(); ) {
-                InetAddress addr = a.nextElement();
-                if (addr.getHostAddress().length() <= 16) {
-                    if (!addr.getHostAddress().contains("127") && !addr.getHostAddress().contains("25.92")){
-                        return addr.getHostAddress();
-                    }
-
-                }
-            }
-        }
-        return "IP_not_solved";
-    }
 
     /**
      * Startet den Server
      */
     public  void startServer(){
-        //String ip = request.getRemoteAddr();
         createFileDirectory();
-
+        System.out.println(serverIp);
     }
 
     /**
