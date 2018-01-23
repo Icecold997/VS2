@@ -6,6 +6,7 @@ import de.htwsaar.DirectoryInformationResponse;
 import de.htwsaar.FileView;
 import de.htwsaar.Document;
 
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -258,17 +259,25 @@ public class MainController implements Initializable {
     @FXML
     private void search(){
         if(searchInput.getText().isEmpty()) {
-            try{
-                this.refresh();
-            }catch (IOException e){}
+              try{
+                  this.refresh();
+              }catch (IOException e){}
         }else {
-            List<FileView> foundFiles = documentsClient.searchFile(searchInput.getText());
-            table_view.getItems().clear();
-            fileViewList.getFileViewList().clear();
-            if (!foundFiles.isEmpty()) {
-                fileViewList.setList(foundFiles);
-                table_view.setItems(fileViewList.getFileViewList());
-            }
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        List<FileView> foundFiles = documentsClient.searchFile(searchInput.getText());
+                        table_view.getItems().clear();
+                        fileViewList.getFileViewList().clear();
+                        if (!foundFiles.isEmpty()) {
+                            fileViewList.setList(foundFiles);
+                            table_view.setItems(fileViewList.getFileViewList());
+                        }
+                    } catch (Exception e) {}
+                }
+            });
+
         }
     }
 
