@@ -22,7 +22,10 @@ import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,6 +45,9 @@ public class ServerConfig implements EmbeddedServletContainerCustomizer {
     @Value("${server.rootDir}")
     private String rootDirectory;
 
+    @Value("${allowServerAddress}")
+    private boolean allowServerAddress;
+
     @Value("${server.address}")
     private String serverIp;
 
@@ -54,17 +60,38 @@ public class ServerConfig implements EmbeddedServletContainerCustomizer {
      */
     @Override
     public void customize(ConfigurableEmbeddedServletContainer container) {
-        try {
-            String fullIP = java.net.InetAddress.getLocalHost().toString();
-            container.setAddress(java.net.InetAddress.getLocalHost());
-
-            if (fullIP.length() > 12) {
-                serverIp = fullIP.substring(fullIP.indexOf('/') +1 );
+        if (!allowServerAddress) {
+            if (solveIP() != "IP_not_solved") {
+                serverIp = solveIP();
                 System.out.println("##### Server is running on: " + serverIp + ":9090 #####");
             }
-        } catch (IOException e) {
+        } else {
+            System.out.println("##### Server is running on: " + serverIp + ":9090 #####");
+        }
+    }
+
+    static String solveIP() {
+        Enumeration<NetworkInterface> n = null;
+        try {
+            n = NetworkInterface.getNetworkInterfaces();
+        } catch (SocketException e) {
             e.printStackTrace();
         }
+        for (; n != null && n.hasMoreElements(); ) {
+            NetworkInterface e = n.nextElement();
+
+            Enumeration<InetAddress> a = e.getInetAddresses();
+            for (; a.hasMoreElements(); ) {
+                InetAddress addr = a.nextElement();
+                if (addr.getHostAddress().length() <= 16) {
+                    if (!addr.getHostAddress().contains("127") && !addr.getHostAddress().contains("25.92")){
+                        return addr.getHostAddress();
+                    }
+
+                }
+            }
+        }
+        return "IP_not_solved";
     }
 
     /**
