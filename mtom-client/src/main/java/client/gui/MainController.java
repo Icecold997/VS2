@@ -39,6 +39,7 @@ public class MainController implements Initializable {
 
 
     private static final Logger logger = LoggerFactory.getLogger(MainController.class);
+    private boolean isSearchOn = false;
 
 
     @Autowired
@@ -160,9 +161,8 @@ public class MainController implements Initializable {
     }
 
     private void handleMouseOver(int index){
-      if(!searchInput.getText().isEmpty() && table_view.getItems().size() > index)  {
-          System.out.println(table_view.getItems().get(index).getFileOrDirectoryName());
-          ToastView.makeMessage(router.getStage(),table_view.getItems().get(index).getSourceDirectoryName(),1000,100,100);
+      if(isSearchOn && table_view.getItems().size() > index)  {
+          ToastView.makeMessage(router.getStage(),"Source Ordner: "+table_view.getItems().get(index).getSourceDirectoryName(),1000,100,250);
        }
     }
     /**
@@ -272,7 +272,6 @@ public class MainController implements Initializable {
 
         DirectoryInformationResponse respone = documentsClient.sendDirectoryInformationRequest(documentsClient.urlList.getUrl());
         if (respone.isSuccess()) {
-            System.out.println("t");
             table_view.getItems().clear();
             fileViewList.getFileViewList().clear();
             fileViewList.setList(respone.getFileConfig());
@@ -287,6 +286,7 @@ public class MainController implements Initializable {
     private void search(){
         if(searchInput.getText().isEmpty()) {
               try{
+                  isSearchOn = false;
                   this.refresh();
               }catch (IOException e){}
         }else {
@@ -300,6 +300,7 @@ public class MainController implements Initializable {
                         if (!foundFiles.isEmpty()) {
                             fileViewList.setList(foundFiles);
                             table_view.setItems(fileViewList.getFileViewList());
+                            isSearchOn = true;
                         }
                     } catch (Exception e) {}
                 }

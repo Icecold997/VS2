@@ -1,8 +1,10 @@
 package client.gui;
 
+import de.htwsaar.FileView;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -12,6 +14,8 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+
+import java.util.List;
 
 /**
  * Diese Klasse ist dazugedacht den Anwender auf einen Fehler mittels Toasts aufmerksam zu machen.
@@ -124,28 +128,39 @@ public final class ToastView {
         toastStage.setX(ownerStage.getX() + ownerStage.getWidth() / 2 - toastStage.getWidth() / 2);
         toastStage.setY(ownerStage.getY() + ownerStage.getHeight() / 2 - toastStage.getHeight() / 2);
         toastStage.setScene(scene);
-
-        toastStage.show();
-
-        Timeline fadeInTimeline = new Timeline();
-        KeyFrame fadeInKey1 = new KeyFrame(Duration.millis(fadeInDelay), new KeyValue(toastStage.getScene().getRoot().opacityProperty(), 1));
-        fadeInTimeline.getKeyFrames().add(fadeInKey1);
-        fadeInTimeline.setOnFinished((ae) ->
-        {
-            new Thread(() -> {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
                 try {
-                    Thread.sleep(toastDelay);
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                    Thread.sleep(1000);
+                }catch (InterruptedException e){
+
                 }
-                Timeline fadeOutTimeline = new Timeline();
-                KeyFrame fadeOutKey1 = new KeyFrame(Duration.millis(fadeOutDelay), new KeyValue(toastStage.getScene().getRoot().opacityProperty(), 0));
-                fadeOutTimeline.getKeyFrames().add(fadeOutKey1);
-                fadeOutTimeline.setOnFinished((aeb) -> toastStage.close());
-                fadeOutTimeline.play();
-            }).start();
+                toastStage.show();
+                Timeline fadeInTimeline = new Timeline();
+                KeyFrame fadeInKey1 = new KeyFrame(Duration.millis(fadeInDelay), new KeyValue(toastStage.getScene().getRoot().opacityProperty(), 1));
+                fadeInTimeline.getKeyFrames().add(fadeInKey1);
+                fadeInTimeline.setOnFinished((ae) ->
+                {
+                    new Thread(() -> {
+                        try {
+                            Thread.sleep(toastDelay);
+                        } catch (InterruptedException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                        Timeline fadeOutTimeline = new Timeline();
+                        KeyFrame fadeOutKey1 = new KeyFrame(Duration.millis(fadeOutDelay), new KeyValue(toastStage.getScene().getRoot().opacityProperty(), 0));
+                        fadeOutTimeline.getKeyFrames().add(fadeOutKey1);
+                        fadeOutTimeline.setOnFinished((aeb) -> toastStage.close());
+                        fadeOutTimeline.play();
+                    }).start();
+                });
+                fadeInTimeline.play();
+            }
         });
-        fadeInTimeline.play();
+
+
+
     }
 }
