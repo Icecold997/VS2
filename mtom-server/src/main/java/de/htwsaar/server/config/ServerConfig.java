@@ -161,6 +161,7 @@ public class ServerConfig implements EmbeddedServletContainerCustomizer {
        }
    }
 
+   public String getServerIp(){return this.serverIp;}
 
 
 

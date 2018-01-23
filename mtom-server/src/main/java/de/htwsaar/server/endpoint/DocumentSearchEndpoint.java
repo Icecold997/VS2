@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Optional;
 
 
+import de.htwsaar.FileView;
 import de.htwsaar.SearchDocumentRequest;
 import de.htwsaar.SearchDocumentResponse;
+import de.htwsaar.server.config.ServerConfig;
 import de.htwsaar.server.config.ServerInformationTransmitter;
 import de.htwsaar.server.persistence.FileArrangementConfig;
 import de.htwsaar.server.persistence.FileArrangementDAO;
@@ -23,6 +25,8 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 @Endpoint
 public class DocumentSearchEndpoint {
 
+    @Autowired
+    ServerConfig serverConfig;
     @Autowired
     ServerInformationTransmitter transmitter;
 
@@ -51,18 +55,29 @@ public class DocumentSearchEndpoint {
         response.setFound(false);
 
         if(files.isPresent()){
+            FileView foundData = new FileView();
+            foundData.setDate(files.get().getUpdated_at().toString());
+            foundData.setFileOrDirectoryName(files.get().getFilename());
+            if(files.get().isDirectory()){
+                foundData.setType("Directory");
+            }else{
+                foundData.setType("File");
+            }
+            foundData.setSourceIp(serverConfig.getServerIp());
             response.setFound(true);
-            return response;
-        }else{
+            response.getFile().add(foundData);
+        }
             Optional<List<ForwardingConfig>> childs = forwardingDAO.findAllByisParent(false);
             if(childs.isPresent()){
                 for (ForwardingConfig f: childs.get()) {
-                    if(transmitter.sendSearchRequestToChild(f.getUrl(),request.getDocumentName())){
-                        response.setFound(true);
+                    SearchDocumentResponse responseFromChild =transmitter.sendSearchRequestToChild(f.getUrl(),request.getDocumentName());
+                    if(responseFromChild.isFound()){
+                        response.getFile().addAll(responseFromChild.getFile());
                     }
+
                 }
             }
-        }
+
        return  response;
     }
 

@@ -37,11 +37,11 @@ public class ServerInformationTransmitter extends WebServiceGatewaySupport {
      * @param fileName  Dateiname
      * @return          Dateifund true/false
      */
-    public boolean sendSearchRequestToChild(String targetUrl,String fileName){
+    public SearchDocumentResponse sendSearchRequestToChild(String targetUrl,String fileName){
         SearchDocumentRequest request = new SearchDocumentRequest();
         request.setDocumentName(fileName);
         String finalUrl = "http://"+targetUrl+":9090/ws/documents";
         SearchDocumentResponse response=(SearchDocumentResponse) getWebServiceTemplate().marshalSendAndReceive(finalUrl,request);
-        return response.isFound();
+        return response;
     }
 }

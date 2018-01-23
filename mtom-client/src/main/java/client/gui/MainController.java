@@ -28,6 +28,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -232,16 +233,22 @@ public class MainController implements Initializable {
         if(documentsClient.urlList.getSize() > 1) {
             documentsClient.urlList.remove();
             try {
-                DirectoryInformationResponse respone = documentsClient.sendDirectoryInformationRequest(documentsClient.urlList.getUrl());
-                if (respone.isSuccess()) {
-                    table_view.getItems().clear();
-                    fileViewList.getFileViewList().clear();
-                    fileViewList.setList(respone.getFileConfig());
-                    table_view.setItems(fileViewList.getFileViewList());
-                }
+               this.refresh();
             } catch (IOException e) {
 
             }
+        }
+    }
+
+    private void refresh() throws IOException{
+
+        DirectoryInformationResponse respone = documentsClient.sendDirectoryInformationRequest(documentsClient.urlList.getUrl());
+        if (respone.isSuccess()) {
+            System.out.println("t");
+            table_view.getItems().clear();
+            fileViewList.getFileViewList().clear();
+            fileViewList.setList(respone.getFileConfig());
+            table_view.setItems(fileViewList.getFileViewList());
         }
     }
 
@@ -250,7 +257,19 @@ public class MainController implements Initializable {
      */
     @FXML
     private void search(){
-        System.out.println(documentsClient.searchFile(searchInput.getText()));
+        if(searchInput.getText().isEmpty()) {
+            try{
+                this.refresh();
+            }catch (IOException e){}
+        }else {
+            List<FileView> foundFiles = documentsClient.searchFile(searchInput.getText());
+            table_view.getItems().clear();
+            fileViewList.getFileViewList().clear();
+            if (!foundFiles.isEmpty()) {
+                fileViewList.setList(foundFiles);
+                table_view.setItems(fileViewList.getFileViewList());
+            }
+        }
     }
 
     /**
