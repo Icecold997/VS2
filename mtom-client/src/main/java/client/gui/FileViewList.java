@@ -1,6 +1,5 @@
 package client.gui;
 
-import de.htwsaar.Directory;
 import de.htwsaar.FileView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
