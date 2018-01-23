@@ -1,23 +1,15 @@
 package client;
 
 import client.gui.Router;
-import client.ws.DocumentsClient;
+import de.htwsaar.AbstractJavaFxApp;
 import javafx.application.Preloader;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import de.htwsaar.AbstractJavaFxApp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.SpringApplication;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
-
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 
 @Configuration
 @ComponentScan
@@ -37,7 +29,7 @@ public class App  extends AbstractJavaFxApp {
 	 * @throws Exception Exceptions während dem Starten der JavaFX Stage.
 	 */
 	@Override
-	public void start(Stage stage) throws Exception {
+	public void start(Stage stage) {
 		notifyPreloader(new Preloader.StateChangeNotification(Preloader.StateChangeNotification.Type.BEFORE_START));
 
 		router.setStage(stage);

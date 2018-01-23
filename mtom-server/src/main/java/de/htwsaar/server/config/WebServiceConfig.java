@@ -55,6 +55,7 @@ public class WebServiceConfig extends WsConfigurationSupport {
 	public Jaxb2Marshaller marshaller() {
 		Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
 		marshaller.setContextPath("de.htwsaar");
+
 		marshaller.setMtomEnabled(true);
 		return marshaller;
 	}
