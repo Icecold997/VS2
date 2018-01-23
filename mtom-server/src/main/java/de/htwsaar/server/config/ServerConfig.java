@@ -22,13 +22,16 @@ import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @Configurable
-public class ServerConfig implements EmbeddedServletContainerCustomizer {
+public class ServerConfig {
 
     @Autowired
     FileArrangementDAO fileArrangementDAO;
@@ -42,38 +45,23 @@ public class ServerConfig implements EmbeddedServletContainerCustomizer {
     @Value("${server.rootDir}")
     private String rootDirectory;
 
+    @Value("${allowServerAddress}")
+    private boolean allowServerAddress;
+
     @Value("${server.address}")
-    private String serverIp;
+    public String serverIp;
 
     public  String fileDirectory;
 
-    /**
-     * Feststellung und Ausgabe der Server-IP
-     *
-     * @param container Container
-     */
-    @Override
-    public void customize(ConfigurableEmbeddedServletContainer container) {
-        try {
-            String fullIP = java.net.InetAddress.getLocalHost().toString();
-            container.setAddress(java.net.InetAddress.getLocalHost());
 
-            if (fullIP.length() > 12) {
-                serverIp = fullIP.substring(fullIP.indexOf('/') +1 );
-                System.out.println("##### Server is running on: " + serverIp + ":9090 #####");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
 
     /**
      * Startet den Server
      */
     public  void startServer(){
-        //String ip = request.getRemoteAddr();
         createFileDirectory();
-
+        System.out.println(serverIp);
     }
 
     /**
