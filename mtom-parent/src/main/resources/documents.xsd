@@ -207,4 +207,15 @@
 			<element name="sourceIp" type="string"/>
 		</sequence>
 	</complexType>
+
+	<complexType name="logoutClientRequest">
+		<sequence>
+			<element name="sourceIp" type="string"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="logoutClientResponse">
+		<sequence>
+		</sequence>
+	</complexType>
 </schema>

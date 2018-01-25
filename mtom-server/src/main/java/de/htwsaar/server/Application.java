@@ -3,10 +3,17 @@ package de.htwsaar.server;
 
 import de.htwsaar.AbstractJavaFxApp;
 import de.htwsaar.server.config.ServerConfig;
+import de.htwsaar.server.config.ServerInformationTransmitter;
 import de.htwsaar.server.gui.Router;
+import de.htwsaar.server.persistence.ForwardingConfig;
+import de.htwsaar.server.persistence.ForwardingDAO;
+import de.htwsaar.server.persistence.ServerDAO;
+import de.htwsaar.server.persistence.ServerInfo;
+import javafx.application.Platform;
 import javafx.application.Preloader;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +21,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Lazy;
+
+import java.beans.EventHandler;
 
 
 /**
@@ -30,8 +39,14 @@ public class Application extends AbstractJavaFxApp {
 	private static Logger logger = LoggerFactory.getLogger(Application.class);
 
 
-    @Autowired
+	@Autowired
+	ForwardingDAO forwardingDAO;
+	@Autowired
 	ServerConfig serverConfig;
+	@Autowired
+	ServerDAO serverDAO;
+	@Autowired
+	ServerInformationTransmitter transmitter;
 
 	@Autowired
 	Router router;
@@ -60,12 +75,37 @@ public class Application extends AbstractJavaFxApp {
 		stage.centerOnScreen();
 		stage.show();
 		stage.getIcons().add(new Image("/soap.png"));
+
+		// Logout bei schliessen der Stage
+		stage.setOnCloseRequest(new javafx.event.EventHandler<WindowEvent>() {
+			@Override
+			public void handle(WindowEvent windowEvent) {
+				logout();
+			}
+		});
 		router.setStage(stage);
 
 		serverConfig.startServer();
 	}
 
+     private void logout(){
+		 Platform.runLater( new Runnable(){
+		 	@Override
+			 public void run(){
+		 		System.out.println("####TEST123456789####");
+				Iterable<ForwardingConfig> ipList = forwardingDAO.findAll();
+				Iterable<ServerInfo> superNodes = serverDAO.findAll() ;
+				for(ForwardingConfig connections : ipList){  // verbundene server
+					transmitter.sendLogoutRequest(connections.getUrl(),serverConfig.getServerIp());
+				}
+				for(ServerInfo superNode : superNodes){
+					transmitter.sendLogoutRequest(superNode.getServerIp(),serverConfig.getServerIp());
+				}
+			}
+		 }
+		 );
 
+	 }
 
 
 

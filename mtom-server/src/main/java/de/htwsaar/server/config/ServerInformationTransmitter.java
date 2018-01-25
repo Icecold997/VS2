@@ -103,4 +103,15 @@ public class ServerInformationTransmitter extends WebServiceGatewaySupport {
              e.printStackTrace();
         }
     }
+
+    public void sendLogoutRequest(String targetUrl,String sourceIp){
+        try{
+            LogoutClientRequest request = new LogoutClientRequest();
+            request.setSourceIp(sourceIp);
+            String finalUrl ="http://"+ targetUrl +":9090/ws/documents";
+            LogoutClientResponse response =(LogoutClientResponse) getWebServiceTemplate().marshalSendAndReceive(finalUrl,request);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }

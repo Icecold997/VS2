@@ -11,21 +11,20 @@ package de.htwsaar;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java-Klasse für anonymous complex type.
+ * <p>Java-Klasse für logoutClientRequest complex type.
  * 
  * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
  * 
  * <pre>
- * &lt;complexType>
+ * &lt;complexType name="logoutClientRequest">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="connectionConfig" type="{http://htwsaar.de/}connectionConfig"/>
+ *         &lt;element name="sourceIp" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -35,37 +34,36 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "connectionConfig"
+@XmlType(name = "logoutClientRequest", propOrder = {
+    "sourceIp"
 })
-@XmlRootElement(name = "networkConnectionRequest")
-public class NetworkConnectionRequest {
+public class LogoutClientRequest {
 
     @XmlElement(required = true)
-    protected ConnectionConfig connectionConfig;
+    protected String sourceIp;
 
     /**
-     * Ruft den Wert der connectionConfig-Eigenschaft ab.
+     * Ruft den Wert der sourceIp-Eigenschaft ab.
      * 
      * @return
      *     possible object is
-     *     {@link ConnectionConfig }
+     *     {@link String }
      *     
      */
-    public ConnectionConfig getConnectionConfig() {
-        return connectionConfig;
+    public String getSourceIp() {
+        return sourceIp;
     }
 
     /**
-     * Legt den Wert der connectionConfig-Eigenschaft fest.
+     * Legt den Wert der sourceIp-Eigenschaft fest.
      * 
      * @param value
      *     allowed object is
-     *     {@link ConnectionConfig }
+     *     {@link String }
      *     
      */
-    public void setConnectionConfig(ConnectionConfig value) {
-        this.connectionConfig = value;
+    public void setSourceIp(String value) {
+        this.sourceIp = value;
     }
 
 }

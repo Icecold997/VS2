@@ -1,6 +1,5 @@
 package de.htwsaar.server.endpoint;
 
-
 import de.htwsaar.*;
 import de.htwsaar.server.config.ServerConfig;
 import de.htwsaar.server.persistence.FileArrangementConfig;
@@ -15,7 +14,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 
 @Endpoint
 public class ClientInformationEndpoint {

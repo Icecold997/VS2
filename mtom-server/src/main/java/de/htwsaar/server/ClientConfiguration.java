@@ -18,12 +18,4 @@ public class ClientConfiguration {
     MainController mainController() {
             return new MainController();
             }
-
-    @Bean
-    @Scope("prototype")
-    DocumentsClient documentsClient() {
-        return new DocumentsClient();
-    }
-
-
 }
