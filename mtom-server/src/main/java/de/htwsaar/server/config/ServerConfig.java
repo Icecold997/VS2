@@ -50,6 +50,7 @@ public class ServerConfig {
      * Startet den Server
      */
     public  void startServer(){
+        resetForwardingTable();
         try {
             createFileDirectory();
             if (!forwardingDAO.findByUrl(this.serverIp).isPresent()) {
@@ -211,6 +212,10 @@ public class ServerConfig {
      */
     public String getServerIp(){
         return this.serverIp;
+    }
+
+    private void resetForwardingTable(){
+        forwardingDAO.deleteAll();
     }
 
 }
