@@ -4,6 +4,7 @@ import client.ws.DocumentsClient;
 import client.ws.UrlList;
 import com.jfoenix.controls.JFXTextField;
 import de.htwsaar.DirectoryInformationResponse;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -54,20 +55,26 @@ public class LoginController implements Initializable {
      */
     @FXML
     protected void login() {
-        try {
-           DirectoryInformationResponse respone = documentsClient.sendDirectoryInformationRequest("http://"+hostInput.getText()+":9090/ws/documents");
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        DirectoryInformationResponse respone = documentsClient.sendDirectoryInformationRequest("http://" + hostInput.getText() + ":9090/ws/documents");
 
-           if(respone.isSuccess()){
-               if(!respone.getFileConfig().isEmpty()) {
-                   externFileViewList.setList(respone.getFileConfig());
-               }
-               documentsClient.urlList.addUrl("http://"+hostInput.getText()+":9090/ws/documents");
-               router.getStage().setResizable(false);
-               router.setSceneContent("/main.fxml");
-           }
-        }catch(IOException e){
+                        if (respone.isSuccess()) {
+                            if (!respone.getFileConfig().isEmpty()) {
+                                externFileViewList.setList(respone.getFileConfig());
+                            }
+                            documentsClient.urlList.addUrl("http://" + hostInput.getText() + ":9090/ws/documents");
+                            router.getStage().setResizable(false);
+                            router.setSceneContent("/main.fxml");
+                        }
+                    }
+                    catch(IOException e){
 
-        }
+                    }
+                }
+            });
     }
 
 

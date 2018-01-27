@@ -201,6 +201,15 @@ public class MainController implements Initializable {
         }
     }
 
+    @FXML
+    private void reset(){
+        try{
+            this.refresh();
+            this.isSearchOn=false;
+        }catch(Exception e){
+
+        }
+    }
     /**
      * Element zur Darstellung hinzufügen
      *
