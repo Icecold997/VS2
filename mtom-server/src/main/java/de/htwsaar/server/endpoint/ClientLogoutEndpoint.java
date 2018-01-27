@@ -37,9 +37,17 @@ public class ClientLogoutEndpoint {
 
         LogoutClientResponse response = new LogoutClientResponse();
         Optional<ForwardingConfig> forwardingConfig = forwardingDAO.findByUrl(request.getSourceIp());
-        if(forwardingConfig.isPresent()){
-            //TODO: IP aus der DB löschen
+        if(forwardingConfig.isPresent()){       // node die auslogt löschen
+            forwardingDAO.delete(forwardingConfig.get());
             System.out.println("Diese IP wurde gefunden.");
+        }
+        Optional<ForwardingConfig> forwardingConfigFromMe = forwardingDAO.findByUrl(serverConfig.getServerIp()); // sich selbst in der datenbank finden
+        if(forwardingConfigFromMe.isPresent()) {
+            forwardingConfigFromMe.get().setConnections(forwardingConfigFromMe.get().getConnections() - 1);  //eigene verbindungen um eins reduzieren
+            forwardingDAO.save(forwardingConfigFromMe.get());
+            if(forwardingConfigFromMe.get().getConnections() < 2){  // wenn eigene verbindung kleiner 2 verbinde mit neuem peer
+                serverConfig.connnectWithNetwork();
+            }
         }
         return response;
     }
