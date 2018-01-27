@@ -32,6 +32,7 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 		byte[] array = Files.readAllBytes(inputPath);
 		document.setContent(array);
 		document.setPath(path);
+		document.setRequestRootDirName(serverConfig.getRootDirectory());
 		document.setName(inputPath.getFileName().toString());
 		document.setSourceUri(serverConfig.getServerIp());
 		StoreDocumentRequest request = new StoreDocumentRequest();
@@ -51,6 +52,7 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 	   RenameDocumentRequest request = new RenameDocumentRequest();
 	   request.setCurrentDocumentName(oldFileName);
 	   request.setSourceIp(serverConfig.getServerIp());
+	   request.setRequestRootDirName(serverConfig.getRootDirectory());
 	   request.setNewDocumentName(newFileName);
 	   request.setPath(path);
 	   RenameDocumentResponse response =(RenameDocumentResponse) getWebServiceTemplate().marshalSendAndReceive("http://"+serverConfig.getServerIp()+":9090/ws/documents",request);
@@ -66,6 +68,7 @@ public class DocumentsClient extends WebServiceGatewaySupport {
    	  DeleteDocumentRequest request = new DeleteDocumentRequest();
 	   request.setDocumentName(fileName);
 	   request.setSourceIp(serverConfig.getServerIp());
+	   request.setRequestRootDirName(serverConfig.getRootDirectory());
 	   request.setPath(path);
 	   DeleteDocumentResponse response = (DeleteDocumentResponse) getWebServiceTemplate().marshalSendAndReceive("http://"+serverConfig.getServerIp()+":9090/ws/documents",request);
 	   boolean success = response.isSuccess();
@@ -83,6 +86,7 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 		CreateDirectoryRequest request = new CreateDirectoryRequest();
 		request.setDirectoryName(dirName);
 		request.setPath(dirPath);
+		request.setRequestRootDirName(serverConfig.getRootDirectory());
 		request.setSourceIp(serverConfig.getServerIp());
 		CreateDirectoryResponse response = (CreateDirectoryResponse) getWebServiceTemplate().marshalSendAndReceive("http://"+serverConfig.getServerIp()+":9090/ws/documents",request);
 
@@ -91,6 +95,7 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 	public DirectoryInformationResponse sendDirectoryInformationRequest(String url,String path) throws IOException {
 		DirectoryInformationRequest request = new DirectoryInformationRequest();
 		request.setPath(path);
+		request.setRequestRootDirName(serverConfig.getRootDirectory());
 		DirectoryInformationResponse response = (DirectoryInformationResponse) getWebServiceTemplate()
 				.marshalSendAndReceive(url,request);
 		return response;
@@ -100,6 +105,7 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 		DownloadDocumentRequest request = new DownloadDocumentRequest();
 		request.setFileName(fileName);
 		request.setPath(path);
+		request.setRequestRootDirName(serverConfig.getRootDirectory());
 		DownloadDocumentResponse response = (DownloadDocumentResponse) getWebServiceTemplate()
 				.marshalSendAndReceive(url,request);
 		return response.getDocument();

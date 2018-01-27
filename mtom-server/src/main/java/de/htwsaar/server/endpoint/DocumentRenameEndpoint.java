@@ -51,8 +51,18 @@ public class DocumentRenameEndpoint {
     @ResponsePayload
     public RenameDocumentResponse renameDocument(@RequestPayload RenameDocumentRequest request) throws IOException {
 
-        System.out.println("Rename Endpoint: " + request.getPath());
-       Optional<FileArrangementConfig> fileArrangementConfig =  fileArrangementDao.findByFileLocationAndFilename(request.getPath(),request.getCurrentDocumentName());
+        String workPath  ;
+        String newPath1 = request.getPath().substring(request.getPath().indexOf(request.getRequestRootDirName())+request.getRequestRootDirName().length(),request.getPath().length());
+
+        if(newPath1.isEmpty()){  //root directory
+            workPath = serverConfig.fileDirectory;
+        }else{  //sub dir
+            workPath   = serverConfig.fileDirectory;
+            workPath   = workPath + newPath1;
+        }
+        System.out.println("Rename Endpoint: " + workPath);
+
+       Optional<FileArrangementConfig> fileArrangementConfig =  fileArrangementDao.findByFileLocationAndFilename(workPath,request.getCurrentDocumentName());
        RenameDocumentResponse response = new RenameDocumentResponse();
         if(fileArrangementConfig.isPresent()){
             File oldFile = new File(fileArrangementConfig.get().getFileLocation()+"/"+fileArrangementConfig.get().getFilename());
@@ -68,7 +78,7 @@ public class DocumentRenameEndpoint {
                 FileView fileView = new FileView();
                 fileView.setFileOrDirectoryName(request.getNewDocumentName());
                 fileView.setDate(fileArrangementConfig.get().getUpdated_at().toString());
-                fileView.setPath(request.getPath());
+                fileView.setPath(workPath);
                 if(fileArrangementConfig.get().isDirectory()){
                     fileView.setType("Directory");
                     oldFileView.setType("Directory");

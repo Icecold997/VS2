@@ -72,8 +72,6 @@ public class ServerConfig {
      */
     private  void createFileDirectory(){
         String path = System.getProperty("user.dir") + "/";
-
-
         File dir = new File(path + rootDirectory);
 
         if (dir.exists()) {

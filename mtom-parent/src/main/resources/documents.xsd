@@ -75,6 +75,7 @@
 		   <sequence>
 			   <element name="fileName" type="string"/>
 			   <element name="path" type="string"/>
+			   <element name="requestRootDirName" type="string" />
 		   </sequence>
 	   </complexType>
    </element>
@@ -86,6 +87,7 @@
 				<element name="directoryName" type="string"/>
 				<element name="path" type="string"/>
 				<element name="sourceIp" type="string"/>
+				<element name="requestRootDirName" type="string" />
 			</sequence>
 		</complexType>
 	</element>
@@ -110,6 +112,7 @@
 				<element name="currentDocumentName" type="string" />
 				<element name="newDocumentName" type="string" />
                 <element name="sourceIp" type="string"/>
+				<element name="requestRootDirName" type="string" />
 			</sequence>
 		</complexType>
 	</element>
@@ -145,6 +148,7 @@
 				<element name="documentName" type="string" />
                 <element name="sourceIp" type="string"/>
 				<element name="path" type="string"/>
+				<element name="requestRootDirName" type="string" />
 			</sequence>
 		</complexType>
 	</element>
@@ -180,6 +184,7 @@
 		<complexType>
 			<sequence>
 				<element name="path" type="string"/>
+				<element name="requestRootDirName" type="string" />
 			</sequence>
 		</complexType>
 	</element>
@@ -202,6 +207,7 @@
 			<element name="content" type="base64Binary" />
 			<element name="sourceUri" type="string" />
 			<element name="path" type="string"/>
+			<element name="requestRootDirName" type="string" />
 		</sequence>
 	</complexType>
 
@@ -226,6 +232,7 @@
 			<element name="date" type="string"/>
 			<element name="sourceIp" type="string"/>
 			<element name="path" type="string"/>
+			<element name="requestRootDirName" type="string" />
 		</sequence>
 	</complexType>
 

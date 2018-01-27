@@ -53,20 +53,32 @@ public class DocumentReceiveEndpoint {
 	@ResponsePayload
 	public StoreDocumentResponse storeDocument(@RequestPayload StoreDocumentRequest request) throws IOException {
 
+
+
 	    	StoreDocumentResponse response = new StoreDocumentResponse();
 	     	System.out.println("Datei empfangen : DateiName: " + request.getDocument().getName());
 			FileArrangementConfig fileArrangementConfig = new FileArrangementConfig();
 			Document document = request.getDocument();
 
+		String workPath  ;
+		String newPath1 = document.getPath().substring(document.getPath().indexOf(document.getRequestRootDirName())+document.getRequestRootDirName().length(),document.getPath().length());
+
+		if(newPath1.isEmpty()){  //root directory
+			workPath = serverConfig.fileDirectory;
+		}else{  //sub dir
+			workPath   = serverConfig.fileDirectory;
+			workPath   = workPath + newPath1;
+		}
+            System.out.println("workp: "+workPath);
 			fileArrangementConfig.setFilename(document.getName());
-			fileArrangementConfig.setFileLocation(request.getDocument().getPath());
+			fileArrangementConfig.setFileLocation(workPath);
 			fileArrangementConfig.setLocal(true);
 			fileArrangementConfig.setSourceIp(document.getSourceUri());
-	    	  if(!fileExist(request.getDocument().getPath(),request.getDocument().getName())) {
+	    	  if(!fileExist(workPath,request.getDocument().getName())) {
 			    fileArrangementDao.save(fileArrangementConfig);
 				  System.out.println("Datei in Datenbank aufgenommen");
 		      }else{
-		      	 fileArrangementDao.deleteByfilenameAndFileLocation(fileArrangementConfig.getFilename(),request.getDocument().getPath());
+		      	 fileArrangementDao.deleteByfilenameAndFileLocation(fileArrangementConfig.getFilename(),workPath);
 				 fileArrangementDao.save(fileArrangementConfig);
 				  System.out.println("Datei schon vorhanden wird überschrieben");
 			  }
@@ -74,9 +86,9 @@ public class DocumentReceiveEndpoint {
 
 			byte[] demBytes = document.getContent();  // datei in byteform aus der soap nachricht holen
 
-			File outputFile = new File(request.getDocument().getPath() + "/" + document.getName()); //  ort an dem datei gespeichert wird
+			File outputFile = new File(workPath + "/" + document.getName()); //  ort an dem datei gespeichert wird
 
-			try (FileOutputStream outputStream = new FileOutputStream(outputFile);) { // bytes aus nachricht in datei zurückschreiben
+			try (FileOutputStream outputStream = new FileOutputStream(outputFile)) { // bytes aus nachricht in datei zurückschreiben
 				outputStream.write(demBytes);
 				outputStream.close();
 				response.setSuccess(true);

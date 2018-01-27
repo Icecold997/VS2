@@ -40,9 +40,18 @@ public class DownloadDocumentEndpoint {
     @ResponsePayload
     public DownloadDocumentResponse downloadDocument(@RequestPayload DownloadDocumentRequest request) throws IOException {
         DownloadDocumentResponse respone = new DownloadDocumentResponse();
+        String workPath  ;
+        String newPath1 = request.getPath().substring(request.getPath().indexOf(request.getRequestRootDirName())+request.getRequestRootDirName().length(),request.getPath().length());
+
+        if(newPath1.isEmpty()){  //root directory
+            workPath = serverConfig.fileDirectory;
+        }else{  //sub dir
+            workPath   = serverConfig.fileDirectory;
+            workPath   = workPath + newPath1;
+        }
         System.out.println("Download Enpoint :" +request.getFileName());
-        System.out.println("Download Enpoint :" +request.getPath());
-        Optional<FileArrangementConfig> config = fileArrangementDAO.findByFileLocationAndFilename(request.getPath(),request.getFileName());
+        System.out.println("Download Enpoint :" +workPath);
+        Optional<FileArrangementConfig> config = fileArrangementDAO.findByFileLocationAndFilename(workPath,request.getFileName());
        if( config.isPresent()){
            System.out.println("datei gefunden");
            Document document = new Document();

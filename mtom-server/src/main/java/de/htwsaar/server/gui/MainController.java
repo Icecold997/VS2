@@ -75,6 +75,7 @@ public class MainController implements Initializable {
      */
    @Override
     public void initialize(URL url, ResourceBundle bundle) {
+
        workDirectoryPath = serverConfig.fileDirectory;
        table_view.setOnMousePressed(new EventHandler<javafx.scene.input.MouseEvent>() {
            @Override
@@ -152,8 +153,6 @@ public class MainController implements Initializable {
                    for(ServerInfo superNode : superNodes){
                        this.downloadFile(respone.getFileConfig(),"http://"+superNode.getServerIp()+":9090/ws/documents" ,serverConfig.fileDirectory);
                    }
-
-
                }
            }
        }catch (Exception e){
@@ -179,8 +178,6 @@ public class MainController implements Initializable {
                             outputStream.close();
                         }
                         if(file.getType().equals("Directory")){
-
-
                             File directory = new File(file.getPath());
                             if(!directory.exists()) {
                                 directory.mkdir();

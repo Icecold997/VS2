@@ -10,6 +10,7 @@ import de.htwsaar.DeleteDocumentResponse;
 
 import de.htwsaar.FileView;
 import de.htwsaar.server.config.FloodingTransmitter;
+import de.htwsaar.server.config.ServerConfig;
 import de.htwsaar.server.gui.FileViewList;
 import de.htwsaar.server.gui.MainController;
 import de.htwsaar.server.persistence.FileArrangementConfig;
@@ -28,6 +29,9 @@ public class DocumentDeleteEndpoint {
 
     @Autowired
     FileArrangementDAO fileArrangementDao;
+
+    @Autowired
+    ServerConfig serverConfig;
 
     @Autowired
     FloodingTransmitter floodingTransmitter;
@@ -49,12 +53,21 @@ public class DocumentDeleteEndpoint {
     public DeleteDocumentResponse deleteDocument(@RequestPayload DeleteDocumentRequest request) throws IOException {
         DeleteDocumentResponse response = new DeleteDocumentResponse();
         response.setSuccess(true);
-        System.out.println("delte endpoint: "+request.getPath());
+        String workPath  ;
+        String newPath1 = request.getPath().substring(request.getPath().indexOf(request.getRequestRootDirName())+request.getRequestRootDirName().length(),request.getPath().length());
+
+        if(newPath1.isEmpty()){  //root directory
+            workPath = serverConfig.fileDirectory;
+        }else{  //sub dir
+            workPath   = serverConfig.fileDirectory;
+            workPath   = workPath + newPath1;
+        }
+        System.out.println("delte endpoint: "+workPath);
         System.out.println("delte endpoint: "+request.getDocumentName());
-        Optional<FileArrangementConfig> fileArrangementConfig =  fileArrangementDao.findByFileLocationAndFilename(request.getPath(),request.getDocumentName());
+        Optional<FileArrangementConfig> fileArrangementConfig =  fileArrangementDao.findByFileLocationAndFilename(workPath,request.getDocumentName());
         if(fileArrangementConfig.isPresent()) {
-            System.out.println("delte endpoint: "+fileArrangementConfig.get().getFileLocation());
-            System.out.println("delte endpoint: "+fileArrangementConfig.get().getFilename());
+            System.out.println("delete endpoint: "+fileArrangementConfig.get().getFileLocation());
+            System.out.println("delete endpoint: "+fileArrangementConfig.get().getFilename());
             File file = new File(fileArrangementConfig.get().getFileLocation()+"/"+fileArrangementConfig.get().getFilename());
 
             if(file.delete()){
@@ -67,7 +80,7 @@ public class DocumentDeleteEndpoint {
                     }
                 });
 
-                fileArrangementDao.deleteByfilenameAndFileLocation(request.getDocumentName(),request.getPath());
+                fileArrangementDao.deleteByfilenameAndFileLocation(request.getDocumentName(),workPath);
                 floodingTransmitter.floodDeleteFileRequest(request);
             }else{
                 response.setSuccess(false);

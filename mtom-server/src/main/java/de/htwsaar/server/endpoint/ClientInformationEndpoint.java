@@ -36,10 +36,22 @@ public class ClientInformationEndpoint {
     @ResponsePayload
     public DirectoryInformationResponse getInformation(@RequestPayload DirectoryInformationRequest request) throws IOException {
 
+        String workPath  ;
+        String newPath1 = request.getPath().substring(request.getPath().indexOf(request.getRequestRootDirName())+request.getRequestRootDirName().length(),request.getPath().length());
+
+        if(newPath1.isEmpty()){  //root directory
+           workPath = serverConfig.fileDirectory;
+        }else{  //sub dir
+           workPath   = serverConfig.fileDirectory;
+           workPath   = workPath + newPath1;
+        }
+
+
         DirectoryInformationResponse respone = new DirectoryInformationResponse();
-        Optional<List<FileArrangementConfig>> fileList = fileArrangementDAO.findAllByFileLocation(request.getPath());
+        Optional<List<FileArrangementConfig>> fileList = fileArrangementDAO.findAllByFileLocation(workPath);
+
         System.out.println("Directory information Endpoint erreicht");
-        System.out.println("Directory pfad" + request.getPath());
+        System.out.println("Directory pfad" + workPath);
         if (fileList.isPresent()){
             for (FileArrangementConfig fileConfig : fileList.get()) {
                 FileView fileView = new FileView();
@@ -53,7 +65,7 @@ public class ClientInformationEndpoint {
                 } else {
                     fileView.setSourceIp(fileConfig.getSourceIp());
                 }
-                fileView.setPath(request.getPath());
+                fileView.setPath(workPath);
                 fileView.setDate(fileConfig.getUpdated_at().toString());
                 fileView.setFileOrDirectoryName(fileConfig.getFilename());
                 respone.getFileConfig().add(fileView);

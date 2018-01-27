@@ -45,17 +45,27 @@ public class CreateDirEndpoint {
     @ResponsePayload
     public CreateDirectoryResponse getInfo(@RequestPayload CreateDirectoryRequest request) throws IOException {
 
-        System.out.println(request.getPath());
+        String workPath  ;
+        String newPath1 = request.getPath().substring(request.getPath().indexOf(request.getRequestRootDirName())+request.getRequestRootDirName().length(),request.getPath().length());
+
+        if(newPath1.isEmpty()){  //root directory
+            workPath = serverConfig.fileDirectory;
+        }else{  //sub dir
+            workPath   = serverConfig.fileDirectory;
+            workPath   = workPath + newPath1;
+        }
+        System.out.println("Create Dir Enpoint : " + workPath);
         System.out.println(request.getDirectoryName());
-        File dir = new File(request.getPath()+"/"+request.getDirectoryName());
+        File dir = new File(workPath+"/"+request.getDirectoryName());
         if(dir.mkdir()) {
             FileArrangementConfig fileArrangementConfig = new FileArrangementConfig();
             fileArrangementConfig.setFilename(request.getDirectoryName());
-            fileArrangementConfig.setFileLocation(request.getPath());
+            fileArrangementConfig.setFileLocation(workPath);
             fileArrangementConfig.setLocal(true);
             fileArrangementConfig.setDirectory(true);
             fileArrangementConfig.setSourceIp(request.getSourceIp());
             fileArrangementDAO.save(fileArrangementConfig);
+            String finalWorkPath = workPath;
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
@@ -64,7 +74,7 @@ public class CreateDirEndpoint {
                         FileView fileView = new FileView();
                         fileView.setFileOrDirectoryName(dir.getName());
                         fileView.setType("Directory");
-                        fileView.setPath(request.getPath());
+                        fileView.setPath(finalWorkPath);
                         fileView.setSourceIp(request.getSourceIp());
                         fileView.setDate(new Date().toString());
                         mainController.addItem(fileView);
