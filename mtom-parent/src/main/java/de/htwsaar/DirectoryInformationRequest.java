@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.7 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2018.01.23 um 05:20:43 PM CET 
+// Generiert: 2018.01.27 um 08:33:47 PM CET 
 //
 
 
@@ -10,6 +10,7 @@ package de.htwsaar;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -24,7 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="received" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
+ *         &lt;element name="path" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -35,27 +36,36 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "received"
+    "path"
 })
 @XmlRootElement(name = "directoryInformationRequest")
 public class DirectoryInformationRequest {
 
-    protected boolean received;
+    @XmlElement(required = true)
+    protected String path;
 
     /**
-     * Ruft den Wert der received-Eigenschaft ab.
+     * Ruft den Wert der path-Eigenschaft ab.
      * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
-    public boolean isReceived() {
-        return received;
+    public String getPath() {
+        return path;
     }
 
     /**
-     * Legt den Wert der received-Eigenschaft fest.
+     * Legt den Wert der path-Eigenschaft fest.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
-    public void setReceived(boolean value) {
-        this.received = value;
+    public void setPath(String value) {
+        this.path = value;
     }
 
 }

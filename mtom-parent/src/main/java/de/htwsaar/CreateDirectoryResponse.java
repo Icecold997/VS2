@@ -23,9 +23,6 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;complexType>
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="success" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
- *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -34,28 +31,9 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "success"
-})
-@XmlRootElement(name = "deleteDocumentResponse")
-public class DeleteDocumentResponse {
+@XmlType(name = "")
+@XmlRootElement(name = "createDirectoryResponse")
+public class CreateDirectoryResponse {
 
-    protected boolean success;
-
-    /**
-     * Ruft den Wert der success-Eigenschaft ab.
-     * 
-     */
-    public boolean isSuccess() {
-        return success;
-    }
-
-    /**
-     * Legt den Wert der success-Eigenschaft fest.
-     * 
-     */
-    public void setSuccess(boolean value) {
-        this.success = value;
-    }
 
 }

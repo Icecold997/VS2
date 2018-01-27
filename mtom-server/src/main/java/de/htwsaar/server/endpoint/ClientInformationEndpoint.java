@@ -37,25 +37,28 @@ public class ClientInformationEndpoint {
     public DirectoryInformationResponse getInformation(@RequestPayload DirectoryInformationRequest request) throws IOException {
 
         DirectoryInformationResponse respone = new DirectoryInformationResponse();
-
-        List<FileArrangementConfig> fileList = new ArrayList<FileArrangementConfig>();
-        fileList = fileArrangementDAO.findAll();
-        for(FileArrangementConfig fileConfig:fileList){
-            FileView fileView = new FileView();
-            if(fileConfig.isDirectory()){
-                fileView.setType("Directory");
-            }else{
-                fileView.setType("File");
+        Optional<List<FileArrangementConfig>> fileList = fileArrangementDAO.findAllByFileLocation(request.getPath());
+        System.out.println("Directory information Endpoint erreicht");
+        System.out.println("Directory pfad" + request.getPath());
+        if (fileList.isPresent()){
+            for (FileArrangementConfig fileConfig : fileList.get()) {
+                FileView fileView = new FileView();
+                if (fileConfig.isDirectory()) {
+                    fileView.setType("Directory");
+                } else {
+                    fileView.setType("File");
+                }
+                if (fileConfig.isLocal()) {
+                    fileView.setSourceIp("localhost"); //TODO lokale ip adresse eingeben
+                } else {
+                    fileView.setSourceIp(fileConfig.getSourceIp());
+                }
+                fileView.setPath(request.getPath());
+                fileView.setDate(fileConfig.getUpdated_at().toString());
+                fileView.setFileOrDirectoryName(fileConfig.getFilename());
+                respone.getFileConfig().add(fileView);
             }
-            if(fileConfig.isLocal()){
-                fileView.setSourceIp("localhost"); //TODO lokale ip adresse eingeben
-            }else{
-                fileView.setSourceIp(fileConfig.getSourceIp());
-            }
-            fileView.setDate(fileConfig.getUpdated_at().toString());
-            fileView.setFileOrDirectoryName(fileConfig.getFilename());
-            respone.getFileConfig().add(fileView);
-        }
+    }
         respone.setSuccess(true);
         return respone;
     }

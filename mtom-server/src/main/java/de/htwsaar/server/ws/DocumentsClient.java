@@ -26,11 +26,12 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 	 * @return
 	 * @throws IOException
      */
-	public FileView storeDocument(String pathToFile) throws IOException {
+	public FileView storeDocument(String pathToFile,String path) throws IOException {
 		Document document = new Document();
 		Path inputPath  = new File(pathToFile).toPath();
 		byte[] array = Files.readAllBytes(inputPath);
 		document.setContent(array);
+		document.setPath(path);
 		document.setName(inputPath.getFileName().toString());
 		document.setSourceUri(serverConfig.getServerIp());
 		StoreDocumentRequest request = new StoreDocumentRequest();
@@ -46,11 +47,12 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 	}
 
 
-   public FileView renameDocument(String oldFileName,String newFileName){
+   public FileView renameDocument(String oldFileName,String newFileName,String path){
 	   RenameDocumentRequest request = new RenameDocumentRequest();
 	   request.setCurrentDocumentName(oldFileName);
 	   request.setSourceIp(serverConfig.getServerIp());
 	   request.setNewDocumentName(newFileName);
+	   request.setPath(path);
 	   RenameDocumentResponse response =(RenameDocumentResponse) getWebServiceTemplate().marshalSendAndReceive("http://"+serverConfig.getServerIp()+":9090/ws/documents",request);
 	   boolean success = response.isSuccess();
 	   if(success){
@@ -60,24 +62,46 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 	   return response.getNewFile();
    }
 
-   public boolean deleteDocument(String fileName){
+   public boolean deleteDocument(String fileName,String path){
    	  DeleteDocumentRequest request = new DeleteDocumentRequest();
 	   request.setDocumentName(fileName);
 	   request.setSourceIp(serverConfig.getServerIp());
+	   request.setPath(path);
 	   DeleteDocumentResponse response = (DeleteDocumentResponse) getWebServiceTemplate().marshalSendAndReceive("http://"+serverConfig.getServerIp()+":9090/ws/documents",request);
 	   boolean success = response.isSuccess();
 	   if(success){
 	   	System.out.println("Datei erfolgreich gelöscht");
+	   }else{
+		   System.out.println("Datei konnte nicht gelöscht werden");
 	   }
    	   return success;
 
    }
 
-	public DirectoryInformationResponse sendDirectoryInformationRequest(String url) throws IOException {
+
+	public void createDir(String dirName,String dirPath){
+		CreateDirectoryRequest request = new CreateDirectoryRequest();
+		request.setDirectoryName(dirName);
+		request.setPath(dirPath);
+		request.setSourceIp(serverConfig.getServerIp());
+		CreateDirectoryResponse response = (CreateDirectoryResponse) getWebServiceTemplate().marshalSendAndReceive("http://"+serverConfig.getServerIp()+":9090/ws/documents",request);
+
+	}
+
+	public DirectoryInformationResponse sendDirectoryInformationRequest(String url,String path) throws IOException {
 		DirectoryInformationRequest request = new DirectoryInformationRequest();
+		request.setPath(path);
 		DirectoryInformationResponse response = (DirectoryInformationResponse) getWebServiceTemplate()
 				.marshalSendAndReceive(url,request);
 		return response;
 	}
 
+	public Document downloadFileFromServer(String fileName ,String url,String path){
+		DownloadDocumentRequest request = new DownloadDocumentRequest();
+		request.setFileName(fileName);
+		request.setPath(path);
+		DownloadDocumentResponse response = (DownloadDocumentResponse) getWebServiceTemplate()
+				.marshalSendAndReceive(url,request);
+		return response.getDocument();
+	}
 }

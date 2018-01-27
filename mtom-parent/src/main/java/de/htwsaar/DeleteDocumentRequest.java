@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.7 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2018.01.23 um 05:20:43 PM CET 
+// Generiert: 2018.01.27 um 08:33:47 PM CET 
 //
 
 
@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="documentName" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="sourceIp" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="path" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -38,7 +39,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "documentName",
-    "sourceIp"
+    "sourceIp",
+    "path"
 })
 @XmlRootElement(name = "deleteDocumentRequest")
 public class DeleteDocumentRequest {
@@ -47,6 +49,8 @@ public class DeleteDocumentRequest {
     protected String documentName;
     @XmlElement(required = true)
     protected String sourceIp;
+    @XmlElement(required = true)
+    protected String path;
 
     /**
      * Ruft den Wert der documentName-Eigenschaft ab.
@@ -94,6 +98,30 @@ public class DeleteDocumentRequest {
      */
     public void setSourceIp(String value) {
         this.sourceIp = value;
+    }
+
+    /**
+     * Ruft den Wert der path-Eigenschaft ab.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getPath() {
+        return path;
+    }
+
+    /**
+     * Legt den Wert der path-Eigenschaft fest.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setPath(String value) {
+        this.path = value;
     }
 
 }

@@ -46,7 +46,6 @@ public class DirectoryInformationEndpoint {
     @ResponsePayload
     public SendDirectoryInformationToParentResponse getInfo(@RequestPayload SendDirectoryInformationToParentRequest request) throws IOException {
 
-
         SendDirectoryInformationToParentResponse response = new SendDirectoryInformationToParentResponse();
         return  response;
     }

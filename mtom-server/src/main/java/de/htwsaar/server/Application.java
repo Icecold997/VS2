@@ -64,7 +64,7 @@ public class Application extends AbstractJavaFxApp {
 	public void start(Stage stage) throws Exception {
 
 
-
+		serverConfig.startServer();
 		notifyPreloader(new Preloader.StateChangeNotification(Preloader.StateChangeNotification.Type.BEFORE_START));
 
 		router.setStage(stage);
@@ -85,7 +85,6 @@ public class Application extends AbstractJavaFxApp {
 		});
 		router.setStage(stage);
 
-		serverConfig.startServer();
 	}
 
      private void logout(){
@@ -95,7 +94,9 @@ public class Application extends AbstractJavaFxApp {
 				Iterable<ForwardingConfig> ipList = forwardingDAO.findAll();
 				Iterable<ServerInfo> superNodes = serverDAO.findAll() ;
 				for(ForwardingConfig connections : ipList){  // verbundene server
-					transmitter.sendLogoutRequest(connections.getUrl(),serverConfig.getServerIp());
+					if(!connections.getUrl().equals(serverConfig.getServerIp())) {
+						transmitter.sendLogoutRequest(connections.getUrl(), serverConfig.getServerIp());
+					}
 				}
 				for(ServerInfo superNode : superNodes){
 					transmitter.sendLogoutRequest(superNode.getServerIp(),serverConfig.getServerIp());

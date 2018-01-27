@@ -93,4 +93,18 @@ public class FloodingTransmitter  extends WebServiceGatewaySupport{
     }
 
 
+    public void floodCreateDirRequest(CreateDirectoryRequest createDirectoryRequest){
+        String sourceIp = createDirectoryRequest.getSourceIp();
+        Iterable<ForwardingConfig> forwardingConfigs;
+        forwardingConfigs = forwardingDAO.findAll();
+        for(ForwardingConfig forwardingConfig : forwardingConfigs) {
+            if (!forwardingConfig.getUrl().equals(serverConfig.getServerIp())  && !forwardingConfig.getUrl().equals(sourceIp)) {
+                System.out.println("Floode create Dir an: " + forwardingConfig.getUrl());
+                CreateDirectoryResponse response = (CreateDirectoryResponse) getWebServiceTemplate()
+                        .marshalSendAndReceive("http://" + forwardingConfig.getUrl() + ":9090/ws/documents", createDirectoryRequest);
+            }
+        }
+    }
+
+
 }

@@ -74,9 +74,26 @@
 	   <complexType>
 		   <sequence>
 			   <element name="fileName" type="string"/>
+			   <element name="path" type="string"/>
 		   </sequence>
 	   </complexType>
    </element>
+
+
+	<element name="createDirectoryRequest">
+		<complexType>
+			<sequence>
+				<element name="directoryName" type="string"/>
+				<element name="path" type="string"/>
+				<element name="sourceIp" type="string"/>
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="createDirectoryResponse">
+		<complexType>
+		</complexType>
+	</element>
 
 	<element name="downloadDocumentResponse">
 		<complexType>
@@ -89,6 +106,7 @@
 	<element name="renameDocumentRequest">
 		<complexType>
 			<sequence>
+				<element name="path" type="string"/>
 				<element name="currentDocumentName" type="string" />
 				<element name="newDocumentName" type="string" />
                 <element name="sourceIp" type="string"/>
@@ -126,6 +144,7 @@
 			<sequence>
 				<element name="documentName" type="string" />
                 <element name="sourceIp" type="string"/>
+				<element name="path" type="string"/>
 			</sequence>
 		</complexType>
 	</element>
@@ -160,7 +179,7 @@
 	<element name="directoryInformationRequest">
 		<complexType>
 			<sequence>
-				<element name="received" type="boolean"/>
+				<element name="path" type="string"/>
 			</sequence>
 		</complexType>
 	</element>
@@ -182,6 +201,7 @@
 			<element name="author" type="string" />
 			<element name="content" type="base64Binary" />
 			<element name="sourceUri" type="string" />
+			<element name="path" type="string"/>
 		</sequence>
 	</complexType>
 
@@ -205,6 +225,7 @@
 			<element name="type" type="string"/>
 			<element name="date" type="string"/>
 			<element name="sourceIp" type="string"/>
+			<element name="path" type="string"/>
 		</sequence>
 	</complexType>
 

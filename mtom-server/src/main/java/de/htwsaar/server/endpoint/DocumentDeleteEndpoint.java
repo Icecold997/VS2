@@ -47,10 +47,16 @@ public class DocumentDeleteEndpoint {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "deleteDocumentRequest")
     @ResponsePayload
     public DeleteDocumentResponse deleteDocument(@RequestPayload DeleteDocumentRequest request) throws IOException {
-
-        Optional<FileArrangementConfig> fileArrangementConfig =  fileArrangementDao.findByfilename(request.getDocumentName());
+        DeleteDocumentResponse response = new DeleteDocumentResponse();
+        response.setSuccess(true);
+        System.out.println("delte endpoint: "+request.getPath());
+        System.out.println("delte endpoint: "+request.getDocumentName());
+        Optional<FileArrangementConfig> fileArrangementConfig =  fileArrangementDao.findByFileLocationAndFilename(request.getPath(),request.getDocumentName());
         if(fileArrangementConfig.isPresent()) {
+            System.out.println("delte endpoint: "+fileArrangementConfig.get().getFileLocation());
+            System.out.println("delte endpoint: "+fileArrangementConfig.get().getFilename());
             File file = new File(fileArrangementConfig.get().getFileLocation()+"/"+fileArrangementConfig.get().getFilename());
+
             if(file.delete()){
                 System.out.println(file.getName()+" is deleted update gui");
                 FileView oldfile = fileArragementConfigToFileView(fileArrangementConfig.get());
@@ -61,13 +67,14 @@ public class DocumentDeleteEndpoint {
                     }
                 });
 
-                fileArrangementDao.deleteByfilename(request.getDocumentName());
+                fileArrangementDao.deleteByfilenameAndFileLocation(request.getDocumentName(),request.getPath());
                 floodingTransmitter.floodDeleteFileRequest(request);
+            }else{
+                response.setSuccess(false);
             }
         }
 
-        DeleteDocumentResponse response = new DeleteDocumentResponse();
-        response.setSuccess(true);
+
         return response;
     }
 

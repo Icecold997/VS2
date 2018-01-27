@@ -1,6 +1,7 @@
 package de.htwsaar.server.gui;
 
 import de.htwsaar.server.config.ServerConfig;
+import de.htwsaar.server.persistence.ServerDAO;
 import de.htwsaar.server.persistence.ServerInfo;
 import de.htwsaar.server.ws.DocumentsClient;
 import com.jfoenix.controls.JFXTextField;
@@ -8,6 +9,7 @@ import de.htwsaar.DirectoryInformationResponse;
 import de.htwsaar.FileView;
 import de.htwsaar.Document;
 
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -26,6 +28,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -36,6 +39,7 @@ public class MainController implements Initializable {
 
     private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 
+    private String workDirectoryPath;
 
     @Autowired
     private DocumentsClient documentsClient;
@@ -49,6 +53,8 @@ public class MainController implements Initializable {
     @Autowired
     FileViewList fileViewList;
 
+    @Autowired
+    private ServerDAO serverDAO;
 
     @FXML
     TableView<FileView> table_view;
@@ -69,7 +75,7 @@ public class MainController implements Initializable {
      */
    @Override
     public void initialize(URL url, ResourceBundle bundle) {
-
+       workDirectoryPath = serverConfig.fileDirectory;
        table_view.setOnMousePressed(new EventHandler<javafx.scene.input.MouseEvent>() {
            @Override
            public void handle(javafx.scene.input.MouseEvent event) {
@@ -109,6 +115,7 @@ public class MainController implements Initializable {
                                deleteDocument(row.getItem());
                            }
                        });
+
                        rowMenu.getItems().addAll(removeItem);
 
 // only display context menu for non-null items:
@@ -125,21 +132,72 @@ public class MainController implements Initializable {
 
     }
 
+    @FXML
+    private void createDirectory(){
+       documentsClient.createDir("Neuer Ordner",workDirectoryPath);
+
+    }
     /**
      * Erhalte Dateiinformatoonen
      */
     private void getFileInformation(){
        try {
-           DirectoryInformationResponse respone = documentsClient.sendDirectoryInformationRequest("http://" + serverConfig.getServerIp() + ":9090/ws/documents");
+           DirectoryInformationResponse respone = documentsClient.sendDirectoryInformationRequest("http://" + serverConfig.getServerIp() + ":9090/ws/documents",serverConfig.fileDirectory);
 
            if (respone.isSuccess()) {
                if (!respone.getFileConfig().isEmpty()) {
                    fileViewList.setList(respone.getFileConfig());
+
+                   Iterable<ServerInfo> superNodes = serverDAO.findAll();
+                   for(ServerInfo superNode : superNodes){
+                       this.downloadFile(respone.getFileConfig(),"http://"+superNode.getServerIp()+":9090/ws/documents" ,serverConfig.fileDirectory);
+                   }
+
+
                }
            }
        }catch (Exception e){
            e.printStackTrace();
        }
+    }
+
+    private void downloadFile(List<FileView> files, String url,String currentPath){
+        System.out.println("downloade file von: "+ url);
+        System.out.println("current path:  "+ currentPath);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    for (FileView file : files) {    //datei liste
+                        if (file.getType().equals("File")) {   // wen datei
+                            Document document = documentsClient.downloadFileFromServer(file.getFileOrDirectoryName(), url,file.getPath()); //downloade datei von url
+                            byte[] demBytes = document.getContent();      //speichern der datei
+
+                            File outputFile = new File(document.getPath());
+                            FileOutputStream outputStream = new FileOutputStream(outputFile);
+                            outputStream.write(demBytes);
+                            outputStream.close();
+                        }
+                        if(file.getType().equals("Directory")){
+
+
+                            File directory = new File(file.getPath());
+                            if(!directory.exists()) {
+                                directory.mkdir();
+                            }else{
+                                DirectoryInformationResponse response = documentsClient.sendDirectoryInformationRequest(url,file.getPath()+"/"+file.getFileOrDirectoryName());
+                                downloadFile(response.getFileConfig(),url,file.getPath());
+                            }
+
+
+                        }
+
+                    }
+                }catch (IOException e){e.printStackTrace();}
+            }
+            }
+
+        );
     }
 
     /**
@@ -150,7 +208,7 @@ public class MainController implements Initializable {
      * @param fileView Darstellung
      */
     private void renameDocument(String newName,String oldName,FileView fileView){
-        documentsClient.renameDocument(oldName,newName);
+        documentsClient.renameDocument(oldName,newName,fileView.getPath());
 
     }
 
@@ -160,7 +218,8 @@ public class MainController implements Initializable {
      * @param fileView Darstellung
      */
     private void deleteDocument(FileView fileView){
-         documentsClient.deleteDocument(fileView.getFileOrDirectoryName());
+        System.out.println("t"+fileView.getPath());
+         documentsClient.deleteDocument(fileView.getFileOrDirectoryName(),fileView.getPath());
     }
 
     /**
@@ -169,7 +228,7 @@ public class MainController implements Initializable {
     @FXML
     private void uploadChoosenFile(){
         try {
-         documentsClient.storeDocument(router.startFileChooser().getAbsolutePath());
+         documentsClient.storeDocument(router.startFileChooser().getAbsolutePath(),workDirectoryPath);
         }catch(Exception e){
 
         }
@@ -182,7 +241,7 @@ public class MainController implements Initializable {
      */
     public void addItem(FileView fileView){
        fileViewList.addFileView(fileView);
-       //table_view.setItems(fileViewList.getFileViewList());
+//       table_view.setItems(fileViewList.getFileViewList());
     }
 
     public void deleteFile(FileView fileView){
@@ -190,20 +249,54 @@ public class MainController implements Initializable {
     }
 
     /**
-     * deprecated
+     * Wechsel zwischen directorys
      *
      * @param tableItem --
      */
-    private void handleDoubleClickOnTableItem(FileView tableItem){
+    private void handleDoubleClickOnTableItem(FileView tableItem) {
+        if (tableItem != null) {
+            if (tableItem.getType().equals("Directory")) {
+                try {
+                    System.out.println("test: "+tableItem.getPath());
+                    DirectoryInformationResponse respone = documentsClient.sendDirectoryInformationRequest("http://" + serverConfig.getServerIp() + ":9090/ws/documents", tableItem.getPath()+"/"+tableItem.getFileOrDirectoryName());
 
+                    if (respone.isSuccess()) {
+                            workDirectoryPath += "/" + tableItem.getFileOrDirectoryName();
+                            table_view.getItems().clear();
+                            fileViewList.getFileViewList().clear();
+                            fileViewList.setList(respone.getFileConfig());
+                            table_view.setItems(fileViewList.getFileViewList());
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     /**
      * deprecated --
      */
     @FXML
-    private void goBack(){
+    private void goBack() {
+        if (!workDirectoryPath.equals(serverConfig.fileDirectory)) {
+            try {
+                DirectoryInformationResponse respone = documentsClient.sendDirectoryInformationRequest("http://" + serverConfig.getServerIp() + ":9090/ws/documents", workDirectoryPath.substring(0, workDirectoryPath.lastIndexOf("/")));
 
+                if (respone.isSuccess()) {
+                    workDirectoryPath = workDirectoryPath.substring(0, workDirectoryPath.lastIndexOf("/"));
+
+                    table_view.getItems().clear();
+                    fileViewList.getFileViewList().clear();
+                    fileViewList.setList(respone.getFileConfig());
+                    table_view.setItems(fileViewList.getFileViewList());
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+         }
     }
 
 

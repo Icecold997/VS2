@@ -51,7 +51,8 @@ public class DocumentRenameEndpoint {
     @ResponsePayload
     public RenameDocumentResponse renameDocument(@RequestPayload RenameDocumentRequest request) throws IOException {
 
-       Optional<FileArrangementConfig> fileArrangementConfig =  fileArrangementDao.findByfilename(request.getCurrentDocumentName());
+        System.out.println("Rename Endpoint: " + request.getPath());
+       Optional<FileArrangementConfig> fileArrangementConfig =  fileArrangementDao.findByFileLocationAndFilename(request.getPath(),request.getCurrentDocumentName());
        RenameDocumentResponse response = new RenameDocumentResponse();
         if(fileArrangementConfig.isPresent()){
             File oldFile = new File(fileArrangementConfig.get().getFileLocation()+"/"+fileArrangementConfig.get().getFilename());
@@ -67,6 +68,7 @@ public class DocumentRenameEndpoint {
                 FileView fileView = new FileView();
                 fileView.setFileOrDirectoryName(request.getNewDocumentName());
                 fileView.setDate(fileArrangementConfig.get().getUpdated_at().toString());
+                fileView.setPath(request.getPath());
                 if(fileArrangementConfig.get().isDirectory()){
                     fileView.setType("Directory");
                     oldFileView.setType("Directory");

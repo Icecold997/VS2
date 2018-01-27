@@ -60,6 +60,7 @@ public class ServerConfig {
                 forwardingDAO.save(forwardingConfig);
             }
             connnectWithNetwork();
+
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -78,7 +79,7 @@ public class ServerConfig {
         if (dir.exists()) {
             fileDirectory = path + rootDirectory;
             System.out.println("Directory vorhanden");
-            checkDirecotory(dir);
+            //checkDirecotory(dir);
         } else if(dir.mkdir()) {
             fileDirectory = path + rootDirectory;
             System.out.println("Directory erstellt");
@@ -214,6 +215,7 @@ public class ServerConfig {
         return this.serverIp;
     }
 
+    public String getRootDirectory(){return this.rootDirectory;}
     private void resetForwardingTable(){
         forwardingDAO.deleteAll();
     }

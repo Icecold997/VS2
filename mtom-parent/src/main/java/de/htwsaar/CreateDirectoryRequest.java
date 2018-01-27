@@ -25,8 +25,9 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="fileName" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="directoryName" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="path" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="sourceIp" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -37,39 +38,42 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "fileName",
-    "path"
+    "directoryName",
+    "path",
+    "sourceIp"
 })
-@XmlRootElement(name = "downloadDocumentRequest")
-public class DownloadDocumentRequest {
+@XmlRootElement(name = "createDirectoryRequest")
+public class CreateDirectoryRequest {
 
     @XmlElement(required = true)
-    protected String fileName;
+    protected String directoryName;
     @XmlElement(required = true)
     protected String path;
+    @XmlElement(required = true)
+    protected String sourceIp;
 
     /**
-     * Ruft den Wert der fileName-Eigenschaft ab.
+     * Ruft den Wert der directoryName-Eigenschaft ab.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getFileName() {
-        return fileName;
+    public String getDirectoryName() {
+        return directoryName;
     }
 
     /**
-     * Legt den Wert der fileName-Eigenschaft fest.
+     * Legt den Wert der directoryName-Eigenschaft fest.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setFileName(String value) {
-        this.fileName = value;
+    public void setDirectoryName(String value) {
+        this.directoryName = value;
     }
 
     /**
@@ -94,6 +98,30 @@ public class DownloadDocumentRequest {
      */
     public void setPath(String value) {
         this.path = value;
+    }
+
+    /**
+     * Ruft den Wert der sourceIp-Eigenschaft ab.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getSourceIp() {
+        return sourceIp;
+    }
+
+    /**
+     * Legt den Wert der sourceIp-Eigenschaft fest.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setSourceIp(String value) {
+        this.sourceIp = value;
     }
 
 }

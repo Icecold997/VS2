@@ -33,6 +33,7 @@
               <padding><Insets top="30" /></padding>
               <JFXButton fx:id="uploadFileButton" onAction="#uploadChoosenFile" styleClass="standardButton" text="Datei hochladen" />
               <JFXButton fx:id="goBackButton" onAction="#goBack" styleClass="standardButton" text="Pfad Zurück" />
+              <JFXButton fx:id="createDir" onAction="#createDirectory" styleClass="standardButton" text="Direcory anlegen" />
           </HBox>
          <columnConstraints>
             <ColumnConstraints />

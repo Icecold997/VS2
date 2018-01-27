@@ -39,15 +39,17 @@ public class DownloadDocumentEndpoint {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "downloadDocumentRequest")
     @ResponsePayload
     public DownloadDocumentResponse downloadDocument(@RequestPayload DownloadDocumentRequest request) throws IOException {
-
         DownloadDocumentResponse respone = new DownloadDocumentResponse();
-        Optional<FileArrangementConfig> config = fileArrangementDAO.findByfilename(request.getFileName());
+        System.out.println("Download Enpoint :" +request.getFileName());
+        System.out.println("Download Enpoint :" +request.getPath());
+        Optional<FileArrangementConfig> config = fileArrangementDAO.findByFileLocationAndFilename(request.getPath(),request.getFileName());
        if( config.isPresent()){
            System.out.println("datei gefunden");
            Document document = new Document();
            Path inputPath  = new File(config.get().getFileLocation()+"/"+config.get().getFilename()).toPath();
            byte[] array = Files.readAllBytes(inputPath);
            document.setContent(array);
+           document.setPath(inputPath.toString());
            document.setName(inputPath.getFileName().toString());
            document.setSourceUri(config.get().getSourceIp());
            respone.setDocument(document);
