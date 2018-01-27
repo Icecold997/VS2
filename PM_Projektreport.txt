@@ -1,32 +1,30 @@
 Todo: 
+ 
+ Korrekturlesen (Robert)
++Projektstrukturplan (Patrick ivm. Robert?!?) -> Patrick auf Arbeit mit Visio
++Projektrückblick (Alle mit Robert) -> Robert Wochenende
++Struktur, Big Picture ->Patrick in Visio
 
-Korrekturlesen (Robert)
-Projektstrukturplan (Patrick ivm. Robert?!?) -> Patrick auf Arbeit mit Visio
-Projektrückblick (Alle mit Robert) -> Robert Wochenende
-Struktur, Big Picture ->Patrick in Visio
+ Quelle des Rohmaterials: Vorgaben_Projektreport V1.1 aus dem KIL-LMS.
+ https://kil-lms.htwsaar.de/moodle/pluginfile.php/4006/mod_resource/content/1/Vorgaben_Projektreport_VS2%20Esch_Sauer.pdf
 
--Meilensteine bzw Präsentationen benennen
-Projektphasen umbenennen analog zu Sauers Vorlage
-
-Quelle des Rohmaterials: Vorgaben_Projektreport V1.1 aus dem KIL-LMS.
-https://kil-lms.htwsaar.de/moodle/pluginfile.php/4006/mod_resource/content/1/Vorgaben_Projektreport_VS2%20Esch_Sauer.pdf
 
 1.)Visions-Dokument:
-Aufgabenstellung war die Entwicklung einer Lösung zum Abbilden eines Virtuellen Dateisystems innerhalb eines verteilten Systems 
-Diese Lösung soll in Aufgabe1 Phase 1 zentralisiert implementiert werden und in Aufgabe 2 sinngemäß dezentral. Die geforderten Methoden search, browse, rename und delete sollen funktional im Projekt umgesetzt werden.
+Aufgabenstellung war die Entwicklung einer Lösung zum Abbilden eines Virtuellen Dateisystems innerhalb eines verteilten Systems. 
+Die Lösung soll in Aufgabe1 Phase 1 zentralisiert implementiert werden und in Aufgabe 2 sinngemäß dezentral. Die geforderten Methoden search, browse, rename und delete sollen funktional im jeweiligen Projekt umgesetzt werden.
 Die Implementierung einer Lösung zu der Problemstellung "Doppelter Dateizugriff" wurde nach Rücksprache mit Herr Sauer/Herr Esch ausgeschlossen.
 
 
 2.)Meilensteinplanung, Projektphasen: (vgl. Gantt-Chart)
 Die Meilensteinplanung sowie die Projektphasen wurden weiterentwickelt und angepasst (korrigiert). Sie sind den jeweiligen (Präsentations-)Folien zu entnehmen.
 
-Zur besseren Übersicht und zur genaueren Zuordnung wurden die vorgegebenen 4 Projektphasen in 6 Projektphasen aufgeteilt und um Phasenspezifische Meilensteine - soweit sinnvoll- ergänzt.
+Zur besseren Übersicht und zur genaueren Zuordnung wurden die zuvor gewählten 6 Projektphasen zu den vorgegebenen 4 Projektphasen zusammengefasst. Hierdurch können sich ggf. Widersprüche ergeben.
 
 1) Projektgründung:
 Die Projektgründung erfolgte mit Auftragsvergabe, da der Umfang des Projekts im Wesentlichen aus Verteilte Systeme 1 bereits bekannt war und lediglich die Umsetzung anders erfolgen musste.Alle Organisatorischen Maßnahmen mit den Gründungsmitgliedern wurden binnen 2 Wochen vollständig abgeschlossen. 
 
 2) Analyse und Design:
-Analyse und Design wurden konsequent im Gantt-Chart angepasst und korrigiert. Aufgegliedert in 2 Teilprojekte (Phase Aufgabe 1 Phase 1 und Aufgabe 2) liegt der Projektplanung das Wasserfallmodell zugrunde:
+Analyse und Design wurden konsequent im Gantt-Chart angepasst und korrigiert. Aufgegliedert in 2 Teilprojekte (Phase Aufgabe 1 Phase 1 und Aufgabe 2) lag der Projektplanung ursprünglich das Wasserfallmodell zugrunde:
 Phase 1: Planung
 Phase 2: Definition
 Phase 3: Entwurf
@@ -34,18 +32,21 @@ Pahse 4: Implementierung
 Phase 5: Testen
 Phase 6: Auslieferung/Wartung/Diverses - Simuliert durch Präsentation und Demonstration 
 
+gemäß den "Vorgaben Projektreport V1.1" wurden die Projektphasen zu 4 Phasen zusammengefasst.
+
 3) Implementierung:
-Da Aufgabe1 Phase1 zuerst in Augenschein genommen wurde und später Aufgabe2 quasi die Grundfunktionalitäten von A1Ph1 ergänzt hat existieren unterschiedliche Zeitstempel bezüglich der Implementierungsphase.
-Diese wurden jeweils im Gantt- Chart ergänzt. Die beiden Meilensteine wurden bewusst zu unterschiedlichen Terminen gesetzt, sie wurden sowohl an der Progressivität von Aufgabe1 Phase1 sowie an der Testphase orientiert.
+Da Aufgabe 1 Phase 1 zuerst in Augenschein genommen wurde und später Aufgabe 2 wurden quasi die Grundfunktionalitäten von Aufgabe 1 Phase 1 angepasst. Daher existieren hier unterschiedliche Zeitstempel bezüglich der Implementierungsphase.
+Die beiden Meilensteine wurden bewusst zu unterschiedlichen Terminen gesetzt, sie wurden sowohl an der Progressivität von Aufgabe1 Phase1 sowie an der Testphase orientiert.
 
 4) Tests: 
-Die Tests wurden teils parallel zur Implementierung und teils nach der Implementierung durchgeführt.Die Tests der Aufgabe1 Phase1 wurden parallel zur Entwicklung der Aufgabe 2 durchgeführt. (vgl. Arbeitstreffen 16.1.)
+Die Tests wurden teils parallel zur Implementierung und teils nach der Implementierung durchgeführt. Die Tests der Aufgabe1 Phase1 wurden parallel zur Entwicklung der Aufgabe 2 durchgeführt. (vgl. Arbeitstreffen 16.1.)
 
 3.)Liquiditätsplan (Zeit=Mittel)
 Da die Zeit zum Projektbeginn nicht strikt festgelegt werden konnte (diverse Verpflichtung einzelner Mitglieder) wurde von der Gesamtprojektzeit je Mitglied ausgegangen: 
-80 Stunden für Aufgabe1 Phase1
-26 Stunden für Aufgabe2
-Die Verantwortung der Zeiteinteilung wurde den einzelnen Gruppenmitgliedern übertragen. Die Sollstundenanzahl wurde auf die Gruppenstundenanzahl je Woche gemittelt und lässt sich nicht auf einzelne Mitglieder oder die ganze Gruppe homogen verteilen. Gemeint ist damit z.B. der Auslastung der Teammitglieder durch Präsentation, Dokumentation, Programmierung und Administration, die sich wöchentlich abwechseln und nicht gleich sondern als progressiver Prozess anzusehen ist.
+~ 80 Stunden für Aufgabe 1 Phase 1
+~ 26 Stunden für Aufgabe 2
+
+Die Verantwortung der Zeiteinteilung wurde den einzelnen Gruppenmitgliedern übertragen. Die Sollstundenanzahl entspricht den Wochenstunden der Gruppe und lässt sich nicht individuell auf einzelne Mitglieder verteilen. Gemeint ist damit, das z.B. die Auslastung der Teammitglieder durch Präsentation, Dokumentation, Programmierung und Administration, sich wöchentlich abwechseln. Ferner ist die Gruppenauslastung nicht konstant, sondern als progressiver Prozess anzusehen.
 Das Diagramm ist dadurch alles andere als aussagekräftig, wird allerdings der vollständigkeitshalber aufgeführt.
 
 4.) Der Projektstrukturplan
@@ -54,13 +55,13 @@ Das Diagramm ist dadurch alles andere als aussagekräftig, wird allerdings der v
 Das Gantt Chart befindet sich im Anhang
 
 6.) Typ Zuordnung und Fertigstellungsgrad
-Zur besseren Lesbarkeit wurde der Graph um die lineare Sollkomponente ergänzt und der Typ um 3 dividiert. Reine Optik.
+Zur besseren Lesbarkeit wurde der Graph um die lineare Sollkomponente ergänzt. Es sind keine Vorfälle eingetreten, bei denen wir Rückschritte gemacht haben oder bei denen wir umsonst entwickelt oder geplant haben.  
 
 7.) Arbeitsleistung
-Da sich die Projektphasen überschneiden (und auch 6 Projektphasen verwendet wurden) muss auch hier "angepasst" werden.
-Die Gründung umfasst anteilig die ersten 5 Wochen der Vorlesungszeit.
+Da auch hier die ursprünglichen 6 Projektphasen des Wasserfallmodells auf 4 gekürzt wurden, wurde auch hier "angepasst". Auch hier kann es zu "Unstimmigkeiten" kommen.
+Die Gründung umfasst anteilig die ersten 5 Wochen der Vorlesungszeit, was die Gruppenergänzung mit einschliesst.
 Analyse und Design ergibt sich aus den Phasen Planung Definition und Entwurf.
-Test und Doku umfassen dabei weder Administrative Tätigkeiten des Projekmanagements, noch Präsentationsimplementierungen. 
+Test und Doku umfassen weder Administrative Tätigkeiten des Projekmanagements, noch Präsentationsimplementierungen. 
   
 8.)Projektrückblick:
 
