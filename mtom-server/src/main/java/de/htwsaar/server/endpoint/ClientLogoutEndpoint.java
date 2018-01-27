@@ -38,6 +38,7 @@ public class ClientLogoutEndpoint {
         LogoutClientResponse response = new LogoutClientResponse();
         Optional<ForwardingConfig> forwardingConfig = forwardingDAO.findByUrl(request.getSourceIp());
         if(forwardingConfig.isPresent()){
+            //TODO: IP aus der DB löschen
             System.out.println("Diese IP wurde gefunden.");
         }
         return response;
