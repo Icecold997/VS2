@@ -143,15 +143,16 @@ public class MainController implements Initializable {
      */
     private void getFileInformation(){
        try {
-           DirectoryInformationResponse respone = documentsClient.sendDirectoryInformationRequest("http://" + serverConfig.getServerIp() + ":9090/ws/documents",serverConfig.fileDirectory);
+           Iterable<ServerInfo> superNodes = serverDAO.findAll();
+           for(ServerInfo superNode : superNodes) {
+               DirectoryInformationResponse respone = documentsClient.sendDirectoryInformationRequest("http://" + superNode.getServerIp() + ":9090/ws/documents",serverConfig.fileDirectory);
 
-           if (respone.isSuccess()) {
-               if (!respone.getFileConfig().isEmpty()) {
-                   fileViewList.setList(respone.getFileConfig());
+               if (respone.isSuccess()) {
+                   if (!respone.getFileConfig().isEmpty()) {
+                       fileViewList.setList(respone.getFileConfig());
 
-                   Iterable<ServerInfo> superNodes = serverDAO.findAll();
-                   for(ServerInfo superNode : superNodes){
                        this.downloadFile(respone.getFileConfig(),"http://"+superNode.getServerIp()+":9090/ws/documents" ,serverConfig.fileDirectory);
+
                    }
                }
            }
