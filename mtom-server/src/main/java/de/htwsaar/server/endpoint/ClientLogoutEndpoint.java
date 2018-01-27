@@ -7,7 +7,6 @@ import de.htwsaar.server.config.ServerInformationTransmitter;
 import de.htwsaar.server.persistence.ForwardingConfig;
 import de.htwsaar.server.persistence.ForwardingDAO;
 import de.htwsaar.server.persistence.ServerDAO;
-import de.htwsaar.server.persistence.ServerInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -15,6 +14,7 @@ import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @Endpoint
 public class ClientLogoutEndpoint {
@@ -36,10 +36,10 @@ public class ClientLogoutEndpoint {
     public LogoutClientResponse getResponse(@RequestPayload LogoutClientRequest request) throws IOException {
 
         LogoutClientResponse response = new LogoutClientResponse();
-
-          System.out.println("test");
-
-
+        Optional<ForwardingConfig> forwardingConfig = forwardingDAO.findByUrl(request.getSourceIp());
+        if(forwardingConfig.isPresent()){
+            System.out.println("Diese IP wurde gefunden.");
+        }
         return response;
     }
 }

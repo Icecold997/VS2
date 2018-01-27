@@ -92,7 +92,6 @@ public class Application extends AbstractJavaFxApp {
 		 Platform.runLater( new Runnable(){
 		 	@Override
 			 public void run(){
-		 		System.out.println("####TEST123456789####");
 				Iterable<ForwardingConfig> ipList = forwardingDAO.findAll();
 				Iterable<ServerInfo> superNodes = serverDAO.findAll() ;
 				for(ForwardingConfig connections : ipList){  // verbundene server
