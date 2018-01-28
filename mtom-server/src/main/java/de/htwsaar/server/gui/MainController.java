@@ -80,8 +80,9 @@ public class MainController implements Initializable {
     @FXML
     TableColumn<FileView, String> table_type;
 
-
-
+    @FXML
+    private JFXTextField searchInput;
+    private boolean isSearchOn = false;
     /**
      * Initialisierung der Darstellung
      *
@@ -157,6 +158,54 @@ public class MainController implements Initializable {
        documentsClient.createDir("Neuer Ordner",workDirHandler.getWorkDir());
 
     }
+
+    @FXML
+    private void reset(){
+        try{
+            this.refresh();
+            this.isSearchOn=false;
+        }catch(Exception e){
+
+        }
+    }
+    private void refresh() throws IOException{
+
+        DirectoryInformationResponse respone = documentsClient.sendDirectoryInformationRequest("http://"+serverConfig.getServerIp()+":9090/ws/documents",getWorkdir());
+        if (respone.isSuccess()) {
+            table_view.getItems().clear();
+            fileViewList.getFileViewList().clear();
+            fileViewList.setList(respone.getFileConfig());
+            table_view.setItems(fileViewList.getFileViewList());
+        }
+    }
+
+    @FXML
+    private void search(){
+        if(searchInput.getText().isEmpty()) {
+            try{
+                isSearchOn = false;
+                this.refresh();
+            }catch (IOException e){}
+        }else {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        List<FileView> foundFiles = documentsClient.searchFile(searchInput.getText());
+                        table_view.getItems().clear();
+                        fileViewList.getFileViewList().clear();
+                        if (!foundFiles.isEmpty()) {
+                            fileViewList.setList(foundFiles);
+                            table_view.setItems(fileViewList.getFileViewList());
+                            isSearchOn = true;
+                        }
+                    } catch (Exception e) {}
+                }
+            });
+
+        }
+    }
+
     /**
      * Erhalte Dateiinformatoonen
      */

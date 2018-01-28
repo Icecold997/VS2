@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 import de.htwsaar.*;
 import de.htwsaar.server.config.ServerConfig;
@@ -81,6 +82,18 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 
    }
 
+	/**
+	 * Datei-Suche
+	 *
+	 * @param fileName Datei-Name
+	 * @return response zum Fund
+	 */
+	public List<FileView> searchFile(String fileName){
+		SearchDocumentRequest request = new SearchDocumentRequest();
+		request.setDocumentName(fileName);
+		SearchDocumentResponse response =(SearchDocumentResponse) getWebServiceTemplate().marshalSendAndReceive("http://"+serverConfig.getServerIp()+":9090/ws/documents",request);
+		return response.getFile();
+	}
 
 	public void createDir(String dirName,String dirPath){
 		CreateDirectoryRequest request = new CreateDirectoryRequest();

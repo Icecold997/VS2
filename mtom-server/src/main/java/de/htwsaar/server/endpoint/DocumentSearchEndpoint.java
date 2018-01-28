@@ -1,10 +1,12 @@
 package de.htwsaar.server.endpoint;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 
+import de.htwsaar.FileView;
 import de.htwsaar.SearchDocumentRequest;
 import de.htwsaar.SearchDocumentResponse;
 import de.htwsaar.server.config.ServerInformationTransmitter;
@@ -44,26 +46,36 @@ public class DocumentSearchEndpoint {
     @ResponsePayload
     public SearchDocumentResponse searchDocument(@RequestPayload SearchDocumentRequest request) throws IOException {
 
- //TODO usecase: datei in filearrangement suchen ,wen local vorhanden gib found  zurück ,wen nicht suche in kindern weiter
-
-        Optional<FileArrangementConfig> files = fileArrangementDao.findByfilename(request.getDocumentName());
+        List<FileArrangementConfig> allFiles = fileArrangementDao.findAll();
+        List<FileArrangementConfig> foundFiles = new ArrayList<>();
+        for(FileArrangementConfig file : allFiles){
+            if(file.getFilename().contains(request.getDocumentName())){
+                foundFiles.add(file);
+            }
+        }
         SearchDocumentResponse response = new SearchDocumentResponse();
         response.setFound(false);
 
-        if(files.isPresent()){
-            response.setFound(true);
-            return response;
-        }else{
-            Iterable<ForwardingConfig> childs = forwardingDAO.findAll();
-                for (ForwardingConfig f: childs) {
-                    if(transmitter.sendSearchRequestToChild(f.getUrl(),request.getDocumentName())){
-                        response.setFound(true);
-                    }
+        if(!foundFiles.isEmpty()){
+            for(FileArrangementConfig file : foundFiles) {
+                FileView foundData = new FileView();
+                foundData.setDate(file.getUpdated_at().toString());
+                foundData.setFileOrDirectoryName(file.getFilename());
+                if(file.isDirectory()){
+                    foundData.setType("Directory");
+                }else{
+                    foundData.setType("File");
                 }
+
+                response.getFile().add(foundData);
+            }
+
+            response.setFound(true);
+
         }
 
 
-       return  response;
+        return  response;
     }
 
 }

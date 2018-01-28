@@ -138,6 +138,7 @@
 		<complexType>
 			<sequence>
 				<element name="found" type="boolean" />
+				<element name="file"  type="tns:fileView" maxOccurs="unbounded"/>
 			</sequence>
 		</complexType>
 	</element>
