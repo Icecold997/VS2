@@ -21,9 +21,14 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.Callback;
+import org.hibernate.annotations.Cache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
 
 import java.io.File;
@@ -36,12 +41,17 @@ import java.util.ResourceBundle;
 /**
  * @author cedosw
  */
+@Component
 public class MainController implements Initializable {
 
 
     private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 
-    private String workDirectoryPath;
+
+
+
+    @Autowired
+    private  WorkDirHandler workDirHandler;
 
     @Autowired
     private DocumentsClient documentsClient;
@@ -81,7 +91,10 @@ public class MainController implements Initializable {
    @Override
     public void initialize(URL url, ResourceBundle bundle) {
 
-       workDirectoryPath = serverConfig.fileDirectory;
+
+
+       workDirHandler.setWorkDir(serverConfig.fileDirectory);
+       System.out.println("workpath initializise: " +workDirHandler.getWorkDir());
        table_view.setOnMousePressed(new EventHandler<javafx.scene.input.MouseEvent>() {
            @Override
            public void handle(javafx.scene.input.MouseEvent event) {
@@ -140,7 +153,8 @@ public class MainController implements Initializable {
 
     @FXML
     private void createDirectory(){
-       documentsClient.createDir("Neuer Ordner",workDirectoryPath);
+        System.out.println("workpath create dir : " +workDirHandler.getWorkDir());
+       documentsClient.createDir("Neuer Ordner",workDirHandler.getWorkDir());
 
     }
     /**
@@ -273,10 +287,16 @@ public class MainController implements Initializable {
     @FXML
     private void uploadChoosenFile(){
         try {
-         documentsClient.storeDocument(router.startFileChooser().getAbsolutePath(),workDirectoryPath);
+            System.out.println("workpath upload: " +workDirHandler.getWorkDir());
+         documentsClient.storeDocument(router.startFileChooser().getAbsolutePath(),workDirHandler.getWorkDir());
+
         }catch(Exception e){
 
         }
+    }
+
+    public String getWorkdir(){
+        return this.workDirHandler.getWorkDir();
     }
 
     /**
@@ -286,8 +306,8 @@ public class MainController implements Initializable {
      */
     public void addItem(FileView fileView){
         System.out.println("test1 : " +fileView.getPath());
-        System.out.println("test2 : " +workDirectoryPath);
-        if(fileView.getPath().equals(workDirectoryPath) || fileView.getPath().endsWith(serverConfig.getRootDirectory())) {
+        System.out.println("workpath additem : " +workDirHandler.getWorkDir());
+        if(fileView.getPath().equals(workDirHandler.getWorkDir()) || fileView.getPath().endsWith(serverConfig.getRootDirectory())) {
 
             fileViewList.addFileView(fileView);
         }
@@ -311,7 +331,9 @@ public class MainController implements Initializable {
                     DirectoryInformationResponse respone = documentsClient.sendDirectoryInformationRequest("http://" + serverConfig.getServerIp() + ":9090/ws/documents", tableItem.getPath()+"/"+tableItem.getFileOrDirectoryName());
 
                     if (respone.isSuccess()) {
-                            workDirectoryPath += "/" + tableItem.getFileOrDirectoryName();
+                        System.out.println("workpath before double click: " +workDirHandler.getWorkDir());
+                        workDirHandler.setWorkDir(workDirHandler.getWorkDir() + "/" + tableItem.getFileOrDirectoryName());
+                        System.out.println("workpath after double click: " +workDirHandler.getWorkDir());
                             table_view.getItems().clear();
                             fileViewList.getFileViewList().clear();
                             fileViewList.setList(respone.getFileConfig());
@@ -330,13 +352,14 @@ public class MainController implements Initializable {
      */
     @FXML
     private void goBack() {
-        if (!workDirectoryPath.equals(serverConfig.fileDirectory)) {
+        if (!workDirHandler.getWorkDir().equals(serverConfig.fileDirectory)) {
             try {
-                DirectoryInformationResponse respone = documentsClient.sendDirectoryInformationRequest("http://" + serverConfig.getServerIp() + ":9090/ws/documents", workDirectoryPath.substring(0, workDirectoryPath.lastIndexOf("/")));
+                DirectoryInformationResponse respone = documentsClient.sendDirectoryInformationRequest("http://" + serverConfig.getServerIp() + ":9090/ws/documents", workDirHandler.getWorkDir().substring(0, workDirHandler.getWorkDir().lastIndexOf("/")));
 
                 if (respone.isSuccess()) {
-                    workDirectoryPath = workDirectoryPath.substring(0, workDirectoryPath.lastIndexOf("/"));
-
+                    System.out.println("workpath before back: " +workDirHandler.getWorkDir());
+                    workDirHandler.setWorkDir(workDirHandler.getWorkDir().substring(0, workDirHandler.getWorkDir().lastIndexOf("/")));
+                    System.out.println("workpath before back: " +workDirHandler.getWorkDir());
                     table_view.getItems().clear();
                     fileViewList.getFileViewList().clear();
                     fileViewList.setList(respone.getFileConfig());
