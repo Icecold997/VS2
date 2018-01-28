@@ -205,22 +205,17 @@ public class MainController implements Initializable {
                             }
 
                             File directory = new File(workPath);
-                            if(!directory.exists()) {
+
                                 FileArrangementConfig fileArrangementConfig = new FileArrangementConfig();
                                 fileArrangementConfig.setDirectory(true);
                                 fileArrangementConfig.setFilename(directory.getName());
-                                fileArrangementConfig.setFileLocation(workPath);
+                                fileArrangementConfig.setFileLocation(workPath.substring(0,workPath.lastIndexOf("/")));
                                 fileArrangementConfig.setLocal(true);
                                 fileArrangementDAO.save(fileArrangementConfig);
                                 System.out.println(directory.mkdir());
-
-
                                 DirectoryInformationResponse response = documentsClient.sendDirectoryInformationRequest(url,workPath);
                                 downloadFile(response.getFileConfig(),url,workPath);
-                            }else{
-                                DirectoryInformationResponse response = documentsClient.sendDirectoryInformationRequest(url,workPath);
-                                downloadFile(response.getFileConfig(),url,workPath);
-                            }
+
 
 
                         }else{
@@ -245,7 +240,7 @@ public class MainController implements Initializable {
                             FileArrangementConfig fileArrangementConfig = new FileArrangementConfig();
                             fileArrangementConfig.setDirectory(false);
                             fileArrangementConfig.setFilename(outputFile.getName());
-                            fileArrangementConfig.setFileLocation(workPath.substring(0,workPath.lastIndexOf("/")));
+                            fileArrangementConfig.setFileLocation((workPath + newPath1).substring(0,(workPath + newPath1).lastIndexOf("/")));
                             fileArrangementConfig.setLocal(true);
 
                             if(!fileArrangementDAO.findByFileLocationAndFilename(fileArrangementConfig.getFileLocation(),fileArrangementConfig.getFilename()).isPresent()){
