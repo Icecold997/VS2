@@ -219,6 +219,9 @@ public class MainController implements Initializable {
                    if (!respone.getFileConfig().isEmpty()) {
                        fileViewList.setList(respone.getFileConfig());
 
+
+
+
                        this.downloadFile(respone.getFileConfig(),"http://"+superNode.getServerIp()+":9090/ws/documents" ,serverConfig.fileDirectory);
 
                    }
@@ -254,13 +257,15 @@ public class MainController implements Initializable {
                             }
 
                             File directory = new File(workPath);
+                             if(!fileArrangementDAO.findByFileLocationAndFilename(workPath.substring(0,workPath.lastIndexOf("/")),directory.getName()).isPresent()){
+                                 FileArrangementConfig fileArrangementConfig = new FileArrangementConfig();
+                                 fileArrangementConfig.setDirectory(true);
+                                 fileArrangementConfig.setFilename(directory.getName());
+                                 fileArrangementConfig.setFileLocation(workPath.substring(0,workPath.lastIndexOf("/")));
+                                 fileArrangementConfig.setLocal(true);
+                                 fileArrangementDAO.save(fileArrangementConfig);
+                             }
 
-                                FileArrangementConfig fileArrangementConfig = new FileArrangementConfig();
-                                fileArrangementConfig.setDirectory(true);
-                                fileArrangementConfig.setFilename(directory.getName());
-                                fileArrangementConfig.setFileLocation(workPath.substring(0,workPath.lastIndexOf("/")));
-                                fileArrangementConfig.setLocal(true);
-                                fileArrangementDAO.save(fileArrangementConfig);
                                 System.out.println(directory.mkdir());
                                 DirectoryInformationResponse response = documentsClient.sendDirectoryInformationRequest(url,workPath);
                                 downloadFile(response.getFileConfig(),url,workPath);
@@ -268,7 +273,7 @@ public class MainController implements Initializable {
 
 
                         }else{
-
+                            if(!fileArrangementDAO.findByFileLocationAndFilename(currentPath,file.getFileOrDirectoryName()).isPresent()){
                             Document document = documentsClient.downloadFileFromServer(file.getFileOrDirectoryName(), url,currentPath); //downloade datei von url
                             byte[] demBytes = document.getContent();      //speichern der datei
 
@@ -292,7 +297,6 @@ public class MainController implements Initializable {
                             fileArrangementConfig.setFileLocation((workPath + newPath1).substring(0,(workPath + newPath1).lastIndexOf("/")));
                             fileArrangementConfig.setLocal(true);
 
-                            if(!fileArrangementDAO.findByFileLocationAndFilename(fileArrangementConfig.getFileLocation(),fileArrangementConfig.getFilename()).isPresent()){
                                 fileArrangementDAO.save(fileArrangementConfig);
                                 System.out.println("Datei: "+fileArrangementConfig.getFilename());
                                 System.out.println("Dateipfad: "+fileArrangementConfig.getFileLocation());
