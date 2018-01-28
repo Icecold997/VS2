@@ -59,6 +59,7 @@ public class DownloadDocumentEndpoint {
            byte[] array = Files.readAllBytes(inputPath);
            document.setContent(array);
            document.setPath(request.getPath() + "/"+config.get().getFilename());
+           document.setRequestRootDirName(serverConfig.getRootDirectory());
            document.setName(inputPath.getFileName().toString());
            document.setSourceUri(config.get().getSourceIp());
            respone.setDocument(document);

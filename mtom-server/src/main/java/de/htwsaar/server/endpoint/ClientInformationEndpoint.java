@@ -66,6 +66,7 @@ public class ClientInformationEndpoint {
                     fileView.setSourceIp(fileConfig.getSourceIp());
                 }
                 fileView.setPath(workPath);
+                fileView.setRequestRootDirName(serverConfig.getRootDirectory());
                 fileView.setDate(fileConfig.getUpdated_at().toString());
                 fileView.setFileOrDirectoryName(fileConfig.getFilename());
                 respone.getFileConfig().add(fileView);

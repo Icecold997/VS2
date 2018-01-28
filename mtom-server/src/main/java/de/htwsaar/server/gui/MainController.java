@@ -1,6 +1,8 @@
 package de.htwsaar.server.gui;
 
 import de.htwsaar.server.config.ServerConfig;
+import de.htwsaar.server.persistence.FileArrangementConfig;
+import de.htwsaar.server.persistence.FileArrangementDAO;
 import de.htwsaar.server.persistence.ServerDAO;
 import de.htwsaar.server.persistence.ServerInfo;
 import de.htwsaar.server.ws.DocumentsClient;
@@ -55,6 +57,9 @@ public class MainController implements Initializable {
 
     @Autowired
     private ServerDAO serverDAO;
+
+    @Autowired
+    private FileArrangementDAO fileArrangementDAO;
 
     @FXML
     TableView<FileView> table_view;
@@ -164,24 +169,66 @@ public class MainController implements Initializable {
     private void downloadFile(List<FileView> files, String url,String currentPath){
         System.out.println("downloade file von: "+ url);
         System.out.println("current path:  "+ currentPath);
+
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 try {
+                    String workPath  = serverConfig.fileDirectory ;
                     for (FileView file : files) {    //datei liste
                         if (file.getType().equals("File")) {   // wen datei
                             Document document = documentsClient.downloadFileFromServer(file.getFileOrDirectoryName(), url,file.getPath()); //downloade datei von url
                             byte[] demBytes = document.getContent();      //speichern der datei
 
-                            File outputFile = new File(document.getPath());
+
+
+                            String newPath1 = document.getPath().substring(document.getPath().indexOf(document.getRequestRootDirName())+document.getRequestRootDirName().length(),document.getPath().length());
+
+                            if(newPath1.isEmpty()){  //root directory
+                                workPath = serverConfig.fileDirectory;
+                            }else{  //sub dir
+                                workPath   = serverConfig.fileDirectory;
+                                workPath   = workPath + newPath1;
+                            }
+                            File outputFile = new File(workPath);
                             FileOutputStream outputStream = new FileOutputStream(outputFile);
                             outputStream.write(demBytes);
                             outputStream.close();
-                        }
-                        if(file.getType().equals("Directory")){
-                            File directory = new File(file.getPath());
+                            FileArrangementConfig fileArrangementConfig = new FileArrangementConfig();
+                            fileArrangementConfig.setDirectory(false);
+                            fileArrangementConfig.setFilename(outputFile.getName());
+                            fileArrangementConfig.setFileLocation(workPath.substring(0,workPath.lastIndexOf("/")));
+                            fileArrangementConfig.setLocal(true);
+
+                            if(!fileArrangementDAO.findByFileLocationAndFilename(fileArrangementConfig.getFileLocation(),fileArrangementConfig.getFilename()).isPresent()){
+                                fileArrangementDAO.save(fileArrangementConfig);
+                                System.out.println("Datei: "+fileArrangementConfig.getFilename());
+                                System.out.println("Dateipfad: "+fileArrangementConfig.getFileLocation());
+                                System.out.println("Datei in Datenbank aufgenommen");
+                            }
+
+                        }else{
+                            String newPath1 = file.getPath().substring(file.getPath().indexOf(file.getRequestRootDirName())+file.getRequestRootDirName().length(),file.getPath().length());
+                            if(newPath1.isEmpty()){  //root directory
+                                workPath = serverConfig.fileDirectory  ;
+                                newPath1 =  "/"+file.getFileOrDirectoryName();
+                            }else{  //sub dir
+                                workPath += newPath1;
+                            }
+
+                            File directory = new File(workPath+newPath1);
                             if(!directory.exists()) {
+                                FileArrangementConfig fileArrangementConfig = new FileArrangementConfig();
+                                fileArrangementConfig.setDirectory(true);
+                                fileArrangementConfig.setFilename(directory.getName());
+                                fileArrangementConfig.setFileLocation(workPath);
+                                fileArrangementConfig.setLocal(true);
+                                fileArrangementDAO.save(fileArrangementConfig);
                                 directory.mkdir();
+
+
+                                DirectoryInformationResponse response = documentsClient.sendDirectoryInformationRequest(url,file.getPath()+"/"+file.getFileOrDirectoryName());
+                                downloadFile(response.getFileConfig(),url,file.getPath());
                             }else{
                                 DirectoryInformationResponse response = documentsClient.sendDirectoryInformationRequest(url,file.getPath()+"/"+file.getFileOrDirectoryName());
                                 downloadFile(response.getFileConfig(),url,file.getPath());
@@ -238,7 +285,12 @@ public class MainController implements Initializable {
      * @param fileView Darstellung
      */
     public void addItem(FileView fileView){
-       fileViewList.addFileView(fileView);
+        System.out.println("test1 : " +fileView.getPath());
+        System.out.println("test2 : " +workDirectoryPath);
+        if(fileView.getPath().equals(workDirectoryPath) || fileView.getPath().endsWith(serverConfig.getRootDirectory())) {
+
+            fileViewList.addFileView(fileView);
+        }
 //       table_view.setItems(fileViewList.getFileViewList());
     }
 
