@@ -37,7 +37,9 @@ public class ClientInformationEndpoint {
     public DirectoryInformationResponse getInformation(@RequestPayload DirectoryInformationRequest request) throws IOException {
 
         String workPath  ;
+//        System.out.println("request.getPath() after workPath declaration:" + request.getPath());
         String newPath1 = request.getPath().substring(request.getPath().indexOf(request.getRequestRootDirName())+request.getRequestRootDirName().length(),request.getPath().length());
+//        System.out.println("request.getPath() after newPath1 Declaration: " + request.getPath());
 
         if(newPath1.isEmpty()){  //root directory
            workPath = serverConfig.fileDirectory;
@@ -45,6 +47,11 @@ public class ClientInformationEndpoint {
            workPath   = serverConfig.fileDirectory;
            workPath   = workPath + newPath1;
         }
+//        System.out.println("request.getRequestRootDirName() after all the magic has happened:" + request.getRequestRootDirName());
+//        System.out.println("request.getPath()  after all the magic has happened:" + request.getPath());
+//        System.out.println("newPath1  after all the magic has happened:" + newPath1);
+//        System.out.println("workPath after all the magic has happened:" + workPath);
+
 
 
         DirectoryInformationResponse respone = new DirectoryInformationResponse();

@@ -41,7 +41,9 @@ public class DownloadDocumentEndpoint {
     public DownloadDocumentResponse downloadDocument(@RequestPayload DownloadDocumentRequest request) throws IOException {
         DownloadDocumentResponse respone = new DownloadDocumentResponse();
         String workPath  ;
+        System.out.println("request.getPath() after workPath declaration:" + request.getPath());
         String newPath1 = request.getPath().substring(request.getPath().indexOf(request.getRequestRootDirName())+request.getRequestRootDirName().length(),request.getPath().length());
+        System.out.println("request.getPath() after newPath1 Declaration: " + request.getPath());
 
         if(newPath1.isEmpty()){  //root directory
             workPath = serverConfig.fileDirectory;
@@ -49,8 +51,13 @@ public class DownloadDocumentEndpoint {
             workPath   = serverConfig.fileDirectory;
             workPath   = workPath + newPath1;
         }
+        System.out.println("request.getRequestRootDirName() after all the magic has happened:" + request.getRequestRootDirName());
+        System.out.println("request.getPath()  after all the magic has happened:" + request.getPath());
+        System.out.println("newPath1  after all the magic has happened:" + newPath1);
+        System.out.println("workPath after all the magic has happened:" + workPath);
         System.out.println("Download Enpoint :" +request.getFileName());
         System.out.println("Download Enpoint :" +workPath);
+
         Optional<FileArrangementConfig> config = fileArrangementDAO.findByFileLocationAndFilename(workPath,request.getFileName());
        if( config.isPresent()){
            System.out.println("datei gefunden");
@@ -59,7 +66,7 @@ public class DownloadDocumentEndpoint {
            byte[] array = Files.readAllBytes(inputPath);
            document.setContent(array);
            document.setPath(request.getPath() + "/"+config.get().getFilename());
-           document.setRequestRootDirName(serverConfig.getRootDirectory());
+           document.setRequestRootDirName(request.getRequestRootDirName());
            document.setName(inputPath.getFileName().toString());
            document.setSourceUri(config.get().getSourceIp());
            respone.setDocument(document);
