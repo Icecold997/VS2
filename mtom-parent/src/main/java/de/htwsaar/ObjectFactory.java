@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.7 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2018.01.28 um 11:11:04 PM CET 
+// Generiert: 2018.01.28 um 11:31:46 PM CET 
 //
 
 
@@ -50,6 +50,14 @@ public class ObjectFactory {
      */
     public FileView createFileView() {
         return new FileView();
+    }
+
+    /**
+     * Create an instance of {@link LogoutClientRequest }
+     * 
+     */
+    public LogoutClientRequest createLogoutClientRequest() {
+        return new LogoutClientRequest();
     }
 
     /**
@@ -149,6 +157,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link LogoutClientResponse }
+     * 
+     */
+    public LogoutClientResponse createLogoutClientResponse() {
+        return new LogoutClientResponse();
+    }
+
+    /**
      * Create an instance of {@link NetworkInformationResponse }
      * 
      */
@@ -242,22 +258,6 @@ public class ObjectFactory {
      */
     public SuperNodeInformationRequest createSuperNodeInformationRequest() {
         return new SuperNodeInformationRequest();
-    }
-
-    /**
-     * Create an instance of {@link LogoutClientRequest }
-     * 
-     */
-    public LogoutClientRequest createLogoutClientRequest() {
-        return new LogoutClientRequest();
-    }
-
-    /**
-     * Create an instance of {@link LogoutClientResponse }
-     * 
-     */
-    public LogoutClientResponse createLogoutClientResponse() {
-        return new LogoutClientResponse();
     }
 
 }
