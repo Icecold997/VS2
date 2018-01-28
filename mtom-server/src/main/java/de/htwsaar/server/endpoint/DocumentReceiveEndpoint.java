@@ -25,6 +25,7 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 
 
+
 @Endpoint
 public class DocumentReceiveEndpoint {
 
@@ -54,7 +55,6 @@ public class DocumentReceiveEndpoint {
 	public StoreDocumentResponse storeDocument(@RequestPayload StoreDocumentRequest request) throws IOException {
 
 
-
 	    	StoreDocumentResponse response = new StoreDocumentResponse();
 	     	System.out.println("Datei empfangen : DateiName: " + request.getDocument().getName());
 			FileArrangementConfig fileArrangementConfig = new FileArrangementConfig();
@@ -69,7 +69,7 @@ public class DocumentReceiveEndpoint {
 			workPath   = serverConfig.fileDirectory;
 			workPath   = workPath + newPath1;
 		}
-            System.out.println("workp: "+workPath);
+            System.out.println("workpath receive endpoint: "+workPath);
 			fileArrangementConfig.setFilename(document.getName());
 			fileArrangementConfig.setFileLocation(workPath);
 			fileArrangementConfig.setLocal(true);
@@ -96,6 +96,7 @@ public class DocumentReceiveEndpoint {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
+            System.out.println("debug: " +mainController.getWorkdir());
                             mainController.addItem(response.getFileInformation());
                         }
                     });
