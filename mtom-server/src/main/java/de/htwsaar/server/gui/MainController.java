@@ -189,9 +189,43 @@ public class MainController implements Initializable {
             public void run() {
                 try {
                     String workPath  = serverConfig.fileDirectory ;
+
                     for (FileView file : files) {    //datei liste
-                        if (file.getType().equals("File")) {   // wen datei
-                            Document document = documentsClient.downloadFileFromServer(file.getFileOrDirectoryName(), url,file.getPath()); //downloade datei von url
+                        if (file.getType().equals("Directory")) {   // wen datei
+
+
+                            String newPath1 = file.getPath().substring(file.getPath().indexOf(file.getRequestRootDirName())+file.getRequestRootDirName().length(),file.getPath().length());
+                            if(newPath1.isEmpty()){  //root directory
+                                workPath = serverConfig.fileDirectory  + "/"+file.getFileOrDirectoryName()  ;
+                                newPath1 =  "/"+file.getFileOrDirectoryName();
+
+                            }else{  //sub dir
+
+                                workPath = workPath + newPath1 + "/"+ file.getFileOrDirectoryName() ;
+                            }
+
+                            File directory = new File(workPath);
+                            if(!directory.exists()) {
+                                FileArrangementConfig fileArrangementConfig = new FileArrangementConfig();
+                                fileArrangementConfig.setDirectory(true);
+                                fileArrangementConfig.setFilename(directory.getName());
+                                fileArrangementConfig.setFileLocation(workPath);
+                                fileArrangementConfig.setLocal(true);
+                                fileArrangementDAO.save(fileArrangementConfig);
+                                System.out.println(directory.mkdir());
+
+
+                                DirectoryInformationResponse response = documentsClient.sendDirectoryInformationRequest(url,workPath);
+                                downloadFile(response.getFileConfig(),url,workPath);
+                            }else{
+                                DirectoryInformationResponse response = documentsClient.sendDirectoryInformationRequest(url,workPath);
+                                downloadFile(response.getFileConfig(),url,workPath);
+                            }
+
+
+                        }else{
+
+                            Document document = documentsClient.downloadFileFromServer(file.getFileOrDirectoryName(), url,currentPath); //downloade datei von url
                             byte[] demBytes = document.getContent();      //speichern der datei
 
 
@@ -202,9 +236,9 @@ public class MainController implements Initializable {
                                 workPath = serverConfig.fileDirectory;
                             }else{  //sub dir
                                 workPath   = serverConfig.fileDirectory;
-                                workPath   = workPath + newPath1;
+
                             }
-                            File outputFile = new File(workPath);
+                            File outputFile = new File(workPath+ newPath1);
                             FileOutputStream outputStream = new FileOutputStream(outputFile);
                             outputStream.write(demBytes);
                             outputStream.close();
@@ -220,34 +254,6 @@ public class MainController implements Initializable {
                                 System.out.println("Dateipfad: "+fileArrangementConfig.getFileLocation());
                                 System.out.println("Datei in Datenbank aufgenommen");
                             }
-
-                        }else{
-                            String newPath1 = file.getPath().substring(file.getPath().indexOf(file.getRequestRootDirName())+file.getRequestRootDirName().length(),file.getPath().length());
-                            if(newPath1.isEmpty()){  //root directory
-                                workPath = serverConfig.fileDirectory  ;
-                                newPath1 =  "/"+file.getFileOrDirectoryName();
-                            }else{  //sub dir
-                                workPath += newPath1;
-                            }
-
-                            File directory = new File(workPath+newPath1);
-                            if(!directory.exists()) {
-                                FileArrangementConfig fileArrangementConfig = new FileArrangementConfig();
-                                fileArrangementConfig.setDirectory(true);
-                                fileArrangementConfig.setFilename(directory.getName());
-                                fileArrangementConfig.setFileLocation(workPath);
-                                fileArrangementConfig.setLocal(true);
-                                fileArrangementDAO.save(fileArrangementConfig);
-                                directory.mkdir();
-
-
-                                DirectoryInformationResponse response = documentsClient.sendDirectoryInformationRequest(url,file.getPath()+"/"+file.getFileOrDirectoryName());
-                                downloadFile(response.getFileConfig(),url,file.getPath());
-                            }else{
-                                DirectoryInformationResponse response = documentsClient.sendDirectoryInformationRequest(url,file.getPath()+"/"+file.getFileOrDirectoryName());
-                                downloadFile(response.getFileConfig(),url,file.getPath());
-                            }
-
 
                         }
 
