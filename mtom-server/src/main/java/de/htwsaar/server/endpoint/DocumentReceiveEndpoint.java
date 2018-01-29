@@ -85,7 +85,8 @@ public class DocumentReceiveEndpoint {
 				outputStream.write(demBytes);
 				outputStream.close();
 				response.setSuccess(true);
-				response.setFileInformation(fileArragementConfigToFileView(fileArrangementConfig));
+
+				response.setFileInformation(fileArragementConfigToFileView(fileArrangementConfig,request.getDocument().getRequestRootDirName()));
 				Platform.runLater(new Runnable() {
 					@Override
 					public void run() {
@@ -109,7 +110,7 @@ public class DocumentReceiveEndpoint {
 		else
 		{
 			response.setSuccess(true);
-			response.setFileInformation(fileArragementConfigToFileView(fileArrangementConfig));
+			response.setFileInformation(fileArragementConfigToFileView(fileArrangementConfig,request.getDocument().getRequestRootDirName()));
 		}
 		return response;
 	}
@@ -118,11 +119,12 @@ public class DocumentReceiveEndpoint {
 	  return fileArrangementDao.findByFileLocationAndFilename(path,name).isPresent();
 	}
 
-	private FileView fileArragementConfigToFileView(FileArrangementConfig fileArrangementConfig) {
+	private FileView fileArragementConfigToFileView(FileArrangementConfig fileArrangementConfig,String rootdir) {
 		FileView fileInformation = new FileView();
 		fileInformation.setSourceIp(fileArrangementConfig.getSourceIp());
 		fileInformation.setFileOrDirectoryName(fileArrangementConfig.getFilename());
 		fileInformation.setPath(fileArrangementConfig.getFileLocation());
+		fileInformation.setRequestRootDirName(rootdir);
 		fileInformation.setDate(fileArrangementConfig.getUpdated_at().toString());
 		if (fileArrangementConfig.isDirectory()) {
 			fileInformation.setType("Directory");
