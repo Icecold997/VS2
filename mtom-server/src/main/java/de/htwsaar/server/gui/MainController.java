@@ -1,5 +1,6 @@
 package de.htwsaar.server.gui;
 
+import de.htwsaar.server.config.GUID;
 import de.htwsaar.server.config.ServerConfig;
 import de.htwsaar.server.persistence.FileArrangementConfig;
 import de.htwsaar.server.persistence.FileArrangementDAO;
@@ -64,6 +65,7 @@ public class MainController implements Initializable {
 
     @Autowired
     FileViewList fileViewList;
+
 
     @Autowired
     private ServerDAO serverDAO;

@@ -9,6 +9,7 @@
 	<element name="storeDocumentRequest">
 		<complexType>
 			<sequence>
+				<element name="guid" type="string"/>
 				<element name="document" type="tns:document" />
 			</sequence>
 		</complexType>
@@ -84,6 +85,7 @@
 	<element name="createDirectoryRequest">
 		<complexType>
 			<sequence>
+				<element name="guid" type="string"/>
 				<element name="directoryName" type="string"/>
 				<element name="path" type="string"/>
 				<element name="sourceIp" type="string"/>
@@ -108,6 +110,7 @@
 	<element name="renameDocumentRequest">
 		<complexType>
 			<sequence>
+				<element name="guid" type="string"/>
 				<element name="path" type="string"/>
 				<element name="currentDocumentName" type="string" />
 				<element name="newDocumentName" type="string" />
@@ -129,6 +132,7 @@
 	<element name="searchDocumentRequest">
 		<complexType>
 			<sequence>
+				<element name="guid" type="string"/>
 				<element name="documentName" type="string" />
 			</sequence>
 		</complexType>
@@ -146,6 +150,7 @@
 	<element name="deleteDocumentRequest">
 		<complexType>
 			<sequence>
+				<element name="guid" type="string"/>
 				<element name="documentName" type="string" />
                 <element name="sourceIp" type="string"/>
 				<element name="path" type="string"/>
@@ -165,6 +170,7 @@
     <element name="sendDirectoryInformationToParentRequest">
 		<complexType>
 			<sequence>
+				<element name="guid" type="string"/>
 				<element name="directory" type="tns:directory"/>
 				<element name="ip" type="string"/>
 			</sequence>
@@ -186,6 +192,7 @@
 			<sequence>
 				<element name="path" type="string"/>
 				<element name="requestRootDirName" type="string" />
+				<element name="guid" type="string"/>
 			</sequence>
 		</complexType>
 	</element>
@@ -240,6 +247,7 @@
 	<element name="logoutClientRequest">
 		<complexType>
 		<sequence>
+			<element name="guid" type="string"/>
 			<element name="sourceIp" type="string"/>
 		</sequence>
 		</complexType>

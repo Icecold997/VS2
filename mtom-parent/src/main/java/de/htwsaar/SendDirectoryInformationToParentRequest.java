@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.7 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2018.01.28 um 11:31:46 PM CET 
+// Generiert: 2018.01.29 um 10:56:56 PM CET 
 //
 
 
@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
+ *         &lt;element name="guid" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="directory" type="{http://htwsaar.de/}directory"/>
  *         &lt;element name="ip" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
@@ -37,6 +38,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+    "guid",
     "directory",
     "ip"
 })
@@ -44,9 +46,35 @@ import javax.xml.bind.annotation.XmlType;
 public class SendDirectoryInformationToParentRequest {
 
     @XmlElement(required = true)
+    protected String guid;
+    @XmlElement(required = true)
     protected Directory directory;
     @XmlElement(required = true)
     protected String ip;
+
+    /**
+     * Ruft den Wert der guid-Eigenschaft ab.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getGuid() {
+        return guid;
+    }
+
+    /**
+     * Legt den Wert der guid-Eigenschaft fest.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setGuid(String value) {
+        this.guid = value;
+    }
 
     /**
      * Ruft den Wert der directory-Eigenschaft ab.

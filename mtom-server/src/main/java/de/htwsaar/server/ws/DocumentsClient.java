@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 import de.htwsaar.*;
+import de.htwsaar.server.config.GUID;
 import de.htwsaar.server.config.ServerConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
@@ -18,6 +19,7 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 	@Autowired
 	ServerConfig serverConfig;
 
+	private GUID guid = new GUID();
 	public DocumentsClient() {}
 
 
@@ -38,7 +40,7 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 		document.setSourceUri(serverConfig.getServerIp());
 		StoreDocumentRequest request = new StoreDocumentRequest();
 		request.setDocument(document);
-
+        request.setGuid(guid.generateGUID());
 		StoreDocumentResponse response = (StoreDocumentResponse) getWebServiceTemplate()
 				.marshalSendAndReceive("http://"+serverConfig.getServerIp()+":9090/ws/documents",request);
 
@@ -56,6 +58,7 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 	   request.setRequestRootDirName(serverConfig.getRootDirectory());
 	   request.setNewDocumentName(newFileName);
 	   request.setPath(path);
+	   request.setGuid(guid.generateGUID());
 	   RenameDocumentResponse response =(RenameDocumentResponse) getWebServiceTemplate().marshalSendAndReceive("http://"+serverConfig.getServerIp()+":9090/ws/documents",request);
 	   boolean success = response.isSuccess();
 	   if(success){
@@ -71,6 +74,7 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 	   request.setSourceIp(serverConfig.getServerIp());
 	   request.setRequestRootDirName(serverConfig.getRootDirectory());
 	   request.setPath(path);
+	   request.setGuid(guid.generateGUID());
 	   DeleteDocumentResponse response = (DeleteDocumentResponse) getWebServiceTemplate().marshalSendAndReceive("http://"+serverConfig.getServerIp()+":9090/ws/documents",request);
 	   boolean success = response.isSuccess();
 	   if(success){
@@ -91,6 +95,7 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 	public List<FileView> searchFile(String fileName){
 		SearchDocumentRequest request = new SearchDocumentRequest();
 		request.setDocumentName(fileName);
+		request.setGuid(guid.generateGUID());
 		SearchDocumentResponse response =(SearchDocumentResponse) getWebServiceTemplate().marshalSendAndReceive("http://"+serverConfig.getServerIp()+":9090/ws/documents",request);
 		return response.getFile();
 	}
@@ -99,6 +104,7 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 		CreateDirectoryRequest request = new CreateDirectoryRequest();
 		request.setDirectoryName(dirName);
 		request.setPath(dirPath);
+		request.setGuid(guid.generateGUID());
 		request.setRequestRootDirName(serverConfig.getRootDirectory());
 		request.setSourceIp(serverConfig.getServerIp());
 		CreateDirectoryResponse response = (CreateDirectoryResponse) getWebServiceTemplate().marshalSendAndReceive("http://"+serverConfig.getServerIp()+":9090/ws/documents",request);
@@ -108,6 +114,7 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 	public DirectoryInformationResponse sendDirectoryInformationRequest(String url,String path) throws IOException {
 		DirectoryInformationRequest request = new DirectoryInformationRequest();
 		request.setPath(path);
+		request.setGuid(guid.generateGUID());
 		request.setRequestRootDirName(serverConfig.getRootDirectory());
 		DirectoryInformationResponse response = (DirectoryInformationResponse) getWebServiceTemplate()
 				.marshalSendAndReceive(url,request);

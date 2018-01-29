@@ -28,6 +28,8 @@ public class FloodingTransmitter  extends WebServiceGatewaySupport{
  @Autowired
  ServerConfig serverConfig;
 
+ @Autowired
+  FloodingCheck floodingCheck;
  public FloodingTransmitter(){}
 
     /**
@@ -40,8 +42,10 @@ public class FloodingTransmitter  extends WebServiceGatewaySupport{
         Iterable<ForwardingConfig> forwardingConfigs;
         forwardingConfigs = forwardingDAO.findAll();
         for(ForwardingConfig forwardingConfig : forwardingConfigs){
-            if(!forwardingConfig.getUrl().equals(serverConfig.getServerIp()) && !forwardingConfig.getUrl().equals(sourceIp)){
+            if(!forwardingConfig.getUrl().equals(serverConfig.getServerIp()) && !forwardingConfig.getUrl().equals(sourceIp) && !floodingCheck.isPresent(storeDocumentRequest.getGuid())){
                 System.out.println("Floode empfangene datei an :" + forwardingConfig.getUrl());
+                System.out.println("füge request in liste ein : " );
+                floodingCheck.addGui(storeDocumentRequest.getGuid());
                 try {
                     StoreDocumentResponse response = (StoreDocumentResponse) getWebServiceTemplate()
                             .marshalSendAndReceive("http://" + forwardingConfig.getUrl()+ ":9090/ws/documents", storeDocumentRequest);
@@ -62,7 +66,7 @@ public class FloodingTransmitter  extends WebServiceGatewaySupport{
         Iterable<ForwardingConfig> forwardingConfigs;
         forwardingConfigs = forwardingDAO.findAll();
         for (ForwardingConfig forwardingConfig : forwardingConfigs) {
-            if (!forwardingConfig.getUrl().equals(serverConfig.getServerIp()) && !forwardingConfig.getUrl().equals(sourceIp)) {
+            if(!forwardingConfig.getUrl().equals(serverConfig.getServerIp()) && !forwardingConfig.getUrl().equals(sourceIp) && !floodingCheck.isPresent(deleteDocumentRequest.getGuid())){
                 System.out.println("Floode gelöschte datei an :" + forwardingConfig.getUrl());
                 try {
                     DeleteDocumentResponse response = (DeleteDocumentResponse) getWebServiceTemplate()
@@ -84,7 +88,7 @@ public class FloodingTransmitter  extends WebServiceGatewaySupport{
         Iterable<ForwardingConfig> forwardingConfigs;
         forwardingConfigs = forwardingDAO.findAll();
         for(ForwardingConfig forwardingConfig : forwardingConfigs) {
-            if (!forwardingConfig.getUrl().equals(serverConfig.getServerIp())  && !forwardingConfig.getUrl().equals(sourceIp)) {
+            if(!forwardingConfig.getUrl().equals(serverConfig.getServerIp()) && !forwardingConfig.getUrl().equals(sourceIp) && !floodingCheck.isPresent(renameDocumentRequest.getGuid())){
                 System.out.println("Floode rename an: " + forwardingConfig.getUrl());
                 RenameDocumentResponse response = (RenameDocumentResponse) getWebServiceTemplate()
                         .marshalSendAndReceive("http://" + forwardingConfig.getUrl() + ":9090/ws/documents", renameDocumentRequest);
@@ -98,7 +102,7 @@ public class FloodingTransmitter  extends WebServiceGatewaySupport{
         Iterable<ForwardingConfig> forwardingConfigs;
         forwardingConfigs = forwardingDAO.findAll();
         for(ForwardingConfig forwardingConfig : forwardingConfigs) {
-            if (!forwardingConfig.getUrl().equals(serverConfig.getServerIp())  && !forwardingConfig.getUrl().equals(sourceIp)) {
+            if(!forwardingConfig.getUrl().equals(serverConfig.getServerIp()) && !forwardingConfig.getUrl().equals(sourceIp) && !floodingCheck.isPresent(createDirectoryRequest.getGuid())){
                 System.out.println("Floode create Dir an: " + forwardingConfig.getUrl());
                 CreateDirectoryResponse response = (CreateDirectoryResponse) getWebServiceTemplate()
                         .marshalSendAndReceive("http://" + forwardingConfig.getUrl() + ":9090/ws/documents", createDirectoryRequest);
