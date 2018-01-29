@@ -55,28 +55,35 @@ public class DocumentReceiveEndpoint {
 	public StoreDocumentResponse storeDocument(@RequestPayload StoreDocumentRequest request) throws IOException {
 
 
-		StoreDocumentResponse response = new StoreDocumentResponse();
-		System.out.println("Datei empfangen : DateiName: " + request.getDocument().getName());
-		FileArrangementConfig fileArrangementConfig = new FileArrangementConfig();
-		Document document = request.getDocument();
+	    	StoreDocumentResponse response = new StoreDocumentResponse();
+	     	System.out.println("Datei empfangen : DateiName: " + request.getDocument().getName());
+			FileArrangementConfig fileArrangementConfig = new FileArrangementConfig();
+			Document document = request.getDocument();
 
-		String workPath;
-		String newPath1 = document.getPath().substring(document.getPath().indexOf(document.getRequestRootDirName()) + document.getRequestRootDirName().length(), document.getPath().length());
+		String workPath  ;
+		String newPath1 = document.getPath().substring(document.getPath().indexOf(document.getRequestRootDirName())+document.getRequestRootDirName().length(),document.getPath().length());
 
-		if (newPath1.isEmpty()) {  //root directory
+		if(newPath1.isEmpty()){  //root directory
 			workPath = serverConfig.fileDirectory;
-		} else {  //sub dir
-			workPath = serverConfig.fileDirectory;
-			workPath = workPath + newPath1;
+		}else{  //sub dir
+			workPath   = serverConfig.fileDirectory;
+			workPath   = workPath + newPath1;
 		}
-		System.out.println("workpath receive endpoint: " + workPath);
-		fileArrangementConfig.setFilename(document.getName());
-		fileArrangementConfig.setFileLocation(workPath);
-		fileArrangementConfig.setLocal(true);
-		fileArrangementConfig.setSourceIp(document.getSourceUri());
-		if (!fileExist(workPath, request.getDocument().getName())) {
-			fileArrangementDao.save(fileArrangementConfig);
-			System.out.println("Datei in Datenbank aufgenommen");
+            System.out.println("workpath receive endpoint: "+workPath);
+			fileArrangementConfig.setFilename(document.getName());
+			fileArrangementConfig.setFileLocation(workPath);
+			fileArrangementConfig.setLocal(true);
+			fileArrangementConfig.setSourceIp(document.getSourceUri());
+	    	  if(!fileExist(workPath,request.getDocument().getName())) {
+			    fileArrangementDao.save(fileArrangementConfig);
+				  System.out.println("Datei in Datenbank aufgenommen");
+		      }else{
+		      	 fileArrangementDao.deleteByfilenameAndFileLocation(fileArrangementConfig.getFilename(),workPath);
+				 fileArrangementDao.save(fileArrangementConfig);
+				  System.out.println("Datei schon vorhanden wird überschrieben");
+			  }
+
+
 			byte[] demBytes = document.getContent();  // datei in byteform aus der soap nachricht holen
 
 			File outputFile = new File(workPath + "/" + document.getName()); //  ort an dem datei gespeichert wird
@@ -86,31 +93,20 @@ public class DocumentReceiveEndpoint {
 				outputStream.close();
 				response.setSuccess(true);
 				response.setFileInformation(fileArragementConfigToFileView(fileArrangementConfig));
-				Platform.runLater(new Runnable() {
-					@Override
-					public void run() {
-						System.out.println("debug: " + mainController.getWorkdir());
-						mainController.addItem(response.getFileInformation());
-					}
-				});
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+            System.out.println("debug: " +mainController.getWorkdir());
+                            mainController.addItem(response.getFileInformation());
+                        }
+                    });
 
 			} catch (Exception e) {
 				//e.printStackTrace();
 			}
 
-			floodingTransmitter.floodReceivedFile(request);
-//		      }else{
-//	    	  	return response;
-//		      	 fileArrangementDao.deleteByfilenameAndFileLocation(fileArrangementConfig.getFilename(),workPath);
-//				 fileArrangementDao.save(fileArrangementConfig);
-//				  System.out.println("Datei schon vorhanden wird überschrieben");
-//			  }
-		}
-		else
-		{
-			response.setSuccess(true);
-			response.setFileInformation(fileArragementConfigToFileView(fileArrangementConfig));
-		}
+		floodingTransmitter.floodReceivedFile(request);
+
 		return response;
 	}
 
