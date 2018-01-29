@@ -52,11 +52,15 @@ public class DocumentRenameEndpoint {
     public RenameDocumentResponse renameDocument(@RequestPayload RenameDocumentRequest request) throws IOException {
 
         String workPath  ;
+        System.out.println("rename request path: " + request.getPath());
+        System.out.println("rename request root: " + request.getRequestRootDirName());
         String newPath1 = request.getPath().substring(request.getPath().indexOf(request.getRequestRootDirName())+request.getRequestRootDirName().length(),request.getPath().length());
 
         if(newPath1.isEmpty()){  //root directory
+            System.out.println("root");
             workPath = serverConfig.fileDirectory;
         }else{  //sub dir
+            System.out.println("sub dir: "+newPath1);
             workPath   = serverConfig.fileDirectory;
             workPath   = workPath + newPath1;
         }

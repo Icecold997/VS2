@@ -85,7 +85,7 @@ public class DocumentReceiveEndpoint {
 				outputStream.write(demBytes);
 				outputStream.close();
 				response.setSuccess(true);
-
+           System.out.println("download endpoint" + request.getDocument().getRequestRootDirName());
 				response.setFileInformation(fileArragementConfigToFileView(fileArrangementConfig,request.getDocument().getRequestRootDirName()));
 				Platform.runLater(new Runnable() {
 					@Override
@@ -124,7 +124,7 @@ public class DocumentReceiveEndpoint {
 		fileInformation.setSourceIp(fileArrangementConfig.getSourceIp());
 		fileInformation.setFileOrDirectoryName(fileArrangementConfig.getFilename());
 		fileInformation.setPath(fileArrangementConfig.getFileLocation());
-		fileInformation.setRequestRootDirName(rootdir);
+		fileInformation.setRequestRootDirName(serverConfig.getRootDirectory());
 		fileInformation.setDate(fileArrangementConfig.getUpdated_at().toString());
 		if (fileArrangementConfig.isDirectory()) {
 			fileInformation.setType("Directory");
