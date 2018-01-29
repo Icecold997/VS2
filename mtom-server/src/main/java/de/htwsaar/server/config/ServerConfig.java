@@ -212,6 +212,7 @@ public class ServerConfig {
     public String getServerIp(){
         return this.serverIp;
     }
+    public String getServerStatus(){return this.serverStatus;}
 
     public String getRootDirectory(){return this.rootDirectory;}
     private void resetForwardingTable(){
