@@ -45,7 +45,7 @@ public class FloodingTransmitter  extends WebServiceGatewaySupport{
             if(!forwardingConfig.getUrl().equals(serverConfig.getServerIp()) && !forwardingConfig.getUrl().equals(sourceIp) && !floodingCheck.isPresent(storeDocumentRequest.getGuid())){
                 System.out.println("Floode empfangene datei an :" + forwardingConfig.getUrl());
                 System.out.println("füge request in liste ein : " );
-                floodingCheck.addGui(storeDocumentRequest.getGuid());
+
                 try {
                     StoreDocumentResponse response = (StoreDocumentResponse) getWebServiceTemplate()
                             .marshalSendAndReceive("http://" + forwardingConfig.getUrl()+ ":9090/ws/documents", storeDocumentRequest);
@@ -53,6 +53,7 @@ public class FloodingTransmitter  extends WebServiceGatewaySupport{
                 }
             }
         }
+        floodingCheck.addGui(storeDocumentRequest.getGuid());
     }
 
     /**
@@ -75,6 +76,7 @@ public class FloodingTransmitter  extends WebServiceGatewaySupport{
                 }
             }
         }
+        floodingCheck.addGui(deleteDocumentRequest.getGuid());
     }
 
     /**
@@ -93,6 +95,7 @@ public class FloodingTransmitter  extends WebServiceGatewaySupport{
                         .marshalSendAndReceive("http://" + forwardingConfig.getUrl() + ":9090/ws/documents", renameDocumentRequest);
             }
         }
+        floodingCheck.addGui(renameDocumentRequest.getGuid());
     }
 
 
@@ -107,6 +110,7 @@ public class FloodingTransmitter  extends WebServiceGatewaySupport{
                         .marshalSendAndReceive("http://" + forwardingConfig.getUrl() + ":9090/ws/documents", createDirectoryRequest);
             }
         }
+        floodingCheck.addGui(createDirectoryRequest.getGuid());
     }
 
 
