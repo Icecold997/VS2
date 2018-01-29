@@ -51,11 +51,11 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 	}
 
 
-   public FileView renameDocument(String oldFileName,String newFileName,String path){
+   public FileView renameDocument(String oldFileName,String newFileName,String path,String rootDir){
 	   RenameDocumentRequest request = new RenameDocumentRequest();
 	   request.setCurrentDocumentName(oldFileName);
 	   request.setSourceIp(serverConfig.getServerIp());
-	   request.setRequestRootDirName(serverConfig.getRootDirectory());
+	   request.setRequestRootDirName(rootDir);
 	   request.setNewDocumentName(newFileName);
 	   request.setPath(path);
 	   request.setGuid(guid.generateGUID());

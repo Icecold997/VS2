@@ -323,7 +323,8 @@ public class MainController implements Initializable {
      * @param fileView Darstellung
      */
     private void renameDocument(String newName,String oldName,FileView fileView){
-        documentsClient.renameDocument(oldName,newName,fileView.getPath());
+
+        documentsClient.renameDocument(oldName,newName,fileView.getPath(),fileView.getRequestRootDirName());
 
     }
 

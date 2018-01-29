@@ -50,7 +50,6 @@ public class FloodingTransmitter  extends WebServiceGatewaySupport{
                     StoreDocumentResponse response = (StoreDocumentResponse) getWebServiceTemplate()
                             .marshalSendAndReceive("http://" + forwardingConfig.getUrl()+ ":9090/ws/documents", storeDocumentRequest);
                 }catch (Exception e){
-                    e.printStackTrace();
                 }
             }
         }
