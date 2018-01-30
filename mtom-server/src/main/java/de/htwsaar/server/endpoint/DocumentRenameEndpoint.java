@@ -2,6 +2,7 @@ package de.htwsaar.server.endpoint;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -78,6 +79,7 @@ public class DocumentRenameEndpoint {
 
                 System.out.println("File name changed succesful");
                 FileView oldFileView = new FileView();
+
                 oldFileView.setFileOrDirectoryName(request.getCurrentDocumentName());
                 FileView fileView = new FileView();
                 fileView.setFileOrDirectoryName(request.getNewDocumentName());
@@ -85,6 +87,7 @@ public class DocumentRenameEndpoint {
                 fileView.setPath(workPath);
                 if(fileArrangementConfig.get().isDirectory()){
                     fileView.setType("Directory");
+                    this.renameDir(workPath,request.getCurrentDocumentName(),request.getNewDocumentName());
                     oldFileView.setType("Directory");
                 }else{
                     oldFileView.setType("File");
@@ -121,6 +124,16 @@ public class DocumentRenameEndpoint {
 
         response.setSuccess(true);
         return response;
+    }
+
+    private void renameDir(String path,String olddirname,String newdirname){
+
+        Optional<List<FileArrangementConfig>> fileToChance = fileArrangementDao.findByFileLocationIgnoreCaseContaining(path+"/" +olddirname);
+        for(FileArrangementConfig file : fileToChance.get()){
+
+            file.setFileLocation(path +file.getFileLocation().substring(path.length(),file.getFileLocation().length()).replace(olddirname,newdirname));
+            fileArrangementDao.save(file);
+        }
     }
 
 }

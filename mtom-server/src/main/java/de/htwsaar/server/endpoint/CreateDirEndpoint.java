@@ -74,6 +74,7 @@ public class CreateDirEndpoint {
                         FileView fileView = new FileView();
                         fileView.setFileOrDirectoryName(dir.getName());
                         fileView.setType("Directory");
+                        fileView.setRequestRootDirName(request.getRequestRootDirName());
                         fileView.setPath(finalWorkPath);
                         fileView.setSourceIp(request.getSourceIp());
                         fileView.setDate(new Date().toString());
