@@ -1,0 +1,5 @@
+Protokolldatei Phase 2
+Besprechung 13.2.18
+Jan, Robert, Thilo, Timo, Christian, Kai, Marc
+Hierarchische Struktur abbilden in der die einzelnen Nodes durch P2P Server dargestellt werden.
+Weiteres folgt in der 2. KW im März (nach DigSig-Klausur).
