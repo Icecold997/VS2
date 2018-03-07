@@ -6,7 +6,7 @@ Weiteres folgt in der 2. KW im März (nach DigSig-Klausur).
 
 Besprechung 7.3.18
 Marc,Jan,Robert,Thilo,Christian,Patrick
-- Der Hierarchische erhält eine Funktion die von aussen ansprechbar ist -impliziert anprechen-
+- Der Hierarchische erhält eine Funktion die von aussen ansprechbar ist. also -implizit anprechbar-
 - P2P Server achten auf Aktivität hierarchischer Server.
 - Push Nachricht in Discordchannel - Fortschritte in Channel schreiben
 
