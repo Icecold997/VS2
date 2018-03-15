@@ -55,6 +55,8 @@ public class DirectoryInformationEndpoint {
             }else{
                 FileArrangementConfig fileArrangementConfig1 = new FileArrangementConfig();
                 fileArrangementConfig1.setSourceIp(directory.getSourceIp());
+                fileArrangementConfig1.setFileDepartment(directory.getDirectoryDepartment());
+                fileArrangementConfig1.setFileRang(directory.getDirectoryRang());
                 fileArrangementConfig1.setLocal(false);
                 fileArrangementConfig1.setDirectory(true);
                 fileArrangementConfig1.setFilename(directory.getDirectoryName());
@@ -67,6 +69,8 @@ public class DirectoryInformationEndpoint {
          }else{
              ForwardingConfig forwardingConfig1 = new ForwardingConfig();
              forwardingConfig1.setParent(false);
+             forwardingConfig1.setDepartment(directory.getDirectoryDepartment());
+             forwardingConfig1.setRang(directory.getDirectoryRang());
              forwardingConfig1.setUrl(request.getIp());
              forwardingDAO.save(forwardingConfig1);
          }

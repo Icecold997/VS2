@@ -19,6 +19,8 @@ public class FileArrangementConfig extends AbstractEntity{
     private boolean isDirectory;
     private boolean isLocal;
     private String sourceIp;
+    private int fileRang;
+    private int fileDepartment;
 
     /**
      * Dateinamen erhalten
@@ -109,6 +111,14 @@ public class FileArrangementConfig extends AbstractEntity{
     public void setSourceIp(String sourceIp) {
         this.sourceIp = sourceIp;
     }
+    public int getFileRang() { return fileRang; }
+
+    public void setFileRang(int fileRang) { this.fileRang = fileRang; }
+
+    public int getFileDepartment() { return fileDepartment; }
+
+    public void setFileDepartment(int fileDepartment) { this.fileDepartment = fileDepartment; }
+
 
 
 }

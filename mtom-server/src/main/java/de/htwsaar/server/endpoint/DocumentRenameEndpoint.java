@@ -62,8 +62,6 @@ public class DocumentRenameEndpoint {
             fileArrangementDao.save(fileArrangementConfig.get());
        }
 
-
-
         response.setSuccess(true);
         return response;
     }

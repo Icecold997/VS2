@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.7 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2018.01.23 um 03:56:19 PM CET 
+// Generiert: 2018.03.15 um 09:57:24 PM CET 
 //
 
 
@@ -25,6 +25,8 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="directoryName" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="directoryRang" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="directoryDepartment" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="sourceIp" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -37,12 +39,16 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "directory", propOrder = {
     "directoryName",
+    "directoryRang",
+    "directoryDepartment",
     "sourceIp"
 })
 public class Directory {
 
     @XmlElement(required = true)
     protected String directoryName;
+    protected int directoryRang;
+    protected int directoryDepartment;
     @XmlElement(required = true)
     protected String sourceIp;
 
@@ -68,6 +74,38 @@ public class Directory {
      */
     public void setDirectoryName(String value) {
         this.directoryName = value;
+    }
+
+    /**
+     * Ruft den Wert der directoryRang-Eigenschaft ab.
+     * 
+     */
+    public int getDirectoryRang() {
+        return directoryRang;
+    }
+
+    /**
+     * Legt den Wert der directoryRang-Eigenschaft fest.
+     * 
+     */
+    public void setDirectoryRang(int value) {
+        this.directoryRang = value;
+    }
+
+    /**
+     * Ruft den Wert der directoryDepartment-Eigenschaft ab.
+     * 
+     */
+    public int getDirectoryDepartment() {
+        return directoryDepartment;
+    }
+
+    /**
+     * Legt den Wert der directoryDepartment-Eigenschaft fest.
+     * 
+     */
+    public void setDirectoryDepartment(int value) {
+        this.directoryDepartment = value;
     }
 
     /**

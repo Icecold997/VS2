@@ -15,7 +15,8 @@ public class ForwardingConfig extends AbstractEntity{
 
     private String url;  //ip addresse der kinder/des parent
     private boolean isParent;
-
+    private int department; //gruppenId
+    private int rang;  // rang in der hierarchie
 
     /**
      * Erhalte URL
@@ -53,7 +54,19 @@ public class ForwardingConfig extends AbstractEntity{
         isParent = parent;
     }
 
+    public int getDepartment() { return department; }
 
+    public void setDepartment(int department) {
+        this.department = department;
+    }
+
+    public int getRang() {
+        return rang;
+    }
+
+    public void setRang(int rang) {
+        this.rang = rang;
+    }
 
 
 

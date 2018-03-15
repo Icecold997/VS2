@@ -53,6 +53,12 @@ public class ServerConfig {
 
     public  String fileDirectory;
 
+     @Value("${serverRang}")
+     private int serverRang;
+
+    @Value("${serverGroup}")
+    private int serverGroup;
+
 
     /**
      * Startet den Server
@@ -134,6 +140,8 @@ public class ServerConfig {
        forwardingConfigs = forwardingDAO.findAllByisParent(true);
        Directory directory = new Directory();
        directory.setSourceIp(serverIp);
+       directory.setDirectoryRang(serverRang);
+       directory.setDirectoryDepartment(serverGroup);
        directory.setDirectoryName(dir.getName());
        if(forwardingConfigs.isPresent()){
            for (ForwardingConfig parent:forwardingConfigs.get()){
@@ -145,5 +153,11 @@ public class ServerConfig {
    public String getServerIp(){return this.serverIp;}
 
    public String getRootDirectory() {return  this.rootDirectory;}
+
+   public int getServerRang() { return serverRang; }
+
+   public int getServerGroup() { return serverGroup; }
+
+
 
 }

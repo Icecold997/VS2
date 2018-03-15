@@ -119,6 +119,8 @@
 	<complexType name="directory">
 		<sequence>
 			<element name="directoryName" type="string"/>
+			<element name="directoryRang" type="int"/>
+			<element name="directoryDepartment" type="int"/>
 			<element name="sourceIp" type="string"/>
 		</sequence>
 	</complexType>

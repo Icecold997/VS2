@@ -45,13 +45,17 @@ public class DocumentReceiveEndpoint {
 		StoreDocumentResponse response = new StoreDocumentResponse();
 
 	     	System.out.println("Datei empfangen : DateiName: " + request.getDocument().getName());
-			FileArrangementConfig fileArrangementConfig = new FileArrangementConfig();
+	     	System.out.println("ServerGruppe :" + serverConfig.getServerGroup());
+	     	System.out.println("ServerRang : "  + serverConfig.getServerRang());
+	     	FileArrangementConfig fileArrangementConfig = new FileArrangementConfig();
 			Document document = request.getDocument();
 
 			fileArrangementConfig.setFilename(document.getName());
 			fileArrangementConfig.setFileLocation(serverConfig.fileDirectory + "/");
 			fileArrangementConfig.setLocal(true);
 			fileArrangementConfig.setSourceIp(document.getSourceUri());
+			fileArrangementConfig.setFileRang(serverConfig.getServerRang());
+			fileArrangementConfig.setFileDepartment(serverConfig.getServerGroup());
 	    	  if(!fileExist(request.getDocument().getName())) {
 			    fileArrangementDao.save(fileArrangementConfig);
 				  System.out.println("Datei in Datenbank aufgenommen");
