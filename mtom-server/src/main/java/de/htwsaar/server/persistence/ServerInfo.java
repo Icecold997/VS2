@@ -20,6 +20,10 @@ public class ServerInfo extends AbstractEntity {
     @NotEmpty
     private String serverIp;
 
+    private int serverRang;
+
+    private int serverGroup;
+
 
     public ServerInfo() {
 
@@ -42,6 +46,14 @@ public class ServerInfo extends AbstractEntity {
     public void setServerIp(String serverIp) {
         this.serverIp = serverIp;
     }
+
+    public int getServerRang() { return serverRang; }
+
+    public void setServerRang(int serverRang) { this.serverRang = serverRang; }
+
+    public int getServerGroup() { return serverGroup; }
+
+    public void setServerGroup(int serverGroup) { this.serverGroup = serverGroup; }
 
 
 }

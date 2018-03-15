@@ -6,6 +6,61 @@
         elementFormDefault="qualified">
 
 
+	<element name="networkInformationRequest">
+		<complexType>
+			<sequence>
+				<element name="connectionConfig" type="tns:connectionConfig"/>
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="networkInformationResponse">
+		<complexType>
+			<sequence>
+				<element name="connectionConfig" type="tns:connectionConfig" maxOccurs="unbounded"/>
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="superNodeInformationRequest">
+		<complexType>
+			<sequence>
+				<element name="connectionConfig" type="tns:connectionConfig" maxOccurs="unbounded"/>
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="superNodeInformationResponse">
+		<complexType>
+			<sequence>
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="networkConnectionRequest">
+		<complexType>
+			<sequence>
+				<element name="connectionConfig" type="tns:connectionConfig"/>
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="networkConnectionResponse">
+		<complexType>
+			<sequence>
+				<element name="connectionConfig" type="tns:connectionConfig" />
+			</sequence>
+		</complexType>
+	</element>
+
+	<complexType name="connectionConfig">
+		<sequence>
+			<element name="ip" type="string" />
+			<element name="connections" type="int"/>
+		</sequence>
+
+	</complexType>
+
 	<element name="storeDocumentRequest">
 		<complexType>
 			<sequence>
@@ -13,6 +68,8 @@
 			</sequence>
 		</complexType>
 	</element>
+
+
 
 	<element name="storeDocumentResponse">
 		<complexType>

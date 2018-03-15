@@ -11,5 +11,6 @@ import java.util.Optional;
 @Transactional
 public interface  ServerDAO extends CrudRepository<ServerInfo, Integer> {
     ServerInfo save(ServerInfo serverInfo);
+    Optional<ServerInfo> findByServerGroupAndServerRang(int serverGroup,int serverRang);
 
 }

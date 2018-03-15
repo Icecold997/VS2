@@ -17,6 +17,22 @@ public class ForwardingConfig extends AbstractEntity{
     private boolean isParent;
     private int department; //gruppenId
     private int rang;  // rang in der hierarchie
+    private int connections; // anzahl der verbindungen
+
+
+    /**
+     * Erhalte Connections
+     *
+     * @return Connections
+     */
+    public int getConnections() { return connections; }
+
+    /**
+     * Setze Connections
+     *
+     * @param connections Connections
+     */
+    public void setConnections(int connections) { this.connections = connections; }
 
     /**
      * Erhalte URL

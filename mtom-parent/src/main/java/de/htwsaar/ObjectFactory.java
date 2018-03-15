@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.7 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2018.03.15 um 09:57:24 PM CET 
+// Generiert: 2018.03.15 um 10:54:00 PM CET 
 //
 
 
@@ -50,6 +50,14 @@ public class ObjectFactory {
      */
     public FileView createFileView() {
         return new FileView();
+    }
+
+    /**
+     * Create an instance of {@link SuperNodeInformationResponse }
+     * 
+     */
+    public SuperNodeInformationResponse createSuperNodeInformationResponse() {
+        return new SuperNodeInformationResponse();
     }
 
     /**
@@ -133,11 +141,43 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link NetworkInformationResponse }
+     * 
+     */
+    public NetworkInformationResponse createNetworkInformationResponse() {
+        return new NetworkInformationResponse();
+    }
+
+    /**
+     * Create an instance of {@link ConnectionConfig }
+     * 
+     */
+    public ConnectionConfig createConnectionConfig() {
+        return new ConnectionConfig();
+    }
+
+    /**
+     * Create an instance of {@link NetworkConnectionRequest }
+     * 
+     */
+    public NetworkConnectionRequest createNetworkConnectionRequest() {
+        return new NetworkConnectionRequest();
+    }
+
+    /**
      * Create an instance of {@link DownloadDocumentResponse }
      * 
      */
     public DownloadDocumentResponse createDownloadDocumentResponse() {
         return new DownloadDocumentResponse();
+    }
+
+    /**
+     * Create an instance of {@link NetworkInformationRequest }
+     * 
+     */
+    public NetworkInformationRequest createNetworkInformationRequest() {
+        return new NetworkInformationRequest();
     }
 
     /**
@@ -170,6 +210,22 @@ public class ObjectFactory {
      */
     public DirectoryInformationRequest createDirectoryInformationRequest() {
         return new DirectoryInformationRequest();
+    }
+
+    /**
+     * Create an instance of {@link NetworkConnectionResponse }
+     * 
+     */
+    public NetworkConnectionResponse createNetworkConnectionResponse() {
+        return new NetworkConnectionResponse();
+    }
+
+    /**
+     * Create an instance of {@link SuperNodeInformationRequest }
+     * 
+     */
+    public SuperNodeInformationRequest createSuperNodeInformationRequest() {
+        return new SuperNodeInformationRequest();
     }
 
 }
