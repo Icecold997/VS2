@@ -54,6 +54,7 @@ public class FloodingTransmitter  extends WebServiceGatewaySupport{
                 }
             }
         }
+        System.out.println("guid: "+storeDocumentRequest.getGuid());
         floodingCheck.addGui(storeDocumentRequest.getGuid());
     }
 

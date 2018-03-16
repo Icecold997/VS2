@@ -32,7 +32,7 @@ import java.util.Enumeration;
 @Lazy
 @SpringBootApplication
 @ComponentScan({"de.htwsaar","de.htwsaar" })
-public class Application extends AbstractJavaFxApp implements EmbeddedServletContainerCustomizer {
+public class Application extends AbstractJavaFxApp  {
 
 	private static Logger logger = LoggerFactory.getLogger(Application.class);
 
@@ -103,25 +103,7 @@ public class Application extends AbstractJavaFxApp implements EmbeddedServletCon
 		return null;
 	}
 
-	/**
-	 * Feststellung und Ausgabe der Server-IP
-	 *
-	 * @param container Container
-	 */
-	@Override
-	public void customize(ConfigurableEmbeddedServletContainer container) {
-		if (!allowServerAddress) {
-			if (solveIP() != null) {
-				InetAddress address = solveIP();
-				serverIp = address.getHostAddress();
-				serverConfig.serverIp = serverIp;
-				container.setAddress(address);
-				System.out.println("##### Server is running on: " + serverIp + ":9090 #####");
-			}
-		} else {
-			System.out.println("##### Server is running on: " + serverIp + ":9090 #####");
-		}
-	}
+
 
 
 }

@@ -206,7 +206,7 @@ public class ServerConfig {
                }
            }
        }else{
-           System.out.println("Server ist SuperNode");
+           System.out.println("Server ist SuperNode der Gruppe :" + getServerGroup() +"  auf Rang: " + getServerRang());
        }
 
    }

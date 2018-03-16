@@ -1,4 +1,4 @@
-package de.htwsaar.server.config;
+package client.ws;
 
 import java.util.UUID;
 /**

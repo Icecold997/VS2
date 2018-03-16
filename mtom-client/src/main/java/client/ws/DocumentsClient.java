@@ -17,6 +17,8 @@ public class DocumentsClient extends WebServiceGatewaySupport {
     @Autowired
     public UrlList urlList;
 
+	private GUID guid = new GUID();
+
 	public DocumentsClient() {}
 
 	/**
@@ -33,6 +35,7 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 		document.setName(inputPath.getFileName().toString());
 		StoreDocumentRequest request = new StoreDocumentRequest();
 		request.setDocument(document);
+		request.setGuid(guid.generateGUID());
 
 
 		StoreDocumentResponse response = (StoreDocumentResponse) getWebServiceTemplate()
@@ -55,6 +58,7 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 	   RenameDocumentRequest request = new RenameDocumentRequest();
 	   request.setCurrentDocumentName(oldFileName);
 	   request.setNewDocumentName(newFileName);
+	   request.setGuid(guid.generateGUID());
 	   RenameDocumentResponse response =(RenameDocumentResponse) getWebServiceTemplate().marshalSendAndReceive(urlList.getUrl(),request);
 	   boolean success = response.isSuccess();
 	   if(success){
@@ -73,6 +77,7 @@ public class DocumentsClient extends WebServiceGatewaySupport {
 	public boolean deleteDocument(String fileName){
    	  DeleteDocumentRequest request = new DeleteDocumentRequest();
 	   request.setDocumentName(fileName);
+	   request.setGuid(guid.generateGUID());
 	   DeleteDocumentResponse response = (DeleteDocumentResponse) getWebServiceTemplate().marshalSendAndReceive(urlList.getUrl(),request);
 	   boolean success = response.isSuccess();
 	   if(success){
