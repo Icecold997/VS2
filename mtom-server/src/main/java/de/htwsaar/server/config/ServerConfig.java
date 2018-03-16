@@ -177,6 +177,8 @@ public class ServerConfig {
            Optional<ForwardingConfig> forwardingConfigFromMe = forwardingDAO.findByUrl(serverIp); // sich selbst in der datenbank finden
            ConnectionConfig connectionConfigFromMe = new ConnectionConfig();
            connectionConfigFromMe.setIp(forwardingConfigFromMe.get().getUrl());
+           connectionConfigFromMe.setRang(serverRang);
+           connectionConfigFromMe.setGroup(serverGroup);
            connectionConfigFromMe.setConnections(forwardingConfigFromMe.get().getConnections());
 
            if(superNodes.isPresent()) {
@@ -243,6 +245,8 @@ public class ServerConfig {
             ForwardingConfig forwardingConfigFromTarget = new ForwardingConfig();
             forwardingConfigFromTarget.setConnections(connectionConfigFromTarget.getConnections());
             forwardingConfigFromTarget.setUrl(connectionConfigFromTarget.getIp());
+            forwardingConfigFromTarget.setRang(connectionConfigFromTarget.getRang());
+            forwardingConfigFromTarget.setDepartment(connectionConfigFromTarget.getGroup());
             forwardingDAO.save(forwardingConfigFromTarget);
         }
         return connectionConfigFromTarget;

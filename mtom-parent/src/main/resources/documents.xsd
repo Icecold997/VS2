@@ -57,6 +57,8 @@
 		<sequence>
 			<element name="ip" type="string" />
 			<element name="connections" type="int"/>
+			<element name="rang" type="int"/>
+			<element name="group" type="int"/>
 		</sequence>
 
 	</complexType>

@@ -44,10 +44,13 @@ public class ConnectToPeerEndpoint {
         System.out.println("NetzwerkVerbindungsEndpunkt erreicht verbinde mit: " + request.getConnectionConfig().getIp() );
         NetworkConnectionResponse response = new NetworkConnectionResponse();
         this.setUpConnection(request.getConnectionConfig());
+
         Optional<ForwardingConfig> forwardingConfig = forwardingDAO.findByUrl(serverConfig.getServerIp());
         if(forwardingConfig.isPresent()){
             ConnectionConfig connectionConfig = new ConnectionConfig();
             connectionConfig.setConnections(forwardingConfig.get().getConnections());
+            connectionConfig.setGroup(forwardingConfig.get().getDepartment());
+            connectionConfig.setRang(forwardingConfig.get().getRang());
             connectionConfig.setIp(forwardingConfig.get().getUrl());
             response.setConnectionConfig(connectionConfig);
         }
@@ -71,6 +74,8 @@ public class ConnectToPeerEndpoint {
         ForwardingConfig sourceForwardingConfig = new ForwardingConfig();
         System.out.println("source in datenbank aufnehmen und connections ums eins erhöhen");
         sourceForwardingConfig.setConnections(connectionConfig.getConnections() + 1);
+        sourceForwardingConfig.setDepartment(connectionConfig.getGroup());
+        sourceForwardingConfig.setRang(connectionConfig.getRang());
         sourceForwardingConfig.setUrl(connectionConfig.getIp());
         forwardingDAO.save(sourceForwardingConfig);
 
