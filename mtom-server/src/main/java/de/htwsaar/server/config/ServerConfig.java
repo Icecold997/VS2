@@ -96,7 +96,9 @@ public class ServerConfig {
             fileDirectory = path + rootDirectory;
             System.out.println("Directory vorhanden");
             checkDirecotory(dir);
-            sendInformationToParent(dir);
+            if(serverStatus.equals("supernode") && serverRang > 0) {
+                sendInformationToParent(dir);
+            }
         } else if(dir.mkdir()) {
             fileDirectory = path + rootDirectory;
             System.out.println("Directory erstellt");

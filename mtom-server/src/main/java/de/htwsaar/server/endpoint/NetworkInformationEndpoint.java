@@ -43,13 +43,15 @@ public class NetworkInformationEndpoint {
 
         System.out.println("NetzwerkInformation Endpunkt erreicht.Sende Netzwerk Informationen zurück ");
         NetworkInformationResponse response = new NetworkInformationResponse();
-        Iterable<ForwardingConfig> forwardingConfigList = forwardingDAO.findAll();
-        response.getConnectionConfig().addAll(forwardingConfigListToConnectionConfig(forwardingConfigList));
+        Optional<List<ForwardingConfig>> forwardingConfigList = forwardingDAO.findAllByRangAndDepartment(serverConfig.getServerRang(),serverConfig.getServerGroup());
+        if(forwardingConfigList.isPresent()) {
+            response.getConnectionConfig().addAll(forwardingConfigListToConnectionConfig(forwardingConfigList.get()));
+        }
         return response;
     }
 
 
-    private List<ConnectionConfig> forwardingConfigListToConnectionConfig(Iterable<ForwardingConfig> forwardingConfigList){
+    private List<ConnectionConfig> forwardingConfigListToConnectionConfig(List<ForwardingConfig> forwardingConfigList){
         List<ConnectionConfig> connectionConfigList = new ArrayList<ConnectionConfig>();
 
         for(ForwardingConfig forwardingConfig : forwardingConfigList){
