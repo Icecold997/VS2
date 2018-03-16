@@ -162,7 +162,7 @@ public class MainController implements Initializable {
 
     private void handleMouseOver(int index){
       if(isSearchOn && table_view.getItems().size() > index)  {
-          ToastView.makeMessage(router.getStage(),"Source Ordner: "+table_view.getItems().get(index).getSourceDirectoryName(),1000,100,250);
+          ToastView.makeMessage(router.getStage(),"Source Ordner: "+table_view.getItems().get(index).getRequestRootDirName(),1000,100,250);
        }
     }
     /**

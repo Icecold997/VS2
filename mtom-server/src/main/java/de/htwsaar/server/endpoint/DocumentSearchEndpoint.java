@@ -69,7 +69,7 @@ public class DocumentSearchEndpoint {
                 if(file.isDirectory()){
                     foundData.setType("Directory");
                 }else{
-                    foundData.setSourceDirectoryName(serverConfig.getRootDirectory());
+                    foundData.setRequestRootDirName(serverConfig.getRootDirectory());
                     foundData.setType("File");
                 }
                 foundData.setSourceIp(serverConfig.getServerIp());
@@ -82,11 +82,12 @@ public class DocumentSearchEndpoint {
             Optional<List<ForwardingConfig>> childs = forwardingDAO.findAllByisParent(false);
             if(childs.isPresent()){
                 for (ForwardingConfig f: childs.get()) {
-                    SearchDocumentResponse responseFromChild =transmitter.sendSearchRequestToChild(f.getUrl(),request.getDocumentName());
-                    if(responseFromChild.isFound()){
-                        response.getFile().addAll(responseFromChild.getFile());
+                    if(!f.getUrl().equals(serverConfig.getServerIp())) {
+                        SearchDocumentResponse responseFromChild = transmitter.sendSearchRequestToChild(f.getUrl(), request.getDocumentName());
+                        if (responseFromChild.isFound()) {
+                            response.getFile().addAll(responseFromChild.getFile());
+                        }
                     }
-
                 }
             }
 

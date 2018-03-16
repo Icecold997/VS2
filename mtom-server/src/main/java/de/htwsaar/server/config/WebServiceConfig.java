@@ -89,4 +89,13 @@ public class WebServiceConfig extends WsConfigurationSupport {
 		serverInformationTransmitter.setUnmarshaller(marshaller);
 		return serverInformationTransmitter;
 	}
+
+	@Bean
+	public FloodingTransmitter floodingTransmitter(Jaxb2Marshaller marshaller){
+		FloodingTransmitter transmitter = new FloodingTransmitter();
+		transmitter.setDefaultUri("http://localhost:9090/ws/documents");
+		transmitter.setMarshaller(marshaller);
+		transmitter.setUnmarshaller(marshaller);
+		return transmitter;
+	}
 }

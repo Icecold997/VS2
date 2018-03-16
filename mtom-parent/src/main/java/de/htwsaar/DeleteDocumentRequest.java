@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.7 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2018.03.15 um 10:54:00 PM CET 
+// Generiert: 2018.03.16 um 01:06:36 AM CET 
 //
 
 
@@ -25,7 +25,11 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
+ *         &lt;element name="guid" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="documentName" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="sourceIp" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="path" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="requestRootDirName" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,13 +40,49 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "documentName"
+    "guid",
+    "documentName",
+    "sourceIp",
+    "path",
+    "requestRootDirName"
 })
 @XmlRootElement(name = "deleteDocumentRequest")
 public class DeleteDocumentRequest {
 
     @XmlElement(required = true)
+    protected String guid;
+    @XmlElement(required = true)
     protected String documentName;
+    @XmlElement(required = true)
+    protected String sourceIp;
+    @XmlElement(required = true)
+    protected String path;
+    @XmlElement(required = true)
+    protected String requestRootDirName;
+
+    /**
+     * Ruft den Wert der guid-Eigenschaft ab.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getGuid() {
+        return guid;
+    }
+
+    /**
+     * Legt den Wert der guid-Eigenschaft fest.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setGuid(String value) {
+        this.guid = value;
+    }
 
     /**
      * Ruft den Wert der documentName-Eigenschaft ab.
@@ -66,6 +106,78 @@ public class DeleteDocumentRequest {
      */
     public void setDocumentName(String value) {
         this.documentName = value;
+    }
+
+    /**
+     * Ruft den Wert der sourceIp-Eigenschaft ab.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getSourceIp() {
+        return sourceIp;
+    }
+
+    /**
+     * Legt den Wert der sourceIp-Eigenschaft fest.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setSourceIp(String value) {
+        this.sourceIp = value;
+    }
+
+    /**
+     * Ruft den Wert der path-Eigenschaft ab.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getPath() {
+        return path;
+    }
+
+    /**
+     * Legt den Wert der path-Eigenschaft fest.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setPath(String value) {
+        this.path = value;
+    }
+
+    /**
+     * Ruft den Wert der requestRootDirName-Eigenschaft ab.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getRequestRootDirName() {
+        return requestRootDirName;
+    }
+
+    /**
+     * Legt den Wert der requestRootDirName-Eigenschaft fest.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setRequestRootDirName(String value) {
+        this.requestRootDirName = value;
     }
 
 }

@@ -9,6 +9,7 @@ import de.htwsaar.Document;
 import de.htwsaar.FileView;
 import de.htwsaar.StoreDocumentRequest;
 import de.htwsaar.StoreDocumentResponse;
+import de.htwsaar.server.config.FloodingTransmitter;
 import de.htwsaar.server.config.ServerConfig;
 import de.htwsaar.server.persistence.FileArrangementDAO;
 import de.htwsaar.server.persistence.FileArrangementConfig;
@@ -28,6 +29,9 @@ public class DocumentReceiveEndpoint {
 
 	@Autowired
 	ServerConfig serverConfig;
+
+	@Autowired
+	FloodingTransmitter floodingTransmitter;
 
 	private static final String NAMESPACE_URI = "http://htwsaar.de/";
 
@@ -57,7 +61,8 @@ public class DocumentReceiveEndpoint {
 			fileArrangementConfig.setFileRang(serverConfig.getServerRang());
 			fileArrangementConfig.setFileDepartment(serverConfig.getServerGroup());
 	    	  if(!fileExist(request.getDocument().getName())) {
-			    fileArrangementDao.save(fileArrangementConfig);
+			      fileArrangementDao.save(fileArrangementConfig);
+				  floodingTransmitter.floodReceivedFile(request);
 				  System.out.println("Datei in Datenbank aufgenommen");
 		      }else{
 		      	 fileArrangementDao.deleteByfilename(fileArrangementConfig.getFilename());
@@ -96,7 +101,7 @@ public class DocumentReceiveEndpoint {
 			fileInformation.setType("Directory");
 		}else{
 			fileInformation.setType("File");
-			fileInformation.setSourceDirectoryName(serverConfig.getRootDirectory());
+			fileInformation.setRequestRootDirName(serverConfig.getRootDirectory());
 		}
 		return fileInformation;
 	}

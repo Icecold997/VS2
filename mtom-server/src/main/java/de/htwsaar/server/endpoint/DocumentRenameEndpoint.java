@@ -8,6 +8,7 @@ import java.util.Optional;
 import de.htwsaar.FileView;
 import de.htwsaar.RenameDocumentRequest;
 import de.htwsaar.RenameDocumentResponse;
+import de.htwsaar.server.config.FloodingTransmitter;
 import de.htwsaar.server.config.ServerConfig;
 import de.htwsaar.server.persistence.FileArrangementConfig;
 import de.htwsaar.server.persistence.FileArrangementDAO;
@@ -27,6 +28,9 @@ public class DocumentRenameEndpoint {
 
     @Autowired
     ServerConfig serverConfig;
+
+    @Autowired
+    FloodingTransmitter floodingTransmitter;
 
     private static final String NAMESPACE_URI = "http://htwsaar.de/";
 
@@ -60,6 +64,7 @@ public class DocumentRenameEndpoint {
             }
             fileArrangementConfig.get().setFilename(request.getNewDocumentName());
             fileArrangementDao.save(fileArrangementConfig.get());
+            floodingTransmitter.floodRenameRequest(request);
        }
 
         response.setSuccess(true);

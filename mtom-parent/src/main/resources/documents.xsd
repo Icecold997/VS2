@@ -64,6 +64,7 @@
 	<element name="storeDocumentRequest">
 		<complexType>
 			<sequence>
+				<element name="guid" type="string"/>
 				<element name="document" type="tns:document" />
 			</sequence>
 		</complexType>
@@ -99,8 +100,12 @@
 	<element name="renameDocumentRequest">
 		<complexType>
 			<sequence>
+				<element name="guid" type="string"/>
+				<element name="path" type="string"/>
 				<element name="currentDocumentName" type="string" />
 				<element name="newDocumentName" type="string" />
+				<element name="sourceIp" type="string"/>
+				<element name="requestRootDirName" type="string" />
 			</sequence>
 		</complexType>
 	</element>
@@ -117,6 +122,7 @@
 	<element name="searchDocumentRequest">
 		<complexType>
 			<sequence>
+				<element name="guid" type="string"/>
 				<element name="documentName" type="string" />
 			</sequence>
 		</complexType>
@@ -134,7 +140,11 @@
 	<element name="deleteDocumentRequest">
 		<complexType>
 			<sequence>
+				<element name="guid" type="string"/>
 				<element name="documentName" type="string" />
+				<element name="sourceIp" type="string"/>
+				<element name="path" type="string"/>
+				<element name="requestRootDirName" type="string" />
 			</sequence>
 		</complexType>
 	</element>
@@ -147,9 +157,10 @@
 		</complexType>
 	</element>
 
-    <element name="sendDirectoryInformationToParentRequest">
+	<element name="sendDirectoryInformationToParentRequest">
 		<complexType>
 			<sequence>
+				<element name="guid" type="string"/>
 				<element name="directory" type="tns:directory"/>
 				<element name="ip" type="string"/>
 			</sequence>
@@ -185,7 +196,9 @@
 	<element name="directoryInformationRequest">
 		<complexType>
 			<sequence>
-				<element name="received" type="boolean"/>
+				<element name="path" type="string"/>
+				<element name="requestRootDirName" type="string" />
+				<element name="guid" type="string"/>
 			</sequence>
 		</complexType>
 	</element>
@@ -206,7 +219,8 @@
 			<element name="type" type="string"/>
 			<element name="date" type="string"/>
 			<element name="sourceIp" type="string"/>
-			<element name ="sourceDirectoryName" type="string"/>
+			<element name="path" type="string"/>
+			<element name="requestRootDirName" type="string" />
 		</sequence>
 	</complexType>
 </schema>

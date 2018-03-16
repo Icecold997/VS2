@@ -48,7 +48,7 @@ public class ClientInformationEndpoint {
                 fileView.setType("Directory");
             }else{
                 fileView.setType("File");
-                fileView.setSourceDirectoryName(serverConfig.getRootDirectory());
+                fileView.setRequestRootDirName(serverConfig.getRootDirectory());
             }
             if(fileConfig.isLocal()){
                 fileView.setSourceIp(serverConfig.getServerIp()); //TODO lokale ip adresse eingeben

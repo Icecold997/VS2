@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.7 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2018.03.15 um 10:54:00 PM CET 
+// Generiert: 2018.03.16 um 01:06:36 AM CET 
 //
 
 
@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
+ *         &lt;element name="guid" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="documentName" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -36,13 +37,40 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+    "guid",
     "documentName"
 })
 @XmlRootElement(name = "searchDocumentRequest")
 public class SearchDocumentRequest {
 
     @XmlElement(required = true)
+    protected String guid;
+    @XmlElement(required = true)
     protected String documentName;
+
+    /**
+     * Ruft den Wert der guid-Eigenschaft ab.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getGuid() {
+        return guid;
+    }
+
+    /**
+     * Legt den Wert der guid-Eigenschaft fest.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setGuid(String value) {
+        this.guid = value;
+    }
 
     /**
      * Ruft den Wert der documentName-Eigenschaft ab.
