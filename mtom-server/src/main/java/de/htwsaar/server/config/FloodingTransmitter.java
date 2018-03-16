@@ -38,17 +38,19 @@ public class FloodingTransmitter  extends WebServiceGatewaySupport{
      */
     public void floodReceivedFile(StoreDocumentRequest storeDocumentRequest){
         String sourceIp = storeDocumentRequest.getDocument().getSourceUri();
-        Iterable<ForwardingConfig> forwardingConfigs;
-        forwardingConfigs = forwardingDAO.findAll();
-        for(ForwardingConfig forwardingConfig : forwardingConfigs){
-            if(!forwardingConfig.getUrl().equals(serverConfig.getServerIp()) && !forwardingConfig.getUrl().equals(sourceIp) && !floodingCheck.isPresent(storeDocumentRequest.getGuid())){
-                System.out.println("Floode empfangene datei an :" + forwardingConfig.getUrl());
-                System.out.println("füge request in liste ein : " );
+        Optional<List<ForwardingConfig>> forwardingConfigs;
+        forwardingConfigs = forwardingDAO.findAllByRangAndDepartment(serverConfig.getServerRang(),serverConfig.getServerGroup());
+        if(forwardingConfigs.isPresent()) {
+            for (ForwardingConfig forwardingConfig : forwardingConfigs.get()) {
+                if (!forwardingConfig.getUrl().equals(serverConfig.getServerIp()) && !forwardingConfig.getUrl().equals(sourceIp) && !floodingCheck.isPresent(storeDocumentRequest.getGuid())) {
+                    System.out.println("Floode empfangene datei an :" + forwardingConfig.getUrl());
+                    System.out.println("füge request in liste ein : ");
 
-                try {
-                    StoreDocumentResponse response = (StoreDocumentResponse) getWebServiceTemplate()
-                            .marshalSendAndReceive("http://" + forwardingConfig.getUrl()+ ":9090/ws/documents", storeDocumentRequest);
-                }catch (Exception e){
+                    try {
+                        StoreDocumentResponse response = (StoreDocumentResponse) getWebServiceTemplate()
+                                .marshalSendAndReceive("http://" + forwardingConfig.getUrl() + ":9090/ws/documents", storeDocumentRequest);
+                    } catch (Exception e) {
+                    }
                 }
             }
         }
@@ -62,16 +64,18 @@ public class FloodingTransmitter  extends WebServiceGatewaySupport{
      */
     public void floodDeleteFileRequest(DeleteDocumentRequest deleteDocumentRequest) {
         String sourceIp = deleteDocumentRequest.getSourceIp();
-        Iterable<ForwardingConfig> forwardingConfigs;
-        forwardingConfigs = forwardingDAO.findAll();
-        for (ForwardingConfig forwardingConfig : forwardingConfigs) {
-            if(!forwardingConfig.getUrl().equals(serverConfig.getServerIp()) && !forwardingConfig.getUrl().equals(sourceIp) && !floodingCheck.isPresent(deleteDocumentRequest.getGuid())){
-                System.out.println("Floode gelöschte datei an :" + forwardingConfig.getUrl());
-                try {
-                    DeleteDocumentResponse response = (DeleteDocumentResponse) getWebServiceTemplate()
-                            .marshalSendAndReceive("http://" + forwardingConfig.getUrl() + ":9090/ws/documents", deleteDocumentRequest);
-                } catch (Exception e) {
+        Optional<List<ForwardingConfig>> forwardingConfigs;
+        forwardingConfigs = forwardingDAO.findAllByRangAndDepartment(serverConfig.getServerRang(),serverConfig.getServerGroup());
+        if(forwardingConfigs.isPresent()) {
+            for (ForwardingConfig forwardingConfig : forwardingConfigs.get()) {
+                if (!forwardingConfig.getUrl().equals(serverConfig.getServerIp()) && !forwardingConfig.getUrl().equals(sourceIp) && !floodingCheck.isPresent(deleteDocumentRequest.getGuid())) {
+                    System.out.println("Floode gelöschte datei an :" + forwardingConfig.getUrl());
+                    try {
+                        DeleteDocumentResponse response = (DeleteDocumentResponse) getWebServiceTemplate()
+                                .marshalSendAndReceive("http://" + forwardingConfig.getUrl() + ":9090/ws/documents", deleteDocumentRequest);
+                    } catch (Exception e) {
 
+                    }
                 }
             }
         }
@@ -83,18 +87,20 @@ public class FloodingTransmitter  extends WebServiceGatewaySupport{
      *
      * @param renameDocumentRequest request
      */
-    public void floodRenameRequest(RenameDocumentRequest renameDocumentRequest){
+    public void floodRenameRequest(RenameDocumentRequest renameDocumentRequest) {
         String sourceIp = renameDocumentRequest.getSourceIp();
-        Iterable<ForwardingConfig> forwardingConfigs;
-        forwardingConfigs = forwardingDAO.findAll();
-        for(ForwardingConfig forwardingConfig : forwardingConfigs) {
-            if(!forwardingConfig.getUrl().equals(serverConfig.getServerIp()) && !forwardingConfig.getUrl().equals(sourceIp) && !floodingCheck.isPresent(renameDocumentRequest.getGuid())){
-                System.out.println("Floode rename an: " + forwardingConfig.getUrl());
-                RenameDocumentResponse response = (RenameDocumentResponse) getWebServiceTemplate()
-                        .marshalSendAndReceive("http://" + forwardingConfig.getUrl() + ":9090/ws/documents", renameDocumentRequest);
+        Optional<List<ForwardingConfig>> forwardingConfigs;
+        forwardingConfigs = forwardingDAO.findAllByRangAndDepartment(serverConfig.getServerRang(), serverConfig.getServerGroup());
+        if (forwardingConfigs.isPresent()) {
+            for (ForwardingConfig forwardingConfig : forwardingConfigs.get()) {
+                if (!forwardingConfig.getUrl().equals(serverConfig.getServerIp()) && !forwardingConfig.getUrl().equals(sourceIp) && !floodingCheck.isPresent(renameDocumentRequest.getGuid())) {
+                    System.out.println("Floode rename an: " + forwardingConfig.getUrl());
+                    RenameDocumentResponse response = (RenameDocumentResponse) getWebServiceTemplate()
+                            .marshalSendAndReceive("http://" + forwardingConfig.getUrl() + ":9090/ws/documents", renameDocumentRequest);
+                }
             }
+            floodingCheck.addGui(renameDocumentRequest.getGuid());
         }
-        floodingCheck.addGui(renameDocumentRequest.getGuid());
     }
 
 
