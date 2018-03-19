@@ -21,7 +21,7 @@
 
          <children>
              <Label fx:id="downloadDirectoryLabelRawText" minWidth="100" text="Download Verzeichnis: " />
-             <Label fx:id="downloadDirectoryLabelDynamicText" layoutX="6.0" layoutY="23.0" minWidth="100" prefHeight="17.0" prefWidth="202.0" text="" />
+             <Label fx:id="downloadDirectoryLabelDynamicText" layoutX="150.0" layoutY="0.0" minWidth="300" prefHeight="17.0" prefWidth="302.0" text="" />
              <JFXTextField fx:id="searchInput" layoutX="231.0" layoutY="18.0" minWidth="191.0" prefHeight="17.0" prefWidth="191.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 
             <TableView fx:id="table_view" layoutX="40.0" layoutY="48.0" prefHeight="276.0" prefWidth="546.0">
